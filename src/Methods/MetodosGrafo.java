@@ -104,7 +104,6 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
-     *
      * método que busca un arco del grafo
      *
      * @param origen vértice de origen de arco al que queremos buscar
@@ -125,7 +124,7 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
+     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020. método que
      * llena el grafo fuertemente conexo
      *
      * @param n es la cantidad de nodos que requiere el grafo
@@ -163,6 +162,7 @@ public class MetodosGrafo {
             aux = aux.sigV;
         }
     }
+
     public void profundidad(vertice grafo) {
         if ((grafo != null) && (grafo.marca == false)) {//2 * n = 2n
             grafo.marca = true;//n
@@ -172,9 +172,9 @@ public class MetodosGrafo {
             asignaciones += 2;
             while (aux != null) {//n*n = n a la 2
                 System.out.println("Origen: " + grafo.ID);
-                 System.out.println("Peso: " + aux.peso);
-                 System.out.println("Destino: " + aux.destino.ID);
-                 System.out.println("-----------");
+                System.out.println("Peso: " + aux.peso);
+                System.out.println("Destino: " + aux.destino.ID);
+                System.out.println("-----------");
                 profundidad(aux.destino);//n*n = n a la 2
                 aux = aux.sigA;//n*n = n a la 2
                 lineas += 3;
