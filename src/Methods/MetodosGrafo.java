@@ -141,7 +141,7 @@ public class MetodosGrafo {
                     Random random = new Random();
                     destino = buscar(j);
                     if (destino.ID != origen.ID && destino.ID != 0) {
-                        insertarArco(origen, destino, random.nextInt(100) + 1);
+                        insertarArco(origen, destino, random.nextInt(99) + 1);
                     }
                 }
             }
