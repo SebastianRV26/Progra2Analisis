@@ -40,14 +40,16 @@ public class Main {
      * ejecuta el algoritmo seleccionado
      */
     public static void menuAlgoritmos() {
-
+       MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+          metGrafo.llenarGrafo(5);
+          metGrafo.profundidad(metGrafo.grafo); 
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         menuAlgoritmos();
     }
 

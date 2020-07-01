@@ -137,11 +137,13 @@ public class MetodosGrafo {
         }
         for (int i = 0; i <= n; i++) { // luego se insertan los arcos
             origen = buscar(i);
-            for (int j = 0; j < n; j++) { // para que el grafo sea fuertemente conexo 
-                Random random = new Random();
-                destino = buscar(j);
-                if (destino.ID != origen.ID) {
-                    insertarArco(origen, destino, random.nextInt(11) + 1);
+            if (origen.ID != n) {
+                for (int j = 0; j < n; j++) { // para que el grafo sea fuertemente conexo 
+                    Random random = new Random();
+                    destino = buscar(j);
+                    if (destino.ID != origen.ID && destino.ID != 0) {
+                        insertarArco(origen, destino, random.nextInt(100) + 1);
+                    }
                 }
             }
         }
@@ -160,5 +162,32 @@ public class MetodosGrafo {
             aux.marca = false;
             aux = aux.sigV;
         }
+    }
+    public void profundidad(vertice grafo) {
+        if ((grafo != null) && (grafo.marca == false)) {//2 * n = 2n
+            grafo.marca = true;//n
+            arco aux = grafo.sigA;//n
+            lineas += 3;
+            comparaciones += 2;
+            asignaciones += 2;
+            while (aux != null) {//n*n = n a la 2
+                System.out.println("Origen: " + grafo.ID);
+                 System.out.println("Peso: " + aux.peso);
+                 System.out.println("Destino: " + aux.destino.ID);
+                 System.out.println("-----------");
+                profundidad(aux.destino);//n*n = n a la 2
+                aux = aux.sigA;//n*n = n a la 2
+                lineas += 3;
+                comparaciones++;
+                asignaciones += 2;
+            }
+            lineas++;
+            comparaciones++;
+        } else {
+            lineas++;
+            comparaciones++;
+            return;
+        }
+        //Total medicion analitica 3n a la 2 + 4n 
     }
 }
