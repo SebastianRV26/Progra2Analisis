@@ -190,4 +190,24 @@ public class MetodosGrafo {
         }
         //Total medicion analitica 3n a la 2 + 4n 
     }
+    
+    public void rutaCortaVoraz(vertice vertice){
+        
+    }
+    
+    public void rutaCortaGenetica(vertice vertice){
+        
+    }
+    
+    public void rutaCortaBacktracking(vertice vertice){
+        
+    }
+    
+    public void rutaCortaDinamica(vertice vertice){
+        
+    }
+    
+    public void rutaCortaRamificacionYPoda(vertice vertice){
+        
+    }
 }

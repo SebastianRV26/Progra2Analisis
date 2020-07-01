@@ -42,7 +42,6 @@ public class Main {
      */
     public static void menuAlgoritmos() {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-
         int[] tamannioGrafo = {10, 20, 30, 60, 120, 1000, 3000, 5000}; // array con los tamaÃ±os para los grafos
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
 
@@ -61,22 +60,37 @@ public class Main {
 
             switch (opcion) {
                 case "1":
-                    
+
                     break;
                 case "2":
-                    
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        metGrafo.rutaCortaVoraz(grafos[i]);
+                    }
                     break;
                 case "3":
-                    
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        metGrafo.rutaCortaGenetica(grafos[i]);
+                    }
                     break;
                 case "4":
-                    
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        metGrafo.rutaCortaBacktracking(grafos[i]);
+                    }
                     break;
                 case "5":
-                    
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        metGrafo.rutaCortaDinamica(grafos[i]);
+                    }
                     break;
                 case "6":
-                    
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        metGrafo.rutaCortaRamificacionYPoda(grafos[i]);
+                    }
                     break;
                 case "7":
                     System.exit(0);
@@ -92,10 +106,10 @@ public class Main {
      */
     public static void main(String[] args) {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        
+
         metGrafo.llenarGrafo(5);
         metGrafo.profundidad(metGrafo.grafo);
-        
+
         // menuAlgoritmos();
     }
 
