@@ -32,28 +32,27 @@ public class MetodosGrafo {
         return instance;
     }
 
-    public vertice grafo;
-    public int asignaciones = 0;
-    public int comparaciones = 0;
-    public int lineas = 0;
+    public vertice grafo, ultimo;
+    public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
-     * método que inserta un vértice para el grafo
+     * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
-     * @return "Insertado" o ""
+     * @return true o false
      */
-    public String insertarVertices(int ID) {
+    public boolean insertarVertices(int ID) {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-            return "Insertado";
+            ultimo=nuevo;
+            return true;
         }
-        nuevo.sigV = grafo; //insersion al inicio de una lista
-        grafo = nuevo;
-        return "";
+        ultimo.sigV = nuevo;
+        ultimo = nuevo;
+        return true;
     }
 
     /**
@@ -167,9 +166,6 @@ public class MetodosGrafo {
         if ((grafo != null) && (grafo.marca == false)) {//2 * n = 2n
             grafo.marca = true;//n
             arco aux = grafo.sigA;//n
-            lineas += 3;
-            comparaciones += 2;
-            asignaciones += 2;
             while (aux != null) {//n*n = n a la 2
                 System.out.println("Origen: " + grafo.ID);
                 System.out.println("Peso: " + aux.peso);
@@ -177,37 +173,72 @@ public class MetodosGrafo {
                 System.out.println("-----------");
                 profundidad(aux.destino);//n*n = n a la 2
                 aux = aux.sigA;//n*n = n a la 2
-                lineas += 3;
-                comparaciones++;
-                asignaciones += 2;
             }
-            lineas++;
-            comparaciones++;
         } else {
-            lineas++;
-            comparaciones++;
             return;
         }
         //Total medicion analitica 3n a la 2 + 4n 
     }
-    
-    public void rutaCortaVoraz(vertice vertice){
-        
+
+    public void amplitud(vertice grafo) {
+        if (grafo == null) {//1
+            //System.out.println("No hay grafo");=
+        } else {
+            vertice temp = grafo;//1
+            while (temp != null) {//n
+                System.out.println("Vertice: " + temp.ID);
+                arco aux = temp.sigA;//n == n
+                while (aux != null) {//n*n = n a la 2
+                    System.out.println("Destino: " + aux.destino.ID);
+                    aux = aux.sigA;//n*n = n ala 2
+                }
+                System.out.println("-----------");
+                temp = temp.sigV; //n
+            }
+        }
+        //Total medicion analitica 2n + 3n + 2
     }
+
+    public String rc = "";
+    public int minRC = 0;
+    public boolean existe = false;
     
-    public void rutaCortaGenetica(vertice vertice){
-        
+    public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int dist) {
+        if ((origen == null) || (origen.marca == true)){
+            return;
+        } 
+        if (origen == destino){  
+            if((rc.equals("")) || (minRC > dist) ) {
+                rc = ruta + " / "+ destino.ID;
+                minRC = dist;
+            }  
+            existe=true;
+            return;
+        }
+        origen.marca = true;
+        arco a = origen.sigA;
+        while (a != null) {
+
+                rutaCortaVoraz(a.destino, destino, ruta +" / "+ origen.ID, dist + a.peso);
+            a = a.sigA;
+        }
+        origen.marca = false;
+    
     }
-    
-    public void rutaCortaBacktracking(vertice vertice){
-        
+
+    public void rutaCortaGenetica(vertice vertice) {
+
     }
-    
-    public void rutaCortaDinamica(vertice vertice){
-        
+
+    public void rutaCortaBacktracking(vertice vertice) {
+
     }
-    
-    public void rutaCortaRamificacionYPoda(vertice vertice){
-        
+
+    public void rutaCortaDinamica(vertice vertice) {
+
+    }
+
+    public void rutaCortaRamificacionYPoda(vertice vertice) {
+
     }
 }
