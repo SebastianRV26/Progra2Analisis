@@ -47,7 +47,7 @@ public class MetodosGrafo {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-            ultimo=nuevo;
+            ultimo = nuevo;
             return true;
         }
         ultimo.sigV = nuevo;
@@ -202,28 +202,27 @@ public class MetodosGrafo {
     public String rc = "";
     public int minRC = 0;
     public boolean existe = false;
-    
+
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int dist) {
-        if ((origen == null) || (origen.marca == true)){
+        if ((origen == null) || (origen.marca == true)) {
             return;
-        } 
-        if (origen == destino){  
-            if((rc.equals("")) || (minRC > dist) ) {
-                rc = ruta + " / "+ destino.ID;
+        }
+        if (origen == destino) {
+            if ((rc.equals("")) || (minRC > dist)) {
+                rc = ruta + " / " + destino.ID;
                 minRC = dist;
-            }  
-            existe=true;
+            }
+            existe = true;
             return;
         }
         origen.marca = true;
         arco a = origen.sigA;
         while (a != null) {
-
-                rutaCortaVoraz(a.destino, destino, ruta +" / "+ origen.ID, dist + a.peso);
+            rutaCortaVoraz(a.destino, destino, ruta + " / " + origen.ID, dist + a.peso);
             a = a.sigA;
         }
         origen.marca = false;
-    
+
     }
 
     public void rutaCortaGenetica(vertice vertice) {
