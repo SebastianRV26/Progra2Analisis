@@ -107,6 +107,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+<<<<<<< HEAD
+              MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+              metGrafo.llenarGrafo(5);
+              metGrafo.amplitud(metGrafo.grafo);
+=======
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
 
         metGrafo.llenarGrafo(5);
@@ -119,6 +124,7 @@ public class Main {
             System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
         }
         //menuAlgoritmos();
+>>>>>>> a7f1038defd428afe4b26383e7fbea18e956b0eb
     }
 
 }

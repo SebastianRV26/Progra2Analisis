@@ -99,7 +99,30 @@ public class MetodosGrafo {
         }
         return "No se pueden repetir arcos";
     }
-
+    public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
+        if (buscar(origen, destino) == null) {
+            arco nuevo = new arco(peso);
+            arco auxNuevo = new arco(peso);
+            nuevo.destino = destino;
+            auxNuevo.destino = origen;
+            if (origen.sigA == null) {
+                origen.sigA = nuevo;
+            } else {
+                nuevo.sigA = origen.sigA;
+                origen.sigA.antA = nuevo;
+                origen.sigA = nuevo;
+            }
+            if (destino.sigA == null) {
+                destino.sigA = auxNuevo;
+            } else {
+                auxNuevo.sigA = destino.sigA;
+                destino.sigA.antA = auxNuevo;
+                destino.sigA = auxNuevo;
+            }
+            return true;
+        }
+        return false;
+    }
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
@@ -130,17 +153,21 @@ public class MetodosGrafo {
      */
     public void llenarGrafo(int n) {
         vertice origen, destino;
-        for (int i = 0; i <= n; i++) { // primero se insertan los vertices
+        for (int i = 1; i <= n; i++) { // primero se insertan los vertices
             insertarVertices(i);
         }
-        for (int i = 0; i <= n; i++) { // luego se insertan los arcos
+        for (int i = 1; i <= n; i++) { // luego se insertan los arcos
             origen = buscar(i);
             if (origen.ID != n) {
-                for (int j = 0; j < n; j++) { // para que el grafo sea fuertemente conexo 
+                for (int j = 1; j <= n; j++) { // para que el grafo sea fuertemente conexo 
                     Random random = new Random();
                     destino = buscar(j);
-                    if (destino.ID != origen.ID && destino.ID != 0) {
-                        insertarArco(origen, destino, random.nextInt(99) + 1);
+                    if (destino.ID != origen.ID && destino.ID != 1) {
+                        if(origen.ID == 1 || destino.ID==n){
+                            insertarArco(origen, destino, random.nextInt(99) + 1);
+                        }else{
+                            insertarArcoDoble(origen, destino, random.nextInt(99) + 1);
+                        }
                     }
                 }
             }
@@ -162,22 +189,25 @@ public class MetodosGrafo {
         }
     }
 
-    public void profundidad(vertice grafo) {
-        if ((grafo != null) && (grafo.marca == false)) {//2 * n = 2n
-            grafo.marca = true;//n
-            arco aux = grafo.sigA;//n
-            while (aux != null) {//n*n = n a la 2
-                System.out.println("Origen: " + grafo.ID);
-                System.out.println("Peso: " + aux.peso);
-                System.out.println("Destino: " + aux.destino.ID);
-                System.out.println("-----------");
-                profundidad(aux.destino);//n*n = n a la 2
-                aux = aux.sigA;//n*n = n a la 2
-            }
+   public void amplitud(vertice grafo) {
+        if (grafo == null) {//1
+            System.out.println("No hay grafo");
         } else {
-            return;
+            vertice temp = grafo;//1
+            while (temp != null) {//n
+                 System.out.println("Vertice: " + temp.ID);
+                arco aux = temp.sigA;//n == n
+                while (aux != null) {//n*n = n a la 2
+                    System.out.println("Destino: " + aux.destino.ID);
+                    System.out.println(aux.peso);
+                    aux = aux.sigA;//n*n = n ala 2
+                }
+               System.out.println("-----------");
+                temp = temp.sigV; //n
+            }
+            lineas++;
+            comparaciones++;
         }
-        //Total medicion analitica 3n a la 2 + 4n 
     }
 
     public void amplitud(vertice grafo) {
