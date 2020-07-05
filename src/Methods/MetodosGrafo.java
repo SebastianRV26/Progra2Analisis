@@ -99,6 +99,7 @@ public class MetodosGrafo {
         }
         return "No se pueden repetir arcos";
     }
+
     public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
@@ -123,6 +124,7 @@ public class MetodosGrafo {
         }
         return false;
     }
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
@@ -163,9 +165,9 @@ public class MetodosGrafo {
                     Random random = new Random();
                     destino = buscar(j);
                     if (destino.ID != origen.ID && destino.ID != 1) {
-                        if(origen.ID == 1 || destino.ID==n){
+                        if (origen.ID == 1 || destino.ID == n) {
                             insertarArco(origen, destino, random.nextInt(99) + 1);
-                        }else{
+                        } else {
                             insertarArcoDoble(origen, destino, random.nextInt(99) + 1);
                         }
                     }
@@ -189,30 +191,9 @@ public class MetodosGrafo {
         }
     }
 
-   public void amplitud(vertice grafo) {
-        if (grafo == null) {//1
-            System.out.println("No hay grafo");
-        } else {
-            vertice temp = grafo;//1
-            while (temp != null) {//n
-                 System.out.println("Vertice: " + temp.ID);
-                arco aux = temp.sigA;//n == n
-                while (aux != null) {//n*n = n a la 2
-                    System.out.println("Destino: " + aux.destino.ID);
-                    System.out.println(aux.peso);
-                    aux = aux.sigA;//n*n = n ala 2
-                }
-               System.out.println("-----------");
-                temp = temp.sigV; //n
-            }
-            lineas++;
-            comparaciones++;
-        }
-    }
-
     public void amplitud(vertice grafo) {
         if (grafo == null) {//1
-            //System.out.println("No hay grafo");=
+            System.out.println("No hay grafo");
         } else {
             vertice temp = grafo;//1
             while (temp != null) {//n
@@ -220,13 +201,13 @@ public class MetodosGrafo {
                 arco aux = temp.sigA;//n == n
                 while (aux != null) {//n*n = n a la 2
                     System.out.println("Destino: " + aux.destino.ID);
+                    System.out.println(aux.peso);
                     aux = aux.sigA;//n*n = n ala 2
                 }
                 System.out.println("-----------");
                 temp = temp.sigV; //n
             }
         }
-        //Total medicion analitica 2n + 3n + 2
     }
 
     public String rc = "";

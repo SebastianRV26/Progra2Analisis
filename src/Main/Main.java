@@ -15,7 +15,9 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static vertice[] ultimos = new vertice[6];;
+    public static vertice[] ultimos = new vertice[6];
+
+    ;
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
      * crea los grafos de distintos tamaños y los almacena en un arreglo
@@ -31,7 +33,7 @@ public class Main {
             metGrafo.llenarGrafo(tamannio[i]);
             vertice grafo = metGrafo.grafo;
             grafos[i] = grafo;
-            ultimos[i]=metGrafo.ultimo;
+            ultimos[i] = metGrafo.ultimo;
             metGrafo.grafo = null;
         }
         return grafos;
@@ -46,7 +48,7 @@ public class Main {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
         int[] tamannioGrafo = {10, 20, 30, 60, 120, 1000, 3000, 5000}; // array con los tamaÃ±os para los grafos
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
-        
+
         while (true) {
             System.out.println("Digite un numero del 1 al 6 para ver las diferentes consultas "
                     + "\n 1-Imprima todas las variables de medición para cada una de las estrategias de diseño "
@@ -67,7 +69,7 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i],"",0);
+                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "", 0);
                     }
                     break;
                 case "3":
@@ -107,15 +109,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
-              MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-              metGrafo.llenarGrafo(5);
-              metGrafo.amplitud(metGrafo.grafo);
-=======
-        MetodosGrafo metGrafo = MetodosGrafo.getInstance();
 
+        MetodosGrafo metGrafo = MetodosGrafo.getInstance();
         metGrafo.llenarGrafo(5);
-        metGrafo.profundidad(metGrafo.grafo);
+        metGrafo.amplitud(metGrafo.grafo);
+
         System.out.println("\nRuta corta");
         metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
         System.out.println(metGrafo.existe);
@@ -124,7 +122,7 @@ public class Main {
             System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
         }
         //menuAlgoritmos();
->>>>>>> a7f1038defd428afe4b26383e7fbea18e956b0eb
+
     }
 
 }
