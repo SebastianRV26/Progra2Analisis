@@ -107,6 +107,7 @@ public class MetodosGrafo {
         }
         return "No se pueden repetir arcos";
     }
+
     public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
@@ -131,6 +132,7 @@ public class MetodosGrafo {
         }
         return false;
     }
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
@@ -171,9 +173,9 @@ public class MetodosGrafo {
                     Random random = new Random();
                     destino = buscar(j);
                     if (destino.ID != origen.ID && destino.ID != 1) {
-                        if(origen.ID == 1 || destino.ID==n){
+                        if (origen.ID == 1 || destino.ID == n) {
                             insertarArco(origen, destino, random.nextInt(99) + 1);
-                        }else{
+                        } else {
                             insertarArcoDoble(origen, destino, random.nextInt(99) + 1);
                         }
                     }
@@ -220,28 +222,27 @@ public class MetodosGrafo {
     public String rc = "";
     public int minRC = 0;
     public boolean existe = false;
-    
+
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int dist) {
-        if ((origen == null) || (origen.marca == true)){
+        if ((origen == null) || (origen.marca == true)) {
             return;
-        } 
-        if (origen == destino){  
-            if((rc.equals("")) || (minRC > dist) ) {
-                rc = ruta + " / "+ destino.ID;
+        }
+        if (origen == destino) {
+            if ((rc.equals("")) || (minRC > dist)) {
+                rc = ruta + " / " + destino.ID;
                 minRC = dist;
-            }  
-            existe=true;
+            }
+            existe = true;
             return;
         }
         origen.marca = true;
         arco a = origen.sigA;
         while (a != null) {
-
-                rutaCortaVoraz(a.destino, destino, ruta +" / "+ origen.ID, dist + a.peso);
+            rutaCortaVoraz(a.destino, destino, ruta + " / " + origen.ID, dist + a.peso);
             a = a.sigA;
         }
         origen.marca = false;
-    
+
     }
 
     public void rutaCortaGenetica(vertice vertice) {
