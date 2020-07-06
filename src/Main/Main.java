@@ -107,24 +107,19 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
-              MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-              metGrafo.llenarGrafo(5);
-              metGrafo.amplitud(metGrafo.grafo);
-=======
+
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
 
         metGrafo.llenarGrafo(5);
-        metGrafo.profundidad(metGrafo.grafo);
-        System.out.println("\nRuta corta");
-        metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
-        System.out.println(metGrafo.existe);
-        if (metGrafo.existe) {
-            System.out.println("Ruta: " + metGrafo.rc);
-            System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
-        }
+        metGrafo.amplitud(metGrafo.grafo);
+    //    System.out.println("\nRuta corta");
+      //  metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
+        //System.out.println(metGrafo.existe);
+        //f (metGrafo.existe) {
+          //  System.out.println("Ruta: " + metGrafo.rc);
+           //System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
+       // }
         //menuAlgoritmos();
->>>>>>> a7f1038defd428afe4b26383e7fbea18e956b0eb
     }
 
 }

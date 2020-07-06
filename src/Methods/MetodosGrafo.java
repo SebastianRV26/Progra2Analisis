@@ -47,21 +47,20 @@ public class MetodosGrafo {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-             
-                System.out.println(ID);
-            return "Insertado";
+            System.out.println(ID);
+            return true;
         }
-        vertice aux  = grafo;
-        while (aux != null) {            
-            if(aux.sigV == null){
+        vertice aux = grafo;
+        while (aux != null) {
+            if (aux.sigV == null) {
                 System.out.println(aux.ID);
                 System.out.println(ID);
-                   aux.sigV = nuevo;
-                    return "Insertado";
+                aux.sigV = nuevo;
+                return true;
             }
-              aux = aux.sigV;
+            aux = aux.sigV;
         }
-        return "";
+        return false;
     }
 
     /**
@@ -214,29 +213,9 @@ public class MetodosGrafo {
                System.out.println("-----------");
                 temp = temp.sigV; //n
             }
-            lineas++;
-            comparaciones++;
-        }
-    }
 
-    public void amplitud(vertice grafo) {
-        if (grafo == null) {//1
-            //System.out.println("No hay grafo");=
-        } else {
-            vertice temp = grafo;//1
-            while (temp != null) {//n
-                System.out.println("Vertice: " + temp.ID);
-                arco aux = temp.sigA;//n == n
-                while (aux != null) {//n*n = n a la 2
-                    System.out.println("Destino: " + aux.destino.ID);
-                    aux = aux.sigA;//n*n = n ala 2
-                }
-                System.out.println("-----------");
-                temp = temp.sigV; //n
-            }
         }
-        //Total medicion analitica 2n + 3n + 2
-    }
+   }
 
     public String rc = "";
     public int minRC = 0;
