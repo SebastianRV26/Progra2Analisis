@@ -113,6 +113,7 @@ public class Main {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
 
         metGrafo.llenarGrafo(5);
+        System.out.println( metGrafo.ultimo.ID);
         metGrafo.amplitud(metGrafo.grafo);
 
         System.out.println("\nRuta corta");

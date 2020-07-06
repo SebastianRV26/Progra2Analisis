@@ -36,7 +36,7 @@ public class MetodosGrafo {
     public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
      * método que inserta un vértice al final para el grafo
      *
@@ -56,6 +56,7 @@ public class MetodosGrafo {
                 System.out.println(aux.ID);
                 System.out.println(ID);
                 aux.sigV = nuevo;
+                ultimo = aux.sigV;
                 return true;
             }
             aux = aux.sigV;
@@ -108,6 +109,16 @@ public class MetodosGrafo {
         return "No se pueden repetir arcos";
     }
 
+       /**
+     * Fecha inicio: 05/07/2020 Ultima modificación: 05/07/2020
+     *
+     * método que inserta un arco para el grafo
+     *
+     * @param origen vértice de origen de arco al que queremos insertar
+     * @param destino vértice destino de arco al que queremos insertar
+     * @param peso el peso del arco, número entre el 1 al 10
+     * @return "Insertado" o "No se pueden repetir arcos"
+     */
     public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
@@ -156,7 +167,7 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020. método que
+     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020. método que
      * llena el grafo fuertemente conexo
      *
      * @param n es la cantidad de nodos que requiere el grafo
