@@ -106,7 +106,7 @@ public class Main {
         }
 
     }
-    
+
     static void prueba() {
         String string = "1/4/2/3/5/";
         String[] parts = string.split("/");
@@ -121,26 +121,21 @@ public class Main {
     public static void main(String[] args) {
 
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-           MetodosListaDoble mld = MetodosListaDoble.getInstance();
+        MetodosListaDoble mld = MetodosListaDoble.getInstance();
 
-      metGrafo.llenarGrafo(5);
-        System.out.println(metGrafo.ultimo.ID);
+        metGrafo.llenarGrafo(5);
         metGrafo.amplitud(metGrafo.grafo);
 
         System.out.println("\nRuta corta");
-        metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
-        System.out.println(metGrafo.existe);
-        if (metGrafo.existe) {
-            System.out.println("Ruta: " + metGrafo.rc);
-            System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
-        }
-        
-        
+        metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, metGrafo.grafo.ID+"/",0);
+
+        System.out.println("");
+
         ArrayList<vertice> visitadosK = new ArrayList<>();
         String rutaCorta = "" + metGrafo.grafo.ID;
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //menuAlgoritmos();
-        
+
         mld.verPeso();
     }
 

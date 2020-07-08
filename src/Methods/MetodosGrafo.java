@@ -40,7 +40,7 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
-//     * método que inserta un vértice al final para el grafo
+     * // * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
      * @return true o false
@@ -111,7 +111,7 @@ public class MetodosGrafo {
         return "No se pueden repetir arcos";
     }
 
-       /**
+    /**
      * Fecha inicio: 05/07/2020 Ultima modificación: 05/07/2020
      *
      * método que inserta un arco para el grafo
@@ -212,60 +212,61 @@ public class MetodosGrafo {
         }
     }
 
-   public void amplitud(vertice grafo) {
+    public void amplitud(vertice grafo) {
         if (grafo == null) {//1
             System.out.println("No hay grafo");
         } else {
             vertice temp = grafo;//1
             while (temp != null) {//n
-                 System.out.println("Vertice: " + temp.ID);
+                System.out.println("Vertice: " + temp.ID);
                 arco aux = temp.sigA;//n == n
                 while (aux != null) {//n*n = n a la 2
                     System.out.println("Destino: " + aux.destino.ID);
                     System.out.println(aux.peso);
                     aux = aux.sigA;//n*n = n ala 2
                 }
-               System.out.println("-----------");
+                System.out.println("-----------");
                 temp = temp.sigV; //n
             }
 
         }
-   }
+    }
 
-    public String rc = "";
-    public int minRC = 0;
-    public boolean existe = false;
-
-    public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int dist) {
+    public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
         if ((origen == null) || (origen.marca == true)) {
             return;
         }
         if (origen == destino) {
-            if ((rc.equals("")) || (minRC > dist)) {
-                rc = ruta + " / " + destino.ID;
-                minRC = dist;
+            System.out.println(ruta + " distancia: " + distancia);
+        }
+        int min = 100;
+        arco auxMenor = null;
+        arco aux = origen.sigA;
+        while (aux != null) {
+            if (aux.peso < min && aux.destino.marca == false) {
+                min = aux.peso;
+                auxMenor = aux;
             }
-            existe = true;
-            return;
+            aux = aux.sigA;
         }
         origen.marca = true;
-        arco a = origen.sigA;
-        while (a != null) {
-            rutaCortaVoraz(a.destino, destino, ruta + " / " + origen.ID, dist + a.peso);
-            a = a.sigA;
+        if (auxMenor != null) {
+            System.out.println(auxMenor.destino.ID + "/");
+            rutaCortaVoraz(auxMenor.destino, destino, ruta + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
+        } else {
+            rutaCortaVoraz(destino, destino, ruta, distancia);
         }
-        origen.marca = false;
-
+        return;
     }
-    
-    public Integer tamannoGrafo(){
+
+    public Integer tamannoGrafo() {
         vertice aux = grafo;
         int cant = 0;
-        while (aux != null) {            
-            cant ++;
+        while (aux != null) {
+            cant++;
             aux = aux.sigV;
         }
-        return  cant;              
+        return cant;
     }
 
     public void rutaCortaGenetica(vertice vertice) {
