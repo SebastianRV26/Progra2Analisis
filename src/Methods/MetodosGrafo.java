@@ -251,7 +251,6 @@ public class MetodosGrafo {
         }
         origen.marca = true;
         if (auxMenor != null) {
-            System.out.println(auxMenor.destino.ID + "/");
             rutaCortaVoraz(auxMenor.destino, destino, ruta + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
             rutaCortaVoraz(destino, destino, ruta, distancia);

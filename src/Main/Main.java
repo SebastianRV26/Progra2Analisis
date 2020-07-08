@@ -127,10 +127,10 @@ public class Main {
         metGrafo.amplitud(metGrafo.grafo);
 
         vertice aux = metGrafo.grafo;
-       metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "", 0);
-        
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-      //  mld.verRutaCorta();
+        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "", 0);
+
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        //  mld.verRutaCorta();
     }
 
 }
