@@ -277,9 +277,9 @@ public class MetodosGrafo {
             return;
         }
         if (vertex.ID == ultimo.ID) {
-            mld.insertarRuta(ruta, pesoRuta, true);
+            mld.insertarRuta(ruta  + vertex.ID + "/", pesoRuta, true);
         } else {
-            mld.insertarRuta(ruta, pesoRuta, false);
+            mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);
         }
         vertex.marca = true;
         arco auxA = vertex.sigA;

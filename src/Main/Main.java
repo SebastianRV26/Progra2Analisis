@@ -136,12 +136,8 @@ public class Main {
         }
         
         
-        ArrayList<vertice> visitadosK = new ArrayList<>();
-        String rutaCorta = "" + metGrafo.grafo.ID;
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-        //menuAlgoritmos();
-        
-        mld.verPeso();
+        mld.verRutaCorta();
     }
 
 }

@@ -11,14 +11,14 @@ import java.util.ArrayList;
  *
  * @author edubi
  */
-public class nodo {
+public class ListaDoble {
 
-    public nodo sigN, antN;
+    public ListaDoble sigN, antN;
     public int pesoRuta;
     public boolean llegaDestino;
     public ArrayList<vertice> verticesRuta;
 
-    public nodo(ArrayList<vertice> verticesRuta, int pesoRuta, boolean llegaDestino) {
+    public ListaDoble(ArrayList<vertice> verticesRuta, int pesoRuta, boolean llegaDestino) {
         this.llegaDestino = llegaDestino;
         this.pesoRuta = pesoRuta;
         this.verticesRuta = verticesRuta;
