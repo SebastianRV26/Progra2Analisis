@@ -7,6 +7,7 @@ package Methods;
 
 import Classes.arco;
 import Classes.vertice;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -32,28 +33,37 @@ public class MetodosGrafo {
         return instance;
     }
 
-    public vertice grafo;
-    public int asignaciones = 0;
-    public int comparaciones = 0;
-    public int lineas = 0;
+    public vertice grafo, ultimo;
+    MetodosListaDoble mld = MetodosListaDoble.getInstance();
+    public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
-     * método que inserta un vértice para el grafo
+     * // * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
-     * @return "Insertado" o ""
+     * @return true o false
      */
-    public String insertarVertices(int ID) {
+    public boolean insertarVertices(int ID) {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-            return "Insertado";
+            System.out.println(ID);
+            return true;
         }
-        nuevo.sigV = grafo; //insersion al inicio de una lista
-        grafo = nuevo;
-        return "";
+        vertice aux = grafo;
+        while (aux != null) {
+            if (aux.sigV == null) {
+                System.out.println(aux.ID);
+                System.out.println(ID);
+                aux.sigV = nuevo;
+                ultimo = aux.sigV;
+                return true;
+            }
+            aux = aux.sigV;
+        }
+        return false;
     }
 
     /**
@@ -102,8 +112,42 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     * Fecha inicio: 05/07/2020 Ultima modificación: 05/07/2020
      *
+     * método que inserta un arco para el grafo
+     *
+     * @param origen vértice de origen de arco al que queremos insertar
+     * @param destino vértice destino de arco al que queremos insertar
+     * @param peso el peso del arco, número entre el 1 al 10
+     * @return "Insertado" o "No se pueden repetir arcos"
+     */
+    public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
+        if (buscar(origen, destino) == null) {
+            arco nuevo = new arco(peso);
+            arco auxNuevo = new arco(peso);
+            nuevo.destino = destino;
+            auxNuevo.destino = origen;
+            if (origen.sigA == null) {
+                origen.sigA = nuevo;
+            } else {
+                nuevo.sigA = origen.sigA;
+                origen.sigA.antA = nuevo;
+                origen.sigA = nuevo;
+            }
+            if (destino.sigA == null) {
+                destino.sigA = auxNuevo;
+            } else {
+                auxNuevo.sigA = destino.sigA;
+                destino.sigA.antA = auxNuevo;
+                destino.sigA = auxNuevo;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
      * método que busca un arco del grafo
      *
@@ -125,24 +169,28 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
+     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020. método que
      * llena el grafo fuertemente conexo
      *
      * @param n es la cantidad de nodos que requiere el grafo
      */
     public void llenarGrafo(int n) {
         vertice origen, destino;
-        for (int i = 0; i <= n; i++) { // primero se insertan los vertices
+        for (int i = 1; i <= n; i++) { // primero se insertan los vertices
             insertarVertices(i);
         }
-        for (int i = 0; i <= n; i++) { // luego se insertan los arcos
+        for (int i = 1; i <= n; i++) { // luego se insertan los arcos
             origen = buscar(i);
             if (origen.ID != n) {
-                for (int j = 0; j < n; j++) { // para que el grafo sea fuertemente conexo 
+                for (int j = 1; j <= n; j++) { // para que el grafo sea fuertemente conexo 
                     Random random = new Random();
                     destino = buscar(j);
-                    if (destino.ID != origen.ID && destino.ID != 0) {
-                        insertarArco(origen, destino, random.nextInt(100) + 1);
+                    if (destino.ID != origen.ID && destino.ID != 1) {
+                        if (origen.ID == 1 || destino.ID == n) {
+                            insertarArco(origen, destino, random.nextInt(99) + 1);
+                        } else {
+                            insertarArcoDoble(origen, destino, random.nextInt(99) + 1);
+                        }
                     }
                 }
             }
@@ -163,31 +211,91 @@ public class MetodosGrafo {
             aux = aux.sigV;
         }
     }
-    public void profundidad(vertice grafo) {
-        if ((grafo != null) && (grafo.marca == false)) {//2 * n = 2n
-            grafo.marca = true;//n
-            arco aux = grafo.sigA;//n
-            lineas += 3;
-            comparaciones += 2;
-            asignaciones += 2;
-            while (aux != null) {//n*n = n a la 2
-                System.out.println("Origen: " + grafo.ID);
-                 System.out.println("Peso: " + aux.peso);
-                 System.out.println("Destino: " + aux.destino.ID);
-                 System.out.println("-----------");
-                profundidad(aux.destino);//n*n = n a la 2
-                aux = aux.sigA;//n*n = n a la 2
-                lineas += 3;
-                comparaciones++;
-                asignaciones += 2;
-            }
-            lineas++;
-            comparaciones++;
+
+    public void amplitud(vertice grafo) {
+        if (grafo == null) {//1
+            System.out.println("No hay grafo");
         } else {
-            lineas++;
-            comparaciones++;
+            vertice temp = grafo;//1
+            while (temp != null) {//n
+                System.out.println("Vertice: " + temp.ID);
+                arco aux = temp.sigA;//n == n
+                while (aux != null) {//n*n = n a la 2
+                    System.out.println("Destino: " + aux.destino.ID);
+                    System.out.println(aux.peso);
+                    aux = aux.sigA;//n*n = n ala 2
+                }
+                System.out.println("-----------");
+                temp = temp.sigV; //n
+            }
+
+        }
+    }
+
+    public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
+        if ((origen == null) || (origen.marca == true)) {
             return;
         }
-        //Total medicion analitica 3n a la 2 + 4n 
+        if (origen == destino) {
+            System.out.println(ruta + " distancia: " + distancia);
+        }
+        int min = 100;
+        arco auxMenor = null;
+        arco aux = origen.sigA;
+        while (aux != null) {
+            if (aux.peso < min && aux.destino.marca == false) {
+                min = aux.peso;
+                auxMenor = aux;
+            }
+            aux = aux.sigA;
+        }
+        origen.marca = true;
+        if (auxMenor != null) {
+            System.out.println(auxMenor.destino.ID + "/");
+            rutaCortaVoraz(auxMenor.destino, destino, ruta + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
+        } else {
+            rutaCortaVoraz(destino, destino, ruta, distancia);
+        }
+        return;
+    }
+
+    public Integer tamannoGrafo() {
+        vertice aux = grafo;
+        int cant = 0;
+        while (aux != null) {
+            cant++;
+            aux = aux.sigV;
+        }
+        return cant;
+    }
+
+    public void rutaCortaGenetica(vertice vertice) {
+
+    }
+
+    public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
+        if ((vertex == null) || (vertex.marca)) {
+            return;
+        }
+        if (vertex.ID == ultimo.ID) {
+            mld.insertarRuta(ruta, pesoRuta, true);
+        } else {
+            mld.insertarRuta(ruta, pesoRuta, false);
+        }
+        vertex.marca = true;
+        arco auxA = vertex.sigA;
+        while (auxA != null) {
+            rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);
+            auxA = auxA.sigA;
+        }
+        vertex.marca = false;
+    }
+
+    public void rutaCortaDinamica(vertice vertice) {
+
+    }
+
+    public void rutaCortaRamificacionYPoda(vertice vertice) {
+
     }
 }
