@@ -7,6 +7,7 @@ package Methods;
 
 import Classes.arco;
 import Classes.vertice;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -33,12 +34,13 @@ public class MetodosGrafo {
     }
 
     public vertice grafo, ultimo;
+    MetodosListaDoble mld = MetodosListaDoble.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
-     * método que inserta un vértice al final para el grafo
+//     * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
      * @return true o false
@@ -255,13 +257,37 @@ public class MetodosGrafo {
         origen.marca = false;
 
     }
+    
+    public Integer tamannoGrafo(){
+        vertice aux = grafo;
+        int cant = 0;
+        while (aux != null) {            
+            cant ++;
+            aux = aux.sigV;
+        }
+        return  cant;              
+    }
 
     public void rutaCortaGenetica(vertice vertice) {
 
     }
 
-    public void rutaCortaBacktracking(vertice vertice) {
-
+    public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
+        if ((vertex == null) || (vertex.marca)) {
+            return;
+        }
+        if (vertex.ID == ultimo.ID) {
+            mld.insertarRuta(ruta, pesoRuta, true);
+        } else {
+            mld.insertarRuta(ruta, pesoRuta, false);
+        }
+        vertex.marca = true;
+        arco auxA = vertex.sigA;
+        while (auxA != null) {
+            rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);
+            auxA = auxA.sigA;
+        }
+        vertex.marca = false;
     }
 
     public void rutaCortaDinamica(vertice vertice) {

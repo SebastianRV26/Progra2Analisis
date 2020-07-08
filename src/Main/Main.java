@@ -7,6 +7,8 @@ package Main;
 
 import Classes.vertice;
 import Methods.MetodosGrafo;
+import Methods.MetodosListaDoble;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -81,7 +83,7 @@ public class Main {
                 case "4":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaBacktracking(grafos[i]);
+                        // metGrafo.rutaCortaBacktracking(grafos[i]);
                     }
                     break;
                 case "5":
@@ -104,6 +106,14 @@ public class Main {
         }
 
     }
+    
+    static void prueba() {
+        String string = "1/4/2/3/5/";
+        String[] parts = string.split("/");
+        for (String part : parts) {
+            System.out.println(part);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -111,9 +121,10 @@ public class Main {
     public static void main(String[] args) {
 
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+           MetodosListaDoble mld = MetodosListaDoble.getInstance();
 
-        metGrafo.llenarGrafo(5);
-        System.out.println( metGrafo.ultimo.ID);
+      metGrafo.llenarGrafo(5);
+        System.out.println(metGrafo.ultimo.ID);
         metGrafo.amplitud(metGrafo.grafo);
 
         System.out.println("\nRuta corta");
@@ -123,8 +134,14 @@ public class Main {
             System.out.println("Ruta: " + metGrafo.rc);
             System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
         }
+        
+        
+        ArrayList<vertice> visitadosK = new ArrayList<>();
+        String rutaCorta = "" + metGrafo.grafo.ID;
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
         //menuAlgoritmos();
-
+        
+        mld.verPeso();
     }
 
 }
