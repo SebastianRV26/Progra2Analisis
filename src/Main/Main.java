@@ -126,17 +126,11 @@ public class Main {
         metGrafo.llenarGrafo(5);
         metGrafo.amplitud(metGrafo.grafo);
 
-        System.out.println("\nRuta corta");
-        metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
-        System.out.println(metGrafo.existe);
-        if (metGrafo.existe) {
-            System.out.println("Ruta: " + metGrafo.rc);
-            System.out.println("Con una distancia mínima de: " + metGrafo.minRC + "km");
-        }
-        
+        vertice aux = metGrafo.grafo;
+       metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "", 0);
         
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-        mld.verRutaCorta();
+      //  mld.verRutaCorta();
     }
 
 }

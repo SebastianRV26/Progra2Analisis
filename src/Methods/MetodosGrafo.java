@@ -275,9 +275,13 @@ public class MetodosGrafo {
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
+                           System.out.println("LLega");
             return;
+
         }
+           
         if (vertex.ID == ultimo.ID) {
+      
             mld.insertarRuta(ruta  + vertex.ID + "/", pesoRuta, true);
         } else {
             mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);

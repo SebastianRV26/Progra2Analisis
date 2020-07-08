@@ -32,6 +32,7 @@ public class MetodosListaDoble {
           ArrayList<vertice> rutaVertices  = convertirRuta(ruta);
           ListaDoble nuevo = new ListaDoble(rutaVertices, pesoRuta,tieneFin);
           if(inicio == null){
+              System.out.println("LLlll");
               inicio = ultimo = nuevo;
               return true;
           }
@@ -57,6 +58,7 @@ public class MetodosListaDoble {
     }
 
     public void verRutaCorta() {
+        System.out.println(inicio.pesoRuta);
         System.out.println("Ruta corta Backtraking");
         ArrayList<vertice> rutaVertices = inicio.verticesRuta;
         for (int i = 0; i < rutaVertices.size() - 1; i++) {
