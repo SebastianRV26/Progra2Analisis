@@ -10,15 +10,21 @@ import Classes.ListaDoble;
 import Classes.vertice;
 import static Methods.MetodosGrafo.instance;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- *
+ ** Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
  * @author edubi
  */
 public class MetodosListaDoble {
 
+    
     public static MetodosListaDoble instance = null;
 
+     /**
+      *  Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+      * @return 
+      */
     public static MetodosListaDoble getInstance() {
         if (instance == null) {
             instance = new MetodosListaDoble();
@@ -26,14 +32,20 @@ public class MetodosListaDoble {
         return instance;
     }
 
-    ListaDoble inicio, ultimo;
+   public  ListaDoble inicio, ultimo;
     
+    /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+     * @param ruta
+     * @param pesoRuta
+     * @param tieneFin
+     * @return 
+     */
     public boolean insertarRuta(String ruta, int pesoRuta, boolean tieneFin){
           ArrayList<vertice> rutaVertices  = convertirRuta(ruta);
-          ListaDoble nuevo = new ListaDoble(rutaVertices, pesoRuta,tieneFin);
+          ListaDoble nuevo = new ListaDoble(rutaVertices, pesoRuta,tieneFin, 0);
           if(inicio == null){
-              System.out.println("LLlll");
-              inicio = ultimo = nuevo;
+               inicio = ultimo = nuevo;
               return true;
           }
           
@@ -57,10 +69,12 @@ public class MetodosListaDoble {
         return false;
     }
 
-    public void verRutaCorta() {
-        System.out.println(inicio.pesoRuta);
-        System.out.println("Ruta corta Backtraking");
-        ArrayList<vertice> rutaVertices = inicio.verticesRuta;
+    /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+     * @param temp
+     */
+    public void imprimirRuta(ListaDoble temp) {
+        ArrayList<vertice> rutaVertices = temp.verticesRuta;
         for (int i = 0; i < rutaVertices.size() - 1; i++) {
             vertice origen = rutaVertices.get(i);
             vertice destino = rutaVertices.get(i + 1);
@@ -74,11 +88,16 @@ public class MetodosListaDoble {
                 aux = aux.sigA;
             }
         }
-        System.out.println("Peso ruta corta: " + inicio.pesoRuta);
+       System.out.println("Peso ruta : " + temp.pesoRuta);
+       System.out.println("========================");
     }
     
-
-    public ArrayList<vertice> convertirRuta(String ruta) {
+/**
+ * Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+ * @param ruta
+ * @return 
+ */
+    private ArrayList<vertice> convertirRuta(String ruta) {
         MetodosGrafo mg = MetodosGrafo.getInstance();
         ArrayList<vertice> rutaVertices = new ArrayList<>();
         String[] verticesID = ruta.split("/");
@@ -90,13 +109,65 @@ public class MetodosListaDoble {
         }
         return rutaVertices;
     }
-
-    //Este metodo es solo para ver si sirve el inserta, en algun punto hay que borrarlo
-        public void verPeso(){
+    
+    /**
+     * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+     */
+    public void rutasValidas(){
         ListaDoble aux = inicio;
-        while (aux != null) {            
-            System.out.println(aux.pesoRuta + " " + aux.llegaDestino);
+        int cantValidas = 0;
+         while (aux != null) {
+             if(aux.llegaDestino){
+                 cantValidas ++;
+             }
             aux = aux.sigN;
         }
+         System.out.println("La cantidad de rutas validas del Backtraking es de: "+ cantValidas);
+    }
+
+    public void asignarPosicion(){
+        ListaDoble aux = inicio;
+        int posicion = 0;
+        while (aux != null) {
+            aux.posicion = posicion;
+            posicion ++;
+            aux = aux.sigN;
+        }
+    }
+
+    private int totalRutas() {
+        ListaDoble aux = inicio;
+        if (aux != null) {
+            int cant = 0;
+            while (aux != null) {
+                cant++;
+                aux = aux.sigN;
+            }
+           return cant;
+        }
+        return 0;
+    }
+
+    
+    public void rutasRandom(){
+        Random random = new Random();
+        ListaDoble aux;
+        for (int i = 0; i < 5; i++) {
+            aux = buscarRuta( random.nextInt(totalRutas()-1) + 1);
+            imprimirRuta(aux);
+        }
+    }
+
+    private ListaDoble buscarRuta(int posicion) {
+        ListaDoble aux = inicio;
+        if (aux != null) {
+            while (aux != null) {
+                if (aux.posicion == posicion) {
+                    return aux;
+                }
+                aux = aux.sigN;
+            }
+        }
+        return null;
     }
 }

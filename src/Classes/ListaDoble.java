@@ -17,11 +17,14 @@ public class ListaDoble {
     public int pesoRuta;
     public boolean llegaDestino;
     public ArrayList<vertice> verticesRuta;
+    public int posicion;
 
-    public ListaDoble(ArrayList<vertice> verticesRuta, int pesoRuta, boolean llegaDestino) {
+    public ListaDoble(ArrayList<vertice> verticesRuta, int pesoRuta, boolean llegaDestino, int posicion) {
         this.llegaDestino = llegaDestino;
         this.pesoRuta = pesoRuta;
         this.verticesRuta = verticesRuta;
+        this.posicion = posicion;
+        
     }
 
 }

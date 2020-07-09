@@ -35,6 +35,7 @@ public class MetodosGrafo {
 
     public vertice grafo, ultimo;
     MetodosListaDoble mld = MetodosListaDoble.getInstance();
+    MetodosCola mc = MetodosCola.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
@@ -55,8 +56,6 @@ public class MetodosGrafo {
         vertice aux = grafo;
         while (aux != null) {
             if (aux.sigV == null) {
-                System.out.println(aux.ID);
-                System.out.println(ID);
                 aux.sigV = nuevo;
                 ultimo = aux.sigV;
                 return true;
@@ -272,16 +271,20 @@ public class MetodosGrafo {
     public void rutaCortaGenetica(vertice vertice) {
 
     }
+    
+    /**
+     *  * Fecha inicio: 30/06/2020 Ultima modificación: 08/07/2020
+     * @param vertex
+     * @param ruta
+     * @param pesoRuta 
+     */
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
-                           System.out.println("LLega");
             return;
-
         }
            
-        if (vertex.ID == ultimo.ID) {
-      
+        if (vertex.ID == ultimo.ID) {  
             mld.insertarRuta(ruta  + vertex.ID + "/", pesoRuta, true);
         } else {
             mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);
@@ -299,7 +302,22 @@ public class MetodosGrafo {
 
     }
 
-    public void rutaCortaRamificacionYPoda(vertice vertice) {
+    public void rutaCortaRamificacionYPoda() {
+          if (grafo == null) {//1
+            System.out.println("No hay grafo");
+        } else {
+            vertice temp = grafo;//1
+            while (temp != null) {//n
+                arco aux = temp.sigA;//n == n
+                while (aux != null) {//n*n = n a la 2
+                    System.out.println(aux.destino.ID);
+                    mc.Insertar(aux.destino);
+                    aux = aux.sigA;//n*n = n ala 2
+                }
+                temp = temp.sigV; //n
+            }
+
+        }
 
     }
 }
