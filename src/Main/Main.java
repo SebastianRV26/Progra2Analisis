@@ -8,7 +8,6 @@ package Main;
 import Classes.vertice;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -71,7 +70,7 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "", 0);
+                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], grafos[i].ID+"/", 0);
                     }
                     break;
                 case "3":
@@ -127,8 +126,9 @@ public class Main {
         metGrafo.amplitud(metGrafo.grafo);
 
         vertice aux = metGrafo.grafo;
-        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "", 0);
-
+        //metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, aux.ID+"/", 0);
+        metGrafo.rutaCortaDinamica(aux);
+       
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //  mld.verRutaCorta();
     }

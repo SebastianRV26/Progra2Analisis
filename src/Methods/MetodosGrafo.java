@@ -7,7 +7,6 @@ package Methods;
 
 import Classes.arco;
 import Classes.vertice;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -274,14 +273,11 @@ public class MetodosGrafo {
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
-                           System.out.println("LLega");
+            System.out.println("LLega");
             return;
-
         }
-           
         if (vertex.ID == ultimo.ID) {
-      
-            mld.insertarRuta(ruta  + vertex.ID + "/", pesoRuta, true);
+            mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, true);
         } else {
             mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);
         }
@@ -294,8 +290,34 @@ public class MetodosGrafo {
         vertex.marca = false;
     }
 
-    public void rutaCortaDinamica(vertice vertice) {
-
+    public void rutaCortaDinamica(vertice origen) { // Dijkstra
+        int distancia = 0;
+        String ruta = origen.ID + "/";
+        vertice aux = origen;
+        while (aux != null) {
+            arco auxA = origen.sigA;
+            arco auxMin = null;
+            int min = 1000;
+            while (auxA != null) {
+                if (auxA.destino.distanciaMinima > distancia + auxA.peso) {
+                    auxA.destino.distanciaMinima = distancia + auxA.peso;
+                }
+                if (min > auxA.destino.distanciaMinima && !auxA.destino.marca) {
+                    min = auxA.destino.distanciaMinima;
+                    auxMin = auxA;
+                }
+                auxA = auxA.sigA;
+            }
+            if (auxMin != null) {
+                ruta += auxMin.destino.ID + "/";
+                distancia += auxMin.peso;
+                auxMin.destino.marca = true;
+                aux = auxMin.destino;
+            } else {
+                aux = null;
+            }
+        }
+        System.out.println(ruta + " distancia: " + distancia);
     }
 
     public void rutaCortaRamificacionYPoda(vertice vertice) {
