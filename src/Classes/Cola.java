@@ -10,11 +10,16 @@ package Classes;
  * @author edubi
  */
 public class Cola {
-    public Cola sig;
+    public Cola sig;  
+    public Cola ant;
     public vertice value;
+    public int pesoArcoLlegada;
 
-    public Cola(vertice value) {
+    public Cola(vertice value, int pesoArcoLlegada) {
         this.value = value;
+        this.pesoArcoLlegada = pesoArcoLlegada;
     }
+
+    
     
 }

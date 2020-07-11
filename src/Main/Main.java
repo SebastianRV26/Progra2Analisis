@@ -5,12 +5,14 @@
  */
 package Main;
 
+import Classes.ListaDoble;
 import Classes.vertice;
 import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.transform.Source;
 
 /**
  *
@@ -96,7 +98,7 @@ public class Main {
                 case "6":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaRamificacionYPoda();
+                      //  metGrafo.rutaCortaRamificacionYPoda();
                     }
                     break;
                 case "7":
@@ -121,31 +123,26 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+        MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
 
         metGrafo.llenarGrafo(5);
-       metGrafo.amplitud(metGrafo.grafo);
+     
 
-       //metGrafo.rutaCortaRamificacionYPoda();
+     metGrafo.amplitud(metGrafo.grafo);
+
+
        
-       //mc.imprimirCola();
+
        
 
             //   vertice aux = metGrafo.grafo;
-   //   metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
+   //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
         
        metGrafo.quitarMarca(metGrafo.grafo);
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-        mld.asignarPosicion();
-        mld.rutasValidas();
-        System.out.println("La ruta corta es el siguiente");
-        mld.imprimirRuta(mld.inicio);
-        System.out.println("Rutas random");
-        mld.rutasRandom();
-      //mld.verPeso();
-       
+     //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+ 
 
     }
 

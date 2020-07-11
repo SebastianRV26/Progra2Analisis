@@ -5,6 +5,7 @@
  */
 package Methods;
 
+import Classes.Cola;
 import Classes.arco;
 import Classes.vertice;
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ public class MetodosGrafo {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-            System.out.println(ID);
             return true;
         }
         vertice aux = grafo;
@@ -77,6 +77,7 @@ public class MetodosGrafo {
         vertice aux = grafo;
         while (aux != null) {
             if (aux.ID == id) {
+       
                 return aux;
             }
             aux = aux.sigV;
@@ -258,22 +259,13 @@ public class MetodosGrafo {
         return;
     }
 
-    public Integer tamannoGrafo() {
-        vertice aux = grafo;
-        int cant = 0;
-        while (aux != null) {
-            cant++;
-            aux = aux.sigV;
-        }
-        return cant;
-    }
 
     public void rutaCortaGenetica(vertice vertice) {
 
     }
     
     /**
-     *  * Fecha inicio: 30/06/2020 Ultima modificación: 08/07/2020
+     *   Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
      * @param vertex
      * @param ruta
      * @param pesoRuta 
@@ -285,9 +277,11 @@ public class MetodosGrafo {
         }
            
         if (vertex.ID == ultimo.ID) {  
-            mld.insertarRuta(ruta  + vertex.ID + "/", pesoRuta, true);
+            ArrayList<vertice> rutaV = convertirRuta(ruta + vertex.ID + "/");
+            mld.insertarRuta(rutaV, pesoRuta, true);
         } else {
-            mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);
+            ArrayList<vertice> rutaV = convertirRuta(ruta + vertex.ID + "/");
+            mld.insertarRuta(rutaV, pesoRuta, false);
         }
         vertex.marca = true;
         arco auxA = vertex.sigA;
@@ -297,27 +291,162 @@ public class MetodosGrafo {
         }
         vertex.marca = false;
     }
+        /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 10/07/2020
+     *
+     * @param ruta
+     * @return
+     */
+     private ArrayList<vertice> convertirRuta(String ruta) {
+        ArrayList<vertice> rutaVertices = new ArrayList<>();
+        String[] verticesID = ruta.split("/");
+        for (String idV : verticesID) {
+              if (!idV.equals("")) {
+                int id = Integer.parseInt(idV);
+                rutaVertices.add(buscar(id));
+            }        
+        }
+        return rutaVertices;
+    }
 
     public void rutaCortaDinamica(vertice vertice) {
 
     }
+   
 
+    
+    /*
+    ArrayList<vertice> lista = new ArrayList<>();
+
+    vertice auxV;
+    int minRuta = 0;
+    int pesoRuta = 0;
+    int menor = 0;
+   public String rutaActual = "";
     public void rutaCortaRamificacionYPoda() {
-          if (grafo == null) {//1
+        if (grafo == null) {
             System.out.println("No hay grafo");
         } else {
-            vertice temp = grafo;//1
-            while (temp != null) {//n
-                arco aux = temp.sigA;//n == n
-                while (aux != null) {//n*n = n a la 2
-                    System.out.println(aux.destino.ID);
-                    mc.Insertar(aux.destino);
-                    aux = aux.sigA;//n*n = n ala 2
-                }
-                temp = temp.sigV; //n
-            }
+            vertice temp = grafo;
+            lista.add(temp);
+            while (temp != null) {
 
+                /*
+                
+                
+                 arco aux = auxV.sigA;
+                while (aux != null) {
+                    mc.Insertar(aux.destino, aux.peso);
+                    aux = aux.sigA;
+                }
+                while (!mc.colaVacia()) {
+                    Cola auxCola = mc.Extraer();
+                    auxV = auxCola.value;
+                    pesoRuta = auxCola.pesoArcoLlegada;
+                    if (pesoRuta < minRuta || rutaActual.equals("")) {
+                        if (auxV.equals(ultimo)) {
+                            menor = minRuta;
+                            minRuta += pesoRuta;
+                            rutaActual = rutaActual + auxV.ID + "/";
+                            lista.add(auxCola.value);
+                            System.out.println("Tiene solucion");
+                        }else {
+                            //llamada recursiva
+                        pesoRuta -= auxCola.pesoArcoLlegada;
+                        auxV = auxCola.sig.value;
+                        System.out.println("Ruta podada");
+                    }
+                    } 
+                }
+               
+                temp = auxV; //n
+            }
+        }
+    }
+
+    public void imprimirLista() {
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i).ID);
+        }     
+    }
+    public boolean sinCiclos(vertice aux){
+         for (int i = 0; i < lista.size(); i++) {
+             if (aux.ID == lista.get(i).ID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+    
+    
+    
+    public int rutaMinima = 0;
+
+    public void Poda(String ruta, int dist) {
+        while (!mc.colaVacia()) {
+            Cola auxCola = mc.Extraer();
+            if ((rutaActual.equals("") || rutaMinima > dist)) {
+                System.out.println("rutahvshv " + rutaActual);
+                if (auxCola.value.equals(ultimo)) {
+                    rutaMinima = dist;
+                    rutaActual = ruta + "/" + auxCola.value.ID;
+                    System.out.println(rutaActual);
+                    System.out.println("Tiene solucion");
+                }
+            } else {
+                 rutaActual = ruta + "/" + auxCola.value.ID;
+                 System.out.println(rutaActual);
+                System.out.println("Ruta podada");
+            }
+        }
+    }
+
+    public void Ramificacion(vertice origen, String ruta, int dist) {
+        if (origen == null || origen.marca) {
+            return;
+        }
+        Poda(ruta, dist);  
+        origen.marca = true;
+        arco auxA = origen.sigA;
+        while (auxA != null) {
+            mc.Insertar(auxA.destino, auxA.peso);
+            Ramificacion(auxA.destino, ruta + "/" + origen.ID, dist + auxA.peso);
+            auxA = auxA.sigA;
+        }
+        origen.marca = false;
+    }
+    
+    
+    
+    int minX2 = 0;
+    String rutaX2 = "";
+
+    public void prueba(vertice temp, int dist, String ruta) {
+        arco aux = temp.sigA;
+        while (aux != null) {
+            mc.Insertar(aux.destino, aux.peso);
+            aux = aux.sigA;
         }
 
+        mc.imprimirCola();
+        while (!mc.colaVacia()) {
+            Cola auxCola = mc.Extraer();
+
+            vertice auxiliar = auxCola.value;
+            System.out.println(auxiliar.ID);
+            if (minX2 > dist || rutaActual.equals("")) {
+                if (auxiliar.equals(ultimo)) {
+                    System.out.println("Tiene solucion");
+                } else {
+                    auxiliar.marca = true;
+                    prueba(auxiliar, dist + auxCola.pesoArcoLlegada, ruta + auxV.ID + "/");
+                }
+            }
+        }
     }
+    */
+    
+
 }
