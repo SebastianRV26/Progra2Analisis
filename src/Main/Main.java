@@ -5,11 +5,14 @@
  */
 package Main;
 
+import Classes.ListaDoble;
 import Classes.vertice;
+import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.transform.Source;
 
 /**
  *
@@ -95,7 +98,7 @@ public class Main {
                 case "6":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaRamificacionYPoda(grafos[i]);
+                      //  metGrafo.rutaCortaRamificacionYPoda();
                     }
                     break;
                 case "7":
@@ -120,23 +123,27 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+        MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
+        MetodosCola mc = MetodosCola.getInstance();
 
         metGrafo.llenarGrafo(5);
-        metGrafo.amplitud(metGrafo.grafo);
+     
 
-        System.out.println("\nRuta corta");
-        metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, metGrafo.grafo.ID+"/",0);
+     metGrafo.amplitud(metGrafo.grafo);
 
-        System.out.println("");
 
-        ArrayList<vertice> visitadosK = new ArrayList<>();
-        String rutaCorta = "" + metGrafo.grafo.ID;
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
-        //menuAlgoritmos();
+       
 
-        mld.verPeso();
+       
+
+            //   vertice aux = metGrafo.grafo;
+   //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
+        
+       metGrafo.quitarMarca(metGrafo.grafo);
+     //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+ 
+
     }
 
 }
