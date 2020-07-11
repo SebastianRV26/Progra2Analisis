@@ -6,6 +6,7 @@
 package Methods;
 
 import Classes.Cola;
+import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
 import java.util.ArrayList;
@@ -260,7 +261,7 @@ public class MetodosGrafo {
     }
 
 
-    public void rutaCortaGenetica(vertice vertice) {
+    public void rutaCortaGenetica(ListaDoble temp) {
 
     }
     

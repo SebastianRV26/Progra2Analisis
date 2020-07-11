@@ -80,7 +80,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaGenetica(grafos[i]);
+                        //metGrafo.rutaCortaGenetica(grafos[i]);
                     }
                     break;
                 case "4":
@@ -141,8 +141,10 @@ public class Main {
    //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
         
        metGrafo.quitarMarca(metGrafo.grafo);
-     //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+     metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+     mld.imprimirRuta(mld.rutaCorta);
  
+
 
     }
 
