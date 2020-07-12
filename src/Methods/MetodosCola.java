@@ -17,9 +17,7 @@ import java.util.Collections;
 public class MetodosCola {
     
     Cola inicioCola, finalCola;
-    
-    
-    
+
     public static MetodosCola instance = null; // instancia de la clase MetodosCola
 
     /**
@@ -37,60 +35,64 @@ public class MetodosCola {
         return instance;
     }
 
-    
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
-     * @return 
+     *
+     * @return
      */
-      public boolean colaVacia() {
+    public boolean colaVacia() {
         if (inicioCola == null) {//1
             return true;//1
         } else {
             return false;//1
         }
-      }
-    
-      /**
-       * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
-       * @param destino 
-     * @param pesoArco 
-       */
+    }
+
+    /**
+     * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+     *
+     * @param destino
+     * @param pesoArco
+     * @return 
+     */
     public boolean Insertar(vertice destino, int pesoArco) {
-        Cola nuevo = new Cola(destino, pesoArco);//1
-        nuevo.sig = null;//1
-        if (colaVacia()) {//4
-            inicioCola = nuevo;//1
-            finalCola = nuevo;//1
-            return true;
-        }
-        if (nuevo.pesoArcoLlegada < inicioCola.pesoArcoLlegada) {
-            inicioCola.ant = nuevo;
-            nuevo.sig = inicioCola;
-            inicioCola = nuevo;
-            return true;
-        }
-        if (nuevo.pesoArcoLlegada > finalCola.pesoArcoLlegada) {
-            nuevo.ant = finalCola;
-            finalCola.sig = nuevo;//1
-            finalCola = nuevo;//1
-            return true;
-        }
-        Cola auxC = inicioCola;
-        while (auxC != null) {
-            if (nuevo.pesoArcoLlegada < auxC.pesoArcoLlegada) {
-                nuevo.ant = auxC.ant;
-                auxC.ant.sig = nuevo;
-                auxC.ant = nuevo;
-                nuevo.sig = auxC;
+        if (destino != null) {
+            Cola nuevo = new Cola(destino, pesoArco);//1
+            nuevo.sig = null;//1
+            if (colaVacia()) {//4
+                inicioCola = nuevo;//1
+                finalCola = nuevo;//1
                 return true;
             }
-            auxC = auxC.sig;
+            if (nuevo.pesoArcoLlegada < inicioCola.pesoArcoLlegada) {
+                inicioCola.ant = nuevo;
+                nuevo.sig = inicioCola;
+                inicioCola = nuevo;
+                return true;
+            }
+            if (nuevo.pesoArcoLlegada > finalCola.pesoArcoLlegada) {
+                nuevo.ant = finalCola;
+                finalCola.sig = nuevo;//1
+                finalCola = nuevo;//1
+                return true;
+            }
+            Cola auxC = inicioCola;
+            while (auxC != null) {
+                if (nuevo.pesoArcoLlegada < auxC.pesoArcoLlegada) {
+                    nuevo.ant = auxC.ant;
+                    auxC.ant.sig = nuevo;
+                    auxC.ant = nuevo;
+                    nuevo.sig = auxC;
+                    return true;
+                }
+                auxC = auxC.sig;
+            }
         }
-
         return false;
     }
-     /**
-      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+
+    /**
+     * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
       * @return 
       */   
          public Cola Extraer() {
@@ -122,4 +124,16 @@ public class MetodosCola {
         }
     }
       //Total medicion analitica 5n + 3
+         
+         
+    public Cola buscar(int id){
+        Cola aux = inicioCola;
+        while (aux != null) {    
+            if(aux.value.ID == id){
+                return aux;
+            }
+            aux = aux.sig;
+        }
+        return null; 
+    }
 }
