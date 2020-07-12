@@ -272,16 +272,17 @@ public class MetodosGrafo {
      * @param pesoRuta 
      */
 
+      ArrayList<vertice> rutaV ;
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
             return;
         }
            
         if (vertex.ID == ultimo.ID) {  
-            ArrayList<vertice> rutaV = convertirRuta(ruta + vertex.ID + "/");
+             rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, true);
         } else {
-            ArrayList<vertice> rutaV = convertirRuta(ruta + vertex.ID + "/");
+             rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, false);
         }
         vertex.marca = true;
@@ -318,15 +319,16 @@ public class MetodosGrafo {
     
     
     public int rutaMinima = 0;
-    public String rutaActual = "";
+    public String rutaActual = "";  
+    ArrayList<vertice> listaRuta;
+    
 /**
- * Fecha inicio: 09/07/2020 Ultima modificación: 11/07/2020
+ * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
  * @param origen
  * @param ruta
  * @param dist 
  */
     public void RamificacionyPoda(String ruta, int dist) {
-
         while (!mc.colaVacia()) {
             Cola auxCola = mc.Extraer();
             vertice origen = auxCola.value;
@@ -337,28 +339,24 @@ public class MetodosGrafo {
                 if (origen.equals(ultimo)) {
                     rutaMinima = dist;
                     rutaActual = ruta + origen.ID + "/";
-                    System.out.println(rutaMinima);
                     System.out.println(rutaActual);
                     System.out.println("Tiene solucion");
-                    ArrayList<vertice> rutaV = convertirRuta(rutaActual);
-                    mp.insertarPoda(rutaV, rutaMinima, true);
+                    listaRuta = convertirRuta(rutaActual);
+                    mp.insertarPoda(listaRuta, rutaMinima, true);
                 } else {
                     origen.marca = true;
                     arco auxA = origen.sigA;
                     while (auxA != null) {
                         mc.Insertar(auxA.destino, auxA.peso);
-             
-
                         RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);
-                         System.out.println("ruta que llega al llamado " + ruta);
                         auxA = auxA.sigA;
                     }
                     origen.marca = false;
                 }
             } else {
-                System.out.println(ruta);
-                ArrayList<vertice> rutaV = convertirRuta(ruta);
-                mp.insertarPoda(rutaV, dist, true);
+                listaRuta = convertirRuta(ruta+ origen.ID + "/");
+                System.out.println(ruta + origen.ID + "/");
+                mp.insertarPoda(listaRuta, dist, false);
                 System.out.println("Ruta podada");
             }
         }
