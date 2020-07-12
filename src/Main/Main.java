@@ -10,6 +10,7 @@ import Classes.vertice;
 import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
+import Methods.MetodosPoda;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.xml.transform.Source;
@@ -126,6 +127,7 @@ public class Main {
         MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
+        MetodosPoda mp = MetodosPoda.getInstance();
 
         metGrafo.llenarGrafo(5);
      
@@ -133,14 +135,15 @@ public class Main {
      metGrafo.amplitud(metGrafo.grafo);
 
 
-       
-
+      mc.Insertar(metGrafo.grafo, 0);
+     metGrafo.RamificacionyPoda("",0);
+     mp.imprimirRuta(mp.rutaCorta);
        
 
             //   vertice aux = metGrafo.grafo;
    //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
         
-       metGrafo.quitarMarca(metGrafo.grafo);
+      // metGrafo.quitarMarca(metGrafo.grafo);
      //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
  
 
