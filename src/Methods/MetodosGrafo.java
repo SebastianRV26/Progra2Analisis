@@ -6,6 +6,7 @@
 package Methods;
 
 import Classes.Cola;
+import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
 import java.util.ArrayList;
@@ -259,10 +260,75 @@ public class MetodosGrafo {
         return;
     }
 
-
-    public void rutaCortaGenetica(vertice vertice) {
-
+    public void generarPoblacion(){
+        
+        ArrayList<ArrayList<vertice>> prueba = new ArrayList<>();
+        ListaDoble aux = mld.inicio;
+        
+        while (aux != null) {
+           if(aux.llegaDestino){
+               prueba.add(aux.verticesRuta);
+           }
+            aux = aux.sigN;
+        }
+        
+        System.out.println(prueba);
+        ListaDoble temp = aux;
+        String ruta  = " "; 
+        
+        //esto imprime las rutas
+        for (ArrayList<vertice> arrayList : prueba) {//  este prueba tiene todas las rutas 
+            for (vertice object : arrayList) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + object.ID + "/";
+                
+            }
+            System.out.println(ruta);
+            ruta = "";
+        }
+        
     }
+    public void ag_escogerPadres(ArrayList<vertice> poblacion){
+        for (int i = 0; i < poblacion.size(); i++) {
+            poblacion.get(i);
+            poblacion.get(i+1);
+            
+        }
+        
+        
+    }
+    
+    public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre){
+        
+    }
+    
+    public void ag_evaluarFitness(){
+        
+    }
+    
+
+    public void rutaCortaGenetica( ) {
+        generarPoblacion();
+    
+        ArrayList<ArrayList<vertice>> prueba = new ArrayList<>();
+        for (int i = 0; i < prueba.size(); i++) {
+            prueba.get(i);
+            prueba.get(i+1);
+            prueba.remove(i+ 1);
+        }
+        
+       
+      
+    }
+
+      //  for (ArrayList<vertice> arrayList : prueba) {
+        //    for (ArrayList<vertice> array1 : prueba) {
+            
+          //  System.out.println(array1);
+            
+        //}
+            
+            
+
     
     /**
      *   Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
