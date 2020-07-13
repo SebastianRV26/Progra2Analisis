@@ -10,6 +10,7 @@ import Classes.vertice;
 import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
+import Methods.MetodosPoda;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.xml.transform.Source;
@@ -126,16 +127,31 @@ public class Main {
         MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
+        MetodosPoda mp = MetodosPoda.getInstance();
 
         metGrafo.llenarGrafo(5);
         metGrafo.amplitud(metGrafo.grafo);
 
+        metGrafo.llenarGrafo(10);
+     
+
+     metGrafo.amplitud(metGrafo.grafo);
+
+
+      mc.Insertar(metGrafo.grafo, 0);
+   //  metGrafo.RamificacionyPoda("",0);
+     //   System.out.println("Ruta corta por RyP");
+     //mp.imprimirRuta(mp.rutaCorta);
+       // System.out.println("Rutas podadas");
+     //mp.imprimirRutaPodada();
+       
 
             //   vertice aux = metGrafo.grafo;
    //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
         
         metGrafo.quitarMarca(metGrafo.grafo);
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+        mld.imprimirRuta(mld.rutaCorta);
         
         metGrafo.rutaCortaGenetica();
 
