@@ -236,7 +236,7 @@ public class MetodosGrafo {
             return;
         }
         if (origen == destino) {
-            System.out.println(ruta + " distancia: " + distancia);
+            System.out.println("Voraz: " + ruta + " distancia: " + distancia);
         }
         int min = 100;
         arco auxMenor = null;
@@ -290,7 +290,7 @@ public class MetodosGrafo {
         vertex.marca = false;
     }
 
-    public void rutaCortaDinamica(vertice origen) { // Dijkstra
+    public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
         int distancia = 0;
         String ruta = origen.ID + "/";
         vertice aux = origen;
@@ -313,11 +313,14 @@ public class MetodosGrafo {
                 distancia += auxMin.peso;
                 auxMin.destino.marca = true;
                 aux = auxMin.destino;
+                if (auxMin.destino == destino) {
+                    break;
+                }
             } else {
                 aux = null;
             }
         }
-        System.out.println(ruta + " distancia: " + distancia);
+        System.out.println("PD: " + ruta + " distancia: " + distancia);
     }
 
     public void rutaCortaRamificacionYPoda(vertice vertice) {

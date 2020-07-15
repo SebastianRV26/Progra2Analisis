@@ -88,7 +88,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaDinamica(grafos[i]);
+                        metGrafo.rutaCortaDinamica(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
@@ -126,10 +126,11 @@ public class Main {
         metGrafo.amplitud(metGrafo.grafo);
 
         vertice aux = metGrafo.grafo;
-        //metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, aux.ID+"/", 0);
-        metGrafo.rutaCortaDinamica(aux);
+        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, aux.ID+"/", 0);
+        metGrafo.quitarMarca(aux);
+        metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
        
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //  mld.verRutaCorta();
     }
 
