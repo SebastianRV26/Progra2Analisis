@@ -292,10 +292,65 @@ public class MetodosGrafo {
             ruta = "";
         }
     }
-    public void ag_escogerPadres(ArrayList<vertice> poblacion){
-        for (int i = 0; i < poblacion.size(); i++) {
-            poblacion.get(i);
-            poblacion.get(i+1);
+    public void ImprimirTodasRutas(ArrayList<ArrayList<vertice>> Manipulados){
+        System.out.println("Estan son todas las rutas con las que se va a trabajar");
+        String ruta  = " ";
+        //esto imprime las rutas
+        for (ArrayList<vertice> arrayList : Manipulados) {//  este prueba tiene todas las rutas 
+            for (vertice object : arrayList) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + object.ID + "/";
+            }
+            System.out.println(ruta);
+            ruta = "";
+        }
+        System.out.println("////////////////////////");
+    }
+    public void ImprimirRuta(ArrayList<vertice> Manipulados){
+        System.out.println("Esta es la ruta");
+        String ruta  = " ";
+        //esto imprime la ruta
+            for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + object.ID + "/";
+            }
+            System.out.println(ruta);
+            ruta = "";
+    }
+    
+    /**
+     * 
+     * @param tamGrafo
+     * @return ArrayList<ArrayList<vertice>> que son todas las Arraylist de rutas.
+     */
+    public ArrayList<ArrayList<vertice>> generarPoblacion(int tamGrafo){
+        ArrayList<ArrayList<vertice>> poblacionInicial = new ArrayList<>();
+        ListaDoble aux = mld.inicio;
+        while (aux != null) {
+           if(aux.llegaDestino){
+               if(aux.verticesRuta.size()>(tamGrafo/2)){
+                   poblacionInicial.add(aux.verticesRuta);
+               }          
+           }
+            aux = aux.sigN;
+        }
+        ListaDoble temp = aux;
+        return poblacionInicial;
+    }
+    
+    /**
+     * 
+     * @param poblacion todas las rutas a analizar
+     */
+    public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
+        Random random = new Random();
+        int index2 = random.nextInt(poblacion.size())-1;
+        if(padre1==null & padre2==null){
+            int index = random.nextInt(poblacion.size())-1;
+            padre1 = poblacion.get(index);
+            padre2 = poblacion.get(index2);
+            poblacion.remove(poblacion.get(index2));
+            poblacion.remove(poblacion.get(index));
+        }//end 1er if
+        else if(padre1!=null){
             
             padre2 = poblacion.get(index2);
             poblacion.remove(poblacion.get(index2));
