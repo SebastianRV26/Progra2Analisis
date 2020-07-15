@@ -5,10 +5,15 @@
  */
 package Main;
 
+import Classes.ListaDoble;
 import Classes.vertice;
+import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
+import Methods.MetodosPoda;
+import java.util.ArrayList;
 import java.util.Scanner;
+import javax.xml.transform.Source;
 
 /**
  *
@@ -76,7 +81,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaGenetica(grafos[i]);
+                        //metGrafo.rutaCortaGenetica(grafos[i]);
                     }
                     break;
                 case "4":
@@ -94,7 +99,7 @@ public class Main {
                 case "6":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaRamificacionYPoda(grafos[i]);
+                      //  metGrafo.rutaCortaRamificacionYPoda();
                     }
                     break;
                 case "7":
@@ -119,11 +124,24 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        MetodosGrafo metGrafo = MetodosGrafo.getInstance();
+        MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
+        MetodosCola mc = MetodosCola.getInstance();
+        MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(5);
-        metGrafo.amplitud(metGrafo.grafo);
+        metGrafo.llenarGrafo(10);
+     
+
+     metGrafo.amplitud(metGrafo.grafo);
+
+
+      mc.Insertar(metGrafo.grafo, 0);
+   //  metGrafo.RamificacionyPoda("",0);
+     //   System.out.println("Ruta corta por RyP");
+     //mp.imprimirRuta(mp.rutaCorta);
+       // System.out.println("Rutas podadas");
+     //mp.imprimirRutaPodada();
+       
 
         vertice aux = metGrafo.grafo;
         metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, aux.ID+"/", 0);
@@ -132,6 +150,15 @@ public class Main {
        
         //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //  mld.verRutaCorta();
+            //   vertice aux = metGrafo.grafo;
+   //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
+        
+       metGrafo.quitarMarca(metGrafo.grafo);
+     metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
+
+     mld.imprimirRuta(mld.rutaCorta);
+
+
     }
 
 }

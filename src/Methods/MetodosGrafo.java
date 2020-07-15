@@ -5,6 +5,8 @@
  */
 package Methods;
 
+import Classes.Cola;
+import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
 import java.util.Random;
@@ -34,6 +36,8 @@ public class MetodosGrafo {
 
     public vertice grafo, ultimo;
     MetodosListaDoble mld = MetodosListaDoble.getInstance();
+    MetodosCola mc = MetodosCola.getInstance();
+    MetodosPoda mp = MetodosPoda.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
 
     /**
@@ -48,14 +52,11 @@ public class MetodosGrafo {
         vertice nuevo = new vertice(ID, false);
         if (grafo == null) {
             grafo = nuevo;
-            System.out.println(ID);
             return true;
         }
         vertice aux = grafo;
         while (aux != null) {
             if (aux.sigV == null) {
-                System.out.println(aux.ID);
-                System.out.println(ID);
                 aux.sigV = nuevo;
                 ultimo = aux.sigV;
                 return true;
@@ -77,6 +78,7 @@ public class MetodosGrafo {
         vertice aux = grafo;
         while (aux != null) {
             if (aux.ID == id) {
+       
                 return aux;
             }
             aux = aux.sigV;
@@ -257,29 +259,30 @@ public class MetodosGrafo {
         return;
     }
 
-    public Integer tamannoGrafo() {
-        vertice aux = grafo;
-        int cant = 0;
-        while (aux != null) {
-            cant++;
-            aux = aux.sigV;
-        }
-        return cant;
-    }
 
-    public void rutaCortaGenetica(vertice vertice) {
+    public void rutaCortaGenetica(ListaDoble temp) {
 
     }
+    
+    /**
+     *   Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     * @param vertex
+     * @param ruta
+     * @param pesoRuta 
+     */
 
+      ArrayList<vertice> rutaV ;
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
-            System.out.println("LLega");
             return;
         }
-        if (vertex.ID == ultimo.ID) {
-            mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, true);
+           
+        if (vertex.ID == ultimo.ID) {  
+             rutaV = convertirRuta(ruta + vertex.ID + "/");
+            mld.insertarRuta(rutaV, pesoRuta, true);
         } else {
-            mld.insertarRuta(ruta + vertex.ID + "/", pesoRuta, false);
+             rutaV = convertirRuta(ruta + vertex.ID + "/");
+            mld.insertarRuta(rutaV, pesoRuta, false);
         }
         vertex.marca = true;
         arco auxA = vertex.sigA;
@@ -288,6 +291,23 @@ public class MetodosGrafo {
             auxA = auxA.sigA;
         }
         vertex.marca = false;
+    }
+        /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 10/07/2020
+     *
+     * @param ruta
+     * @return
+     */
+     private ArrayList<vertice> convertirRuta(String ruta) {
+        ArrayList<vertice> rutaVertices = new ArrayList<>();
+        String[] verticesID = ruta.split("/");
+        for (String idV : verticesID) {
+              if (!idV.equals("")) {
+                int id = Integer.parseInt(idV);
+                rutaVertices.add(buscar(id));
+            }        
+        }
+        return rutaVertices;
     }
 
     public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
@@ -322,8 +342,51 @@ public class MetodosGrafo {
         }
         System.out.println("PD: " + ruta + " distancia: " + distancia);
     }
+   
 
-    public void rutaCortaRamificacionYPoda(vertice vertice) {
-
+    
+    
+    public int rutaMinima = 0;
+    public String rutaActual = "";  
+    ArrayList<vertice> listaRuta;
+    
+/**
+ * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
+ * @param origen
+ * @param ruta
+ * @param dist 
+ */
+    public void RamificacionyPoda(String ruta, int dist) {
+        while (!mc.colaVacia()) {
+            Cola auxCola = mc.Extraer();
+            vertice origen = auxCola.value;
+            if (origen.marca) {
+                return;
+            }
+            if ((rutaActual.equals("") || rutaMinima > dist)) {
+                if (origen.equals(ultimo)) {
+                    rutaMinima = dist;
+                    rutaActual = ruta + origen.ID + "/";
+                    System.out.println(rutaActual);
+                    System.out.println("Tiene solucion");
+                    listaRuta = convertirRuta(rutaActual);
+                    mp.insertarPoda(listaRuta, rutaMinima, true);
+                } else {
+                    origen.marca = true;
+                    arco auxA = origen.sigA;
+                    while (auxA != null) {
+                        mc.Insertar(auxA.destino, auxA.peso);
+                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);
+                        auxA = auxA.sigA;
+                    }
+                    origen.marca = false;
+                }
+            } else {
+                listaRuta = convertirRuta(ruta+ origen.ID + "/");
+                System.out.println(ruta + origen.ID + "/");
+                mp.insertarPoda(listaRuta, dist, false);
+                System.out.println("Ruta podada");
+            }
+        }
     }
 }
