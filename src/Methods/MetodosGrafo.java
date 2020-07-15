@@ -199,6 +199,7 @@ public class MetodosGrafo {
         }
         quitarMarca(grafo);
     }
+    
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
@@ -260,9 +261,13 @@ public class MetodosGrafo {
         }
         return;
     }
-
-    public void generarPoblacion(){
-        
+////////////////////////////////////////////////////////////////////////////////
+    
+    ArrayList<ArrayList<vertice>> Manipulados = new ArrayList();
+    ArrayList<vertice> padre1;
+    ArrayList<vertice> padre2;
+    
+    public void ImprimirGenetico(ArrayList<ArrayList<vertice>> Manipulados){
         ArrayList<ArrayList<vertice>> prueba = new ArrayList<>();
         ListaDoble aux = mld.inicio;
         
@@ -275,27 +280,28 @@ public class MetodosGrafo {
         
         System.out.println(prueba);
         ListaDoble temp = aux;
-        String ruta  = " "; 
+        String ruta  = " ";
         
         //esto imprime las rutas
         for (ArrayList<vertice> arrayList : prueba) {//  este prueba tiene todas las rutas 
             for (vertice object : arrayList) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
                 ruta = ruta + object.ID + "/";
-                
             }
             System.out.println(ruta);
+            
             ruta = "";
         }
-        
     }
     public void ag_escogerPadres(ArrayList<vertice> poblacion){
         for (int i = 0; i < poblacion.size(); i++) {
             poblacion.get(i);
             poblacion.get(i+1);
             
+            padre2 = poblacion.get(index2);
+            poblacion.remove(poblacion.get(index2));
         }
-        
-        
+        Manipulados.add(padre1);
+        Manipulados.add(padre2);
     }
     
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre){
@@ -306,19 +312,33 @@ public class MetodosGrafo {
         
     }
     
-
-    public void rutaCortaGenetica( ) {
-        generarPoblacion();
+    public void ag_mutar(ArrayList<vertice> hijo, int probMutacion){
+        //si no hay mutacion el hijo debe salir igual
+        ArrayList<vertice> hijoMutado = hijo;
+        double pto1 = Math.random()*hijo.size();
+        double pto2 = Math.random()*hijo.size();
+    }
     
+
+    public void rutaCortaGenetica(int tamGrafo ) {
+        ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
+        poblacion = generarPoblacion(8);
+        //ImprimirTodasRutas(poblacion);
+        ArrayList<vertice> hijoPrueba = poblacion.get(6);
+        padre1 = hijoPrueba;
+        ag_escogerPadres(poblacion);
+        ImprimirTodasRutas(Manipulados);
+        
+       //ImprimirGenetico(poblacion);
+    
+        
         ArrayList<ArrayList<vertice>> prueba = new ArrayList<>();
         for (int i = 0; i < prueba.size(); i++) {
             prueba.get(i);
             prueba.get(i+1);
             prueba.remove(i+ 1);
         }
-        
-       
-      
+ 
     }
 
       //  for (ArrayList<vertice> arrayList : prueba) {
@@ -327,8 +347,6 @@ public class MetodosGrafo {
           //  System.out.println(array1);
             
         //}
-            
-            
 
     
     /**
