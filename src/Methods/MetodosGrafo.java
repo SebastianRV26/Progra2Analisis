@@ -10,7 +10,9 @@ import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -315,6 +317,16 @@ public class MetodosGrafo {
             System.out.println(ruta);
             ruta = "";
     }
+    public void ImprimirRuta(List<vertice> Manipulados){
+        System.out.println("Esta es la sublista: ");
+        String ruta  = " ";
+        //esto imprime la ruta
+            for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + object.ID + "/";
+            }
+            System.out.println(ruta);
+            ruta = "";
+    }
     
     /**
      * 
@@ -360,6 +372,51 @@ public class MetodosGrafo {
     }
     
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre){
+        ArrayList<vertice> hijo1 = new ArrayList();
+        ArrayList<vertice> hijo2 = new ArrayList();
+        
+        List <vertice> sub1 = new ArrayList<vertice>();
+        List <vertice> sub2 = new ArrayList<vertice>();
+        List <vertice> sub3 = new ArrayList<vertice>();
+        List <vertice> sub4 = new ArrayList<vertice>();
+     
+        //punto de cruce
+        int randomNum = ThreadLocalRandom.current().nextInt(2, padre.size());
+        System.out.println("Punto de cruse: "+randomNum);
+        
+            //recorre los padres para buscar el punto de cruce que se hace random
+            for (int i = 0; i < padre.size()-1; i++) {
+                if(padre.get(i).ID==randomNum){
+                    sub1= padre.subList(0, i);//creo la sublista
+                    sub2 = padre.subList(i, padre.size());
+                    ImprimirRuta(sub1);
+                    ImprimirRuta(sub2);
+                    for (int a = 0; a < sub1.size(); a++){
+                        hijo1.add(sub1.get(a));
+                    }  
+                }
+            }
+            for(int j = 0; j < madre.size()-1; j++){
+                if(madre.get(j).ID==randomNum){
+                    sub3 = madre.subList(0, j);
+                    sub4 = madre.subList(j, madre.size());
+                    ImprimirRuta(sub3);
+                    ImprimirRuta(sub4);
+                    for (int a = 0; a < sub3.size(); a++){
+                       hijo2.add(sub3.get(a));  
+                    }
+                    for (int b = 0; b < sub4.size(); b++){
+                        hijo1.add(sub4.get(b));
+                    }
+                }
+            }
+            for (int b = 0; b < sub2.size(); b++){
+                        hijo2.add(sub2.get(b));
+                    }
+            ImprimirRuta(hijo1);
+            ImprimirRuta(hijo2);
+            
+    
         
     }
     
@@ -378,30 +435,15 @@ public class MetodosGrafo {
     public void rutaCortaGenetica(int tamGrafo ) {
         ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
         poblacion = generarPoblacion(8);
-        //ImprimirTodasRutas(poblacion);
-        ArrayList<vertice> hijoPrueba = poblacion.get(6);
-        padre1 = hijoPrueba;
         ag_escogerPadres(poblacion);
         ImprimirTodasRutas(Manipulados);
+        ag_cruzar(padre1, padre2);
+        
         
        //ImprimirGenetico(poblacion);
-    
-        
-        ArrayList<ArrayList<vertice>> prueba = new ArrayList<>();
-        for (int i = 0; i < prueba.size(); i++) {
-            prueba.get(i);
-            prueba.get(i+1);
-            prueba.remove(i+ 1);
-        }
- 
+
     }
 
-      //  for (ArrayList<vertice> arrayList : prueba) {
-        //    for (ArrayList<vertice> array1 : prueba) {
-            
-          //  System.out.println(array1);
-            
-        //}
 
     
     /**
