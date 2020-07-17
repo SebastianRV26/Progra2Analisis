@@ -381,38 +381,55 @@ public class MetodosGrafo {
         List <vertice> sub4 = new ArrayList<vertice>();
      
         //punto de cruce
-        int randomNum = ThreadLocalRandom.current().nextInt(2, padre.size());
-        System.out.println("Punto de cruse: "+randomNum);
-        
+        int randomNum;
+        boolean esta;
+        boolean esta2;
+            
+        while(true){
+            
+            randomNum = ThreadLocalRandom.current().nextInt(2, padre.size());
+            System.out.println("Punto de cruse: "+randomNum);
+            esta = padre.contains(buscar(randomNum));
+            esta2 = madre.contains(buscar(randomNum));
+            if(esta&&esta2){
+            System.out.println("estan ambos");
             //recorre los padres para buscar el punto de cruce que se hace random
-            for (int i = 0; i < padre.size()-1; i++) {
-                if(padre.get(i).ID==randomNum){
-                    sub1= padre.subList(0, i);//creo la sublista
-                    sub2 = padre.subList(i, padre.size());
-                    ImprimirRuta(sub1);
-                    ImprimirRuta(sub2);
-                    for (int a = 0; a < sub1.size(); a++){
-                        hijo1.add(sub1.get(a));
-                    }  
-                }
-            }
-            for(int j = 0; j < madre.size()-1; j++){
-                if(madre.get(j).ID==randomNum){
-                    sub3 = madre.subList(0, j);
-                    sub4 = madre.subList(j, madre.size());
-                    ImprimirRuta(sub3);
-                    ImprimirRuta(sub4);
-                    for (int a = 0; a < sub3.size(); a++){
-                       hijo2.add(sub3.get(a));  
-                    }
-                    for (int b = 0; b < sub4.size(); b++){
-                        hijo1.add(sub4.get(b));
+                for (int i = 0; i < padre.size()-1; i++) {
+                    if(padre.get(i).ID==randomNum){
+                        sub1= padre.subList(0, i);//creo la sublista 1
+                        sub2 = padre.subList(i, padre.size());//creo la sublista 2
+                        ImprimirRuta(sub1);
+                        ImprimirRuta(sub2);   
                     }
                 }
+                for(int j = 0; j < madre.size()-1; j++){
+                    if(madre.get(j).ID==randomNum){
+                        sub3 = madre.subList(0, j);//creo la sublista 3
+                        sub4 = madre.subList(j, madre.size());//creo la sublista 4
+                        ImprimirRuta(sub3);
+                        ImprimirRuta(sub4); 
+                    }   
+                }
+                //esto arma al hijo1 con sub 1-4
+                for (int a = 0; a < sub1.size(); a++){
+                    hijo1.add(sub1.get(a));
+                }
+                for (int b = 0; b < sub4.size(); b++){
+                    hijo1.add(sub4.get(b));
+                }
+                //esto arma al hijo2 con sub 3-2
+                for (int a = 0; a < sub3.size(); a++){
+                    hijo2.add(sub3.get(a));  
+                }
+                for (int b = 0; b < sub2.size(); b++){
+                    hijo2.add(sub2.get(b));
+                }
+            break;
             }
-            for (int b = 0; b < sub2.size(); b++){
-                        hijo2.add(sub2.get(b));
-                    }
+            System.err.println("lo volvio a sacar");   
+        }
+        
+         
             ImprimirRuta(hijo1);
             ImprimirRuta(hijo2);
             
@@ -420,8 +437,17 @@ public class MetodosGrafo {
         
     }
     
-    public void ag_evaluarFitness(){
-        
+    public int ag_evaluarFitness(ArrayList<vertice> ruta){
+        int peso = 0;
+        vertice v = ruta.get(0);
+        arco auxA;
+        auxA = v.sigA;
+        while(auxA !=null){
+            peso = peso + auxA.peso;
+            auxA = auxA.sigA;
+        }
+        System.out.println("peso ruta: "+peso);
+        return peso;
     }
     
     public void ag_mutar(ArrayList<vertice> hijo, int probMutacion){
@@ -437,6 +463,7 @@ public class MetodosGrafo {
         poblacion = generarPoblacion(8);
         ag_escogerPadres(poblacion);
         ImprimirTodasRutas(Manipulados);
+        
         ag_cruzar(padre1, padre2);
         
         
