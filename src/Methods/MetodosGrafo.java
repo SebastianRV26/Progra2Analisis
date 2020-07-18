@@ -9,6 +9,7 @@ import Classes.Cola;
 import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -78,7 +79,7 @@ public class MetodosGrafo {
         vertice aux = grafo;
         while (aux != null) {
             if (aux.ID == id) {
-       
+
                 return aux;
             }
             aux = aux.sigV;
@@ -252,36 +253,36 @@ public class MetodosGrafo {
         }
         origen.marca = true;
         if (auxMenor != null) {
-            rutaCortaVoraz(auxMenor.destino, destino, ruta + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
+            rutaCortaVoraz(auxMenor.destino, destino, ruta + "->P" + auxMenor.peso + " V" + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
             rutaCortaVoraz(destino, destino, ruta, distancia);
         }
         return;
     }
 
-
     public void rutaCortaGenetica(ListaDoble temp) {
 
     }
-    
+
     /**
-     *   Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     * Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     *
      * @param vertex
      * @param ruta
-     * @param pesoRuta 
+     * @param pesoRuta
      */
+    ArrayList<vertice> rutaV;
 
-      ArrayList<vertice> rutaV ;
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
             return;
         }
-           
-        if (vertex.ID == ultimo.ID) {  
-             rutaV = convertirRuta(ruta + vertex.ID + "/");
+
+        if (vertex.ID == ultimo.ID) {
+            rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, true);
         } else {
-             rutaV = convertirRuta(ruta + vertex.ID + "/");
+            rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, false);
         }
         vertex.marca = true;
@@ -292,70 +293,87 @@ public class MetodosGrafo {
         }
         vertex.marca = false;
     }
-        /**
+
+    /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 10/07/2020
      *
      * @param ruta
      * @return
      */
-     private ArrayList<vertice> convertirRuta(String ruta) {
+    private ArrayList<vertice> convertirRuta(String ruta) {
         ArrayList<vertice> rutaVertices = new ArrayList<>();
         String[] verticesID = ruta.split("/");
         for (String idV : verticesID) {
-              if (!idV.equals("")) {
+            if (!idV.equals("")) {
                 int id = Integer.parseInt(idV);
                 rutaVertices.add(buscar(id));
-            }        
+            }
         }
         return rutaVertices;
     }
 
+    public void mostrarRuta(vertice destino) {
+        String ruta = "";
+        vertice aux = destino;
+        while (aux != null) {
+            ruta = "V" + aux.ID + "/" + ruta;
+            aux = aux.antV;
+        }
+        System.out.println("PD: " + ruta + " distancia: " + destino.distanciaMinima);
+    }
+
     public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
-        int distancia = 0;
-        String ruta = origen.ID + "/";
         vertice aux = origen;
+        vertice ant = origen;
+        int min;
+        ant.distanciaMinima = 0;
         while (aux != null) {
             arco auxA = origen.sigA;
             arco auxMin = null;
-            int min = 1000;
-            while (auxA != null) {
-                if (auxA.destino.distanciaMinima > distancia + auxA.peso) {
-                    auxA.destino.distanciaMinima = distancia + auxA.peso;
-                }
-                if (min > auxA.destino.distanciaMinima && !auxA.destino.marca) {
-                    min = auxA.destino.distanciaMinima;
+            min = 10000;
+            while (auxA != null) { // aqun los vértices conocidos
+                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) {
+                    min = auxA.peso + ant.distanciaMinima;
+                    System.out.println("min " + min);
                     auxMin = auxA;
+                    System.out.println("auxmin " + auxMin.destino.ID);
                 }
                 auxA = auxA.sigA;
+                if (auxA != null) {
+                    System.out.println("Sig A " + auxA.destino.ID);
+                }
             }
             if (auxMin != null) {
-                ruta += auxMin.destino.ID + "/";
-                distancia += auxMin.peso;
-                auxMin.destino.marca = true;
-                aux = auxMin.destino;
-                if (auxMin.destino == destino) {
-                    break;
+                if (auxMin.destino.distanciaMinima > (auxMin.peso + ant.distanciaMinima)) {
+                    auxMin.destino.marca = true;
+                    auxMin.destino.distanciaMinima = auxMin.peso + ant.distanciaMinima;
+                    auxMin.destino.antV = ant;
+                    ant = auxMin.destino;
                 }
             } else {
-                aux = null;
+                aux.distanciaMinima = ant.distanciaMinima;
+                System.out.println("F");
             }
+            if (aux == destino) {
+                break;
+            }
+            aux = auxMin.destino;
+            System.out.println("Sig V " + aux.ID);
         }
-        System.out.println("PD: " + ruta + " distancia: " + distancia);
+        mostrarRuta(destino);
     }
-   
 
-    
-    
     public int rutaMinima = 0;
-    public String rutaActual = "";  
+    public String rutaActual = "";
     ArrayList<vertice> listaRuta;
-    
-/**
- * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
- * @param origen
- * @param ruta
- * @param dist 
- */
+
+    /**
+     * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
+     *
+     * @param origen
+     * @param ruta
+     * @param dist
+     */
     public void RamificacionyPoda(String ruta, int dist) {
         while (!mc.colaVacia()) {
             Cola auxCola = mc.Extraer();
@@ -382,7 +400,7 @@ public class MetodosGrafo {
                     origen.marca = false;
                 }
             } else {
-                listaRuta = convertirRuta(ruta+ origen.ID + "/");
+                listaRuta = convertirRuta(ruta + origen.ID + "/");
                 System.out.println(ruta + origen.ID + "/");
                 mp.insertarPoda(listaRuta, dist, false);
                 System.out.println("Ruta podada");
