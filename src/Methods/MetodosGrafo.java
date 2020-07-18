@@ -429,23 +429,30 @@ public class MetodosGrafo {
             System.err.println("lo volvio a sacar");   
         }
         
-         
-            ImprimirRuta(hijo1);
-            ImprimirRuta(hijo2);
-            
-    
+        //Se evaluan las rutas
+       
         
+         
+        
+            ImprimirRuta(hijo1);
+            ImprimirRuta(hijo2); 
+             ag_evaluarFitness(hijo1);
+        ag_evaluarFitness(hijo2);
     }
     
     public int ag_evaluarFitness(ArrayList<vertice> ruta){
         int peso = 0;
-        vertice v = ruta.get(0);
-        arco auxA;
-        auxA = v.sigA;
-        while(auxA !=null){
-            peso = peso + auxA.peso;
-            auxA = auxA.sigA;
+        String rutaStr =  "";
+        rutaStr = ""+ ruta.get(0).ID;
+        for (int i = 0; i < ruta.size()-1; i++){
+            
+             arco auxA = buscar(ruta.get(i), ruta.get(i+1));
+        
+             
+             rutaStr+=" Peso: -> "+auxA.peso+" Vertice destino: "+auxA.destino.ID;
+             peso= peso + auxA.peso;
         }
+        System.out.println("Ruta: "+rutaStr);
         System.out.println("peso ruta: "+peso);
         return peso;
     }
@@ -453,21 +460,39 @@ public class MetodosGrafo {
     public void ag_mutar(ArrayList<vertice> hijo, int probMutacion){
         //si no hay mutacion el hijo debe salir igual
         ArrayList<vertice> hijoMutado = hijo;
-        double pto1 = Math.random()*hijo.size();
-        double pto2 = Math.random()*hijo.size();
+        //recorrer el hijo nuevo
+        //preguntar por el arco de mayor tamaño 
+        //cambiarlo por otro vertice o eliminar vertice
+        // ver si la ruta aun existe y si mejora
+        //si mejora sale hijo mutado
+        //else sale hijo nuevo sin mutar
+        //return hijo
     }
     
 
     public void rutaCortaGenetica(int tamGrafo ) {
+    // 2.Imprimir la ruta corta encontrada de inicio a fin, indicado los vértices 
+    //por donde pasa y la distancia respectiva entre cada uno, así como la suma total de la ruta.
+    //3.Imprimir todos los cruces realizados para la estrategia genética y su 
+    //mutación. Así como la puntación asignada a cada cromosoma.
+
         ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
         poblacion = generarPoblacion(8);
         ag_escogerPadres(poblacion);
-        ImprimirTodasRutas(Manipulados);
-        
         ag_cruzar(padre1, padre2);
         
+        int cont=0;
+       // while(cont<poblacion.size()/2){
+        //    ag_escogerPadres(poblacion);
+        //    ag_cruzar(padre1, padre2);
+        //    ag_mutar(padre1,5);
+       // }
         
-       //ImprimirGenetico(poblacion);
+        
+        ImprimirTodasRutas(Manipulados);
+        
+        
+        
 
     }
 
