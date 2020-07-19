@@ -312,53 +312,59 @@ public class MetodosGrafo {
         return rutaVertices;
     }
 
+    /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 18/07/2020. Método que
+     * impreme la ruta del algoritmo de programación dinámica Dijkstra
+     *
+     * @param destino último vértice
+     */
     public void mostrarRuta(vertice destino) {
         String ruta = "";
         vertice aux = destino;
+        int peso = 0;
         while (aux != null) {
-            ruta = "V" + aux.ID + "/" + ruta;
+            ruta = "->P" + aux.pesoMin + " V" + aux.ID + "/" + ruta;
+            peso += aux.pesoMin;
             aux = aux.antV;
         }
-        System.out.println("PD: " + ruta + " distancia: " + destino.distanciaMinima);
+        System.out.println("PD: " + ruta + " distancia: " + peso);
     }
 
+    /**
+     * Lógica del algoritmo Dijkstra
+     *
+     * @param origen vértice de origen de arco al que queremos insertar
+     * @param destino vértice destino de arco al que queremos insertar
+     */
     public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
         vertice aux = origen;
         vertice ant = origen;
         int min;
         ant.distanciaMinima = 0;
         while (aux != null) {
-            arco auxA = origen.sigA;
+            arco auxA = aux.sigA;
             arco auxMin = null;
             min = 10000;
-            while (auxA != null) { // aqun los vértices conocidos
-                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) {
-                    min = auxA.peso + ant.distanciaMinima;
-                    System.out.println("min " + min);
+            while (auxA != null) { // para encontrar el más pequeño
+                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) { // 
+                    min = auxA.peso;
                     auxMin = auxA;
-                    System.out.println("auxmin " + auxMin.destino.ID);
                 }
                 auxA = auxA.sigA;
-                if (auxA != null) {
-                    System.out.println("Sig A " + auxA.destino.ID);
-                }
             }
             if (auxMin != null) {
-                if (auxMin.destino.distanciaMinima > (auxMin.peso + ant.distanciaMinima)) {
+                if (auxMin.destino.distanciaMinima > (auxMin.peso /*+ ant.distanciaMinima*/)) {
                     auxMin.destino.marca = true;
-                    auxMin.destino.distanciaMinima = auxMin.peso + ant.distanciaMinima;
+                    auxMin.destino.distanciaMinima = auxMin.peso /*+ ant.distanciaMinima*/;
                     auxMin.destino.antV = ant;
                     ant = auxMin.destino;
                 }
-            } else {
-                aux.distanciaMinima = ant.distanciaMinima;
-                System.out.println("F");
+                auxMin.destino.pesoMin = auxMin.peso;
             }
             if (aux == destino) {
                 break;
             }
             aux = auxMin.destino;
-            System.out.println("Sig V " + aux.ID);
         }
         mostrarRuta(destino);
     }

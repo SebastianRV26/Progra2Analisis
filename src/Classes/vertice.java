@@ -15,6 +15,7 @@ public class vertice { //vertice de un grafo
     public arco sigA; // Puntero para hacer referencia a los arcos
     public boolean marca; // Marca, utilizado para los diferentes imprimir y recorridos recursivos
     public int distanciaMinima; // distancia mínima para llegar a dicho vértice (Dijkstra)
+    public int pesoMin; // Peso del arco para llegar a él
     public vertice antV; // vértice anterior (Dijkstra)
 
     /**
@@ -28,6 +29,7 @@ public class vertice { //vertice de un grafo
         this.marca = m;
         this.distanciaMinima = 1000;
         this.antV = null;
+        this.pesoMin = 0;
     }
 
 }
