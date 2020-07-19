@@ -129,7 +129,7 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(5);
+        metGrafo.llenarGrafo(10);
 
         metGrafo.amplitud(metGrafo.grafo);
 

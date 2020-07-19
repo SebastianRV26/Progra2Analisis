@@ -40,11 +40,12 @@ public class MetodosGrafo {
     MetodosCola mc = MetodosCola.getInstance();
     MetodosPoda mp = MetodosPoda.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
+    public int lineas = 0; // líneas ejecutasas
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
-     * // * método que inserta un vértice al final para el grafo
+     * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
      * @return true o false
@@ -90,7 +91,7 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
-     * método que inserta un arco para el grafo
+     * Método que inserta un arco para el grafo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
@@ -116,7 +117,7 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 05/07/2020 Ultima modificación: 05/07/2020
      *
-     * método que inserta un arco para el grafo
+     * Método que inserta un arco para el grafo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
@@ -151,7 +152,7 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
-     * método que busca un arco del grafo
+     * Método que busca un arco del grafo
      *
      * @param origen vértice de origen de arco al que queremos buscar
      * @param destino vértice destino de arco al que queremos buscar
@@ -171,8 +172,9 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020. método que
-     * llena el grafo fuertemente conexo
+     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020.
+     *
+     * Método que llena el grafo fuertemente conexo
      *
      * @param n es la cantidad de nodos que requiere el grafo
      */
@@ -201,8 +203,9 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
-     * establece la marca de todos los nodos del grafo como false
+     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     *
+     * Método que establece la marca de todos los nodos del grafo como false
      *
      * @param grafo es el primer vértice del grafo
      */
@@ -214,7 +217,7 @@ public class MetodosGrafo {
         }
     }
 
-    public void amplitud(vertice grafo) {
+    public void amplitud(vertice grafo) { // BORRAR LUEGO
         if (grafo == null) {//1
             System.out.println("No hay grafo");
         } else {
@@ -234,6 +237,17 @@ public class MetodosGrafo {
         }
     }
 
+    /**
+     * Fecha inicio: 08/07/2020 Ultima modificación: 10/07/2020.
+     *
+     * Método de ruta corta que consiste en irse por el arco de menor peso hasta
+     * llegar al destino, no está permitido devolverse
+     *
+     * @param origen vértice de origen de arco al que queremos buscar
+     * @param destino vértice destino de arco al que queremos buscar
+     * @param ruta vértices y sus respectivos pesos de la ruta encontrada
+     * @param distancia distancia total de los arcos por los vértices que pasa
+     */
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
         if ((origen == null) || (origen.marca == true)) {
             return;
@@ -313,8 +327,10 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 07/07/2020 Ultima modificación: 18/07/2020. Método que
-     * impreme la ruta del algoritmo de programación dinámica Dijkstra
+     * Fecha inicio: 07/07/2020 Ultima modificación: 18/07/2020.
+     *
+     * Método que impreme la ruta del algoritmo de programación dinámica
+     * Dijkstra
      *
      * @param destino último vértice
      */
@@ -331,12 +347,15 @@ public class MetodosGrafo {
     }
 
     /**
-     * Lógica del algoritmo Dijkstra
+     * Fecha inicio: 07/07/2020. Ultima modificación: 19/07/2020.
+     *
+     * Lógica del algoritmo Dijkstra: analizar la mejor manera de llegar al
+     * destino con forme a la menor distancia de llegar de un vértice a otro
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
      */
-    public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
+    public void rutaCortaDinamica(vertice origen, vertice destino) { 
         vertice aux = origen;
         vertice ant = origen;
         int min;
@@ -345,7 +364,7 @@ public class MetodosGrafo {
             arco auxA = aux.sigA;
             arco auxMin = null;
             min = 10000;
-            while (auxA != null) { // para encontrar el más pequeño
+            while (auxA != null) { 
                 if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) { // 
                     min = auxA.peso;
                     auxMin = auxA;
@@ -356,9 +375,9 @@ public class MetodosGrafo {
                 if (auxMin.destino.distanciaMinima > (auxMin.peso /*+ ant.distanciaMinima*/)) {
                     auxMin.destino.marca = true;
                     auxMin.destino.distanciaMinima = auxMin.peso /*+ ant.distanciaMinima*/;
-                    auxMin.destino.antV = ant;
-                    ant = auxMin.destino;
                 }
+                auxMin.destino.antV = ant;
+                ant = auxMin.destino;
                 auxMin.destino.pesoMin = auxMin.peso;
             }
             if (aux == destino) {
