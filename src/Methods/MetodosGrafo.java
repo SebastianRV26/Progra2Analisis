@@ -430,14 +430,57 @@ public class MetodosGrafo {
         }
         
         //Se evaluan las rutas
+        if(ag_evaluarFitness2(padre)<ag_evaluarFitness2(madre)){
+            if (ag_evaluarFitness2(padre)<ag_evaluarFitness2(hijo1)) {
+                if (ag_evaluarFitness2(padre)<ag_evaluarFitness2(hijo2)) {
+                    System.out.println("Es mejor el padre");
+                    padre1 = padre;
+                    padre2 = null; 
+                }  
+            }
+            else{
+                if(ag_evaluarFitness2(hijo1)<ag_evaluarFitness2(hijo2)){
+                   System.out.println("Es mejor el hijo1");
+                   ImprimirRuta(hijo1);
+                   ag_evaluarFitness(hijo1);
+                    padre1 = hijo1;
+                    padre2 = null;  
+                }
+                else{
+                    System.out.println("Es mejor el hijo2");
+                    ImprimirRuta(hijo2); 
+                    padre1 = hijo2;
+                    padre2 = null;
+                }
+            }    
+        }
+        else{
+            if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo1)) {
+                if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo2)) {
+                    System.out.println("Es mejor el padre");
+                    padre1 = padre;
+                    padre2 = null; 
+                }  
+            }
+            else{
+                if(ag_evaluarFitness2(hijo1)<ag_evaluarFitness2(hijo2)){
+                   System.out.println("Es mejor el hijo1");
+                   ag_evaluarFitness(hijo1);
+                   ImprimirRuta(hijo1);
+                    padre1 = hijo1;
+                    padre2 = null;  
+                }
+                else{
+                    System.out.println("Es mejor el hijo2");
+                    ImprimirRuta(hijo2); 
+                    ag_evaluarFitness(hijo2);
+                    padre1 = hijo2;
+                    padre2 = null;
+                }
+            }
+        }
+            
        
-        
-         
-        
-            ImprimirRuta(hijo1);
-            ImprimirRuta(hijo2); 
-             ag_evaluarFitness(hijo1);
-        ag_evaluarFitness(hijo2);
     }
     
     public int ag_evaluarFitness(ArrayList<vertice> ruta){
@@ -454,6 +497,19 @@ public class MetodosGrafo {
         }
         System.out.println("Ruta: "+rutaStr);
         System.out.println("peso ruta: "+peso);
+        return peso;
+    }
+    public int ag_evaluarFitness2(ArrayList<vertice> ruta){
+        int peso = 0;
+       // String rutaStr =  "";
+        //rutaStr = ""+ ruta.get(0).ID;
+        for (int i = 0; i < ruta.size()-1; i++){
+             arco auxA = buscar(ruta.get(i), ruta.get(i+1));
+             //rutaStr+=" Peso: -> "+auxA.peso+" Vertice destino: "+auxA.destino.ID;
+             peso= peso + auxA.peso;
+        }
+        //System.out.println("Ruta: "+rutaStr);
+        //System.out.println("peso ruta: "+peso);
         return peso;
     }
     
@@ -478,15 +534,16 @@ public class MetodosGrafo {
 
         ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
         poblacion = generarPoblacion(8);
-        ag_escogerPadres(poblacion);
-        ag_cruzar(padre1, padre2);
+        //ag_escogerPadres(poblacion);
+        //ag_cruzar(padre1, padre2);
         
         int cont=0;
-       // while(cont<poblacion.size()/2){
-        //    ag_escogerPadres(poblacion);
-        //    ag_cruzar(padre1, padre2);
+        while(cont<tamGrafo/2){
+            ag_escogerPadres(poblacion);
+            ag_cruzar(padre1, padre2);
         //    ag_mutar(padre1,5);
-       // }
+        cont++;
+        }
         
         
         ImprimirTodasRutas(Manipulados);
