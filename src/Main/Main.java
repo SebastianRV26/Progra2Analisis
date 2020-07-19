@@ -129,15 +129,10 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(5);
-        metGrafo.amplitud(metGrafo.grafo);
+        metGrafo.llenarGrafo(8);
+        //metGrafo.amplitud(metGrafo.grafo);
 
-        metGrafo.llenarGrafo(10);
-     
-
-     metGrafo.amplitud(metGrafo.grafo);
-
-
+       
       mc.Insertar(metGrafo.grafo, 0);
    //  metGrafo.RamificacionyPoda("",0);
      //   System.out.println("Ruta corta por RyP");
@@ -151,9 +146,9 @@ public class Main {
         
         metGrafo.quitarMarca(metGrafo.grafo);
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-        mld.imprimirRuta(mld.rutaCorta);
+        //mld.imprimirRuta(mld.rutaCorta);
         
-        metGrafo.rutaCortaGenetica();
+        metGrafo.rutaCortaGenetica(60);
 
     }
 
