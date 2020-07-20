@@ -433,6 +433,8 @@ public class MetodosGrafo {
             if (ag_evaluarFitness2(padre)<ag_evaluarFitness2(hijo1)) {
                 if (ag_evaluarFitness2(padre)<ag_evaluarFitness2(hijo2)) {
                     System.out.println("Es mejor el padre");
+                    ImprimirRuta(padre); 
+                    ag_evaluarFitness(padre);
                     padre1 = padre;
                     padre2 = null; 
                 }  
@@ -447,7 +449,8 @@ public class MetodosGrafo {
                 }
                 else{
                     System.out.println("Es mejor el hijo2");
-                    ImprimirRuta(hijo2); 
+                    ImprimirRuta(hijo2);
+                    ag_evaluarFitness(hijo2);
                     padre1 = hijo2;
                     padre2 = null;
                 }
@@ -457,6 +460,8 @@ public class MetodosGrafo {
             if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo1)) {
                 if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo2)) {
                     System.out.println("Es mejor el padre");
+                    ImprimirRuta(madre); 
+                    ag_evaluarFitness(madre);
                     padre1 = padre;
                     padre2 = null; 
                 }  
@@ -507,15 +512,17 @@ public class MetodosGrafo {
         return peso;
     }
     
-    public void ag_mutar(ArrayList<vertice> hijo, int probMutacion){
+    public void ag_mutar(ArrayList<vertice> hijo){
         //si no hay mutacion el hijo debe salir igual
         ArrayList<vertice> hijoMutado = hijo;
+        ArrayList<vertice> hijoMutado2 = new ArrayList();
         //recorrer el hijo nuevo
         int numero = 0;
         arco actual= null;
         vertice vO = null;
         vertice vD = null;
-        for (int i = 0; i < hijoMutado.size(); i++) {
+        
+        for (int i = 0; i < hijoMutado.size()-1; i++) {
             
             //preguntar por el arco de mayor tamaño 
             arco auxA = buscar(hijoMutado.get(i),hijoMutado.get(i+1));
@@ -524,23 +531,43 @@ public class MetodosGrafo {
                 actual = auxA;
                 vO = hijoMutado.get(i);
                 vD = hijoMutado.get(i+1);
-            }  
+                System.out.println("Arco mas grande: "+numero+"vertice de origen: "+vO.ID);
+                
+            } 
+            
         }
+        
         //cambiarlo por otro vertice destino
+        vertice vNuevo = null;
         arco auxA2= vO.sigA ;
+        
         while(auxA2!=null){
             if(!hijoMutado.contains(auxA2.destino)){
-                vertice vNuevo = auxA2.destino;
+                vNuevo = auxA2.destino;
+                System.out.println("el nuevo vertice: "+vNuevo.ID);
             }
             auxA2 = auxA2.sigA;
         }
         
-        
-        
-        
+        for (int i = 0; i < hijo.size(); i++) {
+            if(hijo.get(i)==vO){
+              hijoMutado2.add(hijo.get(i));
+              hijoMutado2.add(vNuevo);
+            }
+            else{
+                hijoMutado2.add(hijo.get(i));
+            }
+            ImprimirRuta(hijoMutado2); 
+        }
         // ver si la ruta aun existe y si mejora
-        //si mejora sale hijo mutado
-        //else sale hijo nuevo sin mutar
+        if( ag_evaluarFitness2(hijo)<ag_evaluarFitness2(hijoMutado2)){
+            // sale hijo nuevo sin mutar
+            padre1 = hijo;
+        }
+        else{
+            //si mejora sale hijo mutado
+            padre1 = hijoMutado2;
+        }
         //return hijo
     }
     
@@ -560,7 +587,8 @@ public class MetodosGrafo {
         while(cont<tamGrafo/2){
             ag_escogerPadres(poblacion);
             ag_cruzar(padre1, padre2);
-        //    ag_mutar(padre1,5);
+            ag_mutar(padre1);
+            System.err.println("Escogemos padres de nuevo");
         cont++;
         }
         
