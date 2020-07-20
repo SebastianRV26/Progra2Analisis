@@ -500,15 +500,10 @@ public class MetodosGrafo {
     }
     public int ag_evaluarFitness2(ArrayList<vertice> ruta){
         int peso = 0;
-       // String rutaStr =  "";
-        //rutaStr = ""+ ruta.get(0).ID;
         for (int i = 0; i < ruta.size()-1; i++){
              arco auxA = buscar(ruta.get(i), ruta.get(i+1));
-             //rutaStr+=" Peso: -> "+auxA.peso+" Vertice destino: "+auxA.destino.ID;
              peso= peso + auxA.peso;
         }
-        //System.out.println("Ruta: "+rutaStr);
-        //System.out.println("peso ruta: "+peso);
         return peso;
     }
     
@@ -516,8 +511,33 @@ public class MetodosGrafo {
         //si no hay mutacion el hijo debe salir igual
         ArrayList<vertice> hijoMutado = hijo;
         //recorrer el hijo nuevo
-        //preguntar por el arco de mayor tamaño 
-        //cambiarlo por otro vertice o eliminar vertice
+        int numero = 0;
+        arco actual= null;
+        vertice vO = null;
+        vertice vD = null;
+        for (int i = 0; i < hijoMutado.size(); i++) {
+            
+            //preguntar por el arco de mayor tamaño 
+            arco auxA = buscar(hijoMutado.get(i),hijoMutado.get(i+1));
+            if(auxA.peso>numero){
+                numero = auxA.peso;
+                actual = auxA;
+                vO = hijoMutado.get(i);
+                vD = hijoMutado.get(i+1);
+            }  
+        }
+        //cambiarlo por otro vertice destino
+        arco auxA2= vO.sigA ;
+        while(auxA2!=null){
+            if(!hijoMutado.contains(auxA2.destino)){
+                vertice vNuevo = auxA2.destino;
+            }
+            auxA2 = auxA2.sigA;
+        }
+        
+        
+        
+        
         // ver si la ruta aun existe y si mejora
         //si mejora sale hijo mutado
         //else sale hijo nuevo sin mutar
