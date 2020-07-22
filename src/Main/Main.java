@@ -19,7 +19,11 @@ import javax.xml.transform.Source;
  *
  * @author Sebas
  */
+
+ ;
+
 public class Main {
+    
 
     public static vertice[] ultimos = new vertice[6];
 

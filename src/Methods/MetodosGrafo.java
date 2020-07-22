@@ -90,7 +90,7 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     * Fecha inicio: 30/06/2020 Ultima modificación: 13/06/2020
      *
      * método que inserta un arco para el grafo
      *
@@ -99,7 +99,7 @@ public class MetodosGrafo {
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-    public String insertarArco(vertice origen, vertice destino, int peso) {
+   public String insertarArco(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             nuevo.destino = destino;
@@ -116,7 +116,7 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 05/07/2020 Ultima modificación: 05/07/2020
+     * Fecha inicio: 05/07/2020 Ultima modificación: 13/07/2020
      *
      * método que inserta un arco para el grafo
      *
@@ -125,7 +125,7 @@ public class MetodosGrafo {
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-    public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
+      public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             arco auxNuevo = new arco(peso);
@@ -149,7 +149,6 @@ public class MetodosGrafo {
         }
         return false;
     }
-
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
@@ -756,48 +755,86 @@ public class MetodosGrafo {
         mostrarRuta(destino);
     }
 
-    public int rutaMinima = 0;
     public String rutaActual = "";
     ArrayList<vertice> listaRuta;
+     int rutaMinima = 0;
 
     /**
      * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
      *
-     * @param origen
+     * @param actual
      * @param ruta
      * @param dist
      */
-    public void RamificacionyPoda(String ruta, int dist) {
-        while (!mc.colaVacia()) {
-            Cola auxCola = mc.Extraer();
-            vertice origen = auxCola.value;
-            if (origen.marca) {
-                return;
+  
+     public void RamificacionyPoda(String ruta, int dist) { 
+        while (!mc.colaVacia()) { 
+             Cola auxCola = mc.Extraer(); 
+            vertice origen = auxCola.value; 
+            if (origen.marca) { 
+                return; 
+            } 
+
+            if ((rutaActual == "" || rutaMinima > dist)) { 
+                if (origen.equals(ultimo)) { 
+                    rutaMinima = dist; 
+                    rutaActual = ruta + origen.ID + "/"; 
+                    listaRuta = convertirRuta(rutaActual); 
+                    mp.insertarPoda(listaRuta, rutaMinima, true); 
+                } else { 
+                    origen.marca = true; 
+                    arco auxA = origen.sigA; 
+                    while (auxA != null) { 
+                        mc.Insertar(auxA.destino, auxA.peso); 
+                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso); 
+                        auxA = auxA.sigA; 
+                    } 
+                    origen.marca = false; 
+                } 
+            } else { 
+                listaRuta = convertirRuta(ruta+ origen.ID + "/"); 
+                mp.insertarPoda(listaRuta, dist, false); 
             }
-            if ((rutaActual.equals("") || rutaMinima > dist)) {
-                if (origen.equals(ultimo)) {
-                    rutaMinima = dist;
-                    rutaActual = ruta + origen.ID + "/";
-                    System.out.println(rutaActual);
-                    System.out.println("Tiene solucion");
-                    listaRuta = convertirRuta(rutaActual);
-                    mp.insertarPoda(listaRuta, rutaMinima, true);
-                } else {
-                    origen.marca = true;
-                    arco auxA = origen.sigA;
-                    while (auxA != null) {
-                        mc.Insertar(auxA.destino, auxA.peso);
-                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);
-                        auxA = auxA.sigA;
-                    }
-                    origen.marca = false;
+        } 
+    } 
+     
+     
+     /**
+      * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
+      * @return 
+      */
+     public int tamanoGrafo(){
+         vertice aux = grafo;
+         int total = 0;
+         while (aux != null) {
+             total ++;             
+             aux = aux.sigV;
+         }
+         return total;
+     }
+/*
+     public void RamificacionyPoda(vertice actual, String ruta, int dist) { 
+
+        if (actual.equals(ultimo) && rutaMinima > dist) {
+            rutaMinima = dist;
+            rutaActual = ruta + actual.ID + "/";
+            listaRuta = convertirRuta(rutaActual);
+            mp.insertarPoda(listaRuta, rutaMinima, true);
+        } else {
+            while (!mc.colaVacia()) {
+                arco auxA = actual.sigA;
+                while (auxA != null) {
+                    mc.Insertar(auxA.destino, auxA.peso);
+                    auxA = auxA.sigA;
                 }
-            } else {
-                listaRuta = convertirRuta(ruta + origen.ID + "/");
-                System.out.println(ruta + origen.ID + "/");
+                Cola auxCola = mc.Extraer();
+                actual = auxCola.value;
+                RamificacionyPoda(actual, ruta, dist + auxCola.pesoArcoLlegada);
+                listaRuta = convertirRuta(ruta + actual.ID + "/");
                 mp.insertarPoda(listaRuta, dist, false);
-                System.out.println("Ruta podada");
             }
         }
     }
+    */
+   
 }

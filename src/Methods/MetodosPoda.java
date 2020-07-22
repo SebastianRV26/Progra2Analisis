@@ -82,7 +82,23 @@ public class MetodosPoda {
             aux = aux.sig;
         }
     }
-     
+
+    /**
+     * Fecha inicio: 12/07/2020 Ultima modificación: 12/07/2020
+     * @return 
+     */
+    public int totalRutasPodadas() {
+        int contador = 0;
+        Poda aux = inicio;
+        while (aux != null) {
+            if (!aux.esSolucion) {
+                contador++;
+            }
+            aux = aux.sig;
+        }
+        return  contador;
+    }
+
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
      * @param temp 

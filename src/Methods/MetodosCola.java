@@ -49,46 +49,23 @@ public class MetodosCola {
     }
 
     /**
-     * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
-     *
-     * @param destino
-     * @param pesoArco
-     * @return 
+     * Fecha inicio: 08/07/2020 Ultima modificación: 13/07/2020
+     * @param aux
+     * @param peso 
      */
-    public boolean Insertar(vertice destino, int pesoArco) {
-        if (destino != null) {
-            Cola nuevo = new Cola(destino, pesoArco);//1
-            nuevo.sig = null;//1
-            if (colaVacia()) {//4
-                inicioCola = nuevo;//1
-                finalCola = nuevo;//1
-                return true;
-            }
-            if (nuevo.pesoArcoLlegada < inicioCola.pesoArcoLlegada) {
-                inicioCola.ant = nuevo;
-                nuevo.sig = inicioCola;
-                inicioCola = nuevo;
-                return true;
-            }
-            if (nuevo.pesoArcoLlegada > finalCola.pesoArcoLlegada) {
-                nuevo.ant = finalCola;
-                finalCola.sig = nuevo;//1
-                finalCola = nuevo;//1
-                return true;
-            }
-            Cola auxC = inicioCola;
-            while (auxC != null) {
-                if (nuevo.pesoArcoLlegada < auxC.pesoArcoLlegada) {
-                    nuevo.ant = auxC.ant;
-                    auxC.ant.sig = nuevo;
-                    auxC.ant = nuevo;
-                    nuevo.sig = auxC;
-                    return true;
-                }
-                auxC = auxC.sig;
-            }
+    public void Insertar(vertice aux, int peso) {
+      Cola nuevo = new Cola(aux, peso);//1
+        nuevo.value = aux;//1
+        nuevo.sig = null;//1
+        if (colaVacia()) {//4
+            inicioCola = nuevo;//1
+            finalCola = nuevo;//1
+            
+        } else {
+            finalCola.sig = nuevo;//1
+            finalCola = nuevo;//1
         }
-        return false;
+        //  //Total medicion analitica 12
     }
 
     /**
