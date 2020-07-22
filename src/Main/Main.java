@@ -79,13 +79,13 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "", 0);
+                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
                     }
                     break;
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaGenetica(grafos[i]);
+                        //metGrafo.rutaCortaGenetica(grafos[i]);
                     }
                     break;
                 case "4":
@@ -97,7 +97,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaDinamica(grafos[i]);
+                        metGrafo.rutaCortaDinamica(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
@@ -135,22 +135,25 @@ public class Main {
 
         metGrafo.llenarGrafo(5);
 
-        //metGrafo.amplitud(metGrafo.grafo);
-        //mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.RamificacionyPoda("",0);
-        //System.out.println("Ruta corta por RyP");
+        metGrafo.amplitud(metGrafo.grafo);
+
+        mc.Insertar(metGrafo.grafo, 0);
+        //  metGrafo.RamificacionyPoda("",0);
+        //   System.out.println("Ruta corta por RyP");
         //mp.imprimirRuta(mp.rutaCorta);
-        //System.out.println("Rutas podadas");
+        // System.out.println("Rutas podadas");
         //mp.imprimirRutaPodada();
-        //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
-        //metGrafo.quitarMarca(metGrafo.grafo);
-        //  MemoryMeter memoria= new MemoryMeter();
-        /// System.out.println(memoria.measureDeep(new byte[1000]));
-        ///System.out.println(memoria.measureDeep(new byte[2000]));
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
-        mld.imprimirRuta(mld.rutaCorta);
 
+        vertice aux = metGrafo.grafo;
+        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
+        metGrafo.quitarMarca(aux);
+        metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
+        metGrafo.quitarMarca(metGrafo.grafo);
 
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        //  mld.verRutaCorta();
+        //   vertice aux = metGrafo.grafo;
+        //mld.imprimirRuta(mld.rutaCorta);
     }
 
 }

@@ -6,6 +6,7 @@
 package Methods;
 
 import Classes.Cola;
+import Classes.ListaDoble;
 import Classes.arco;
 import Classes.vertice;
 import java.util.ArrayList;
@@ -237,7 +238,7 @@ public class MetodosGrafo {
             return;
         }
         if (origen == destino) {
-            System.out.println(ruta + " distancia: " + distancia);
+            System.out.println("Voraz: " + ruta + " distancia: " + distancia);
         }
         int min = 100;
         arco auxMenor = null;
@@ -251,37 +252,36 @@ public class MetodosGrafo {
         }
         origen.marca = true;
         if (auxMenor != null) {
-            System.out.println(auxMenor.destino.ID + "/");
-            rutaCortaVoraz(auxMenor.destino, destino, ruta + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
+            rutaCortaVoraz(auxMenor.destino, destino, ruta + "->P" + auxMenor.peso + " V" + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
             rutaCortaVoraz(destino, destino, ruta, distancia);
         }
         return;
     }
 
-
-    public void rutaCortaGenetica(vertice vertice) {
+    public void rutaCortaGenetica(ListaDoble temp) {
 
     }
-    
+
     /**
-     *   Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     * Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     *
      * @param vertex
      * @param ruta
-     * @param pesoRuta 
+     * @param pesoRuta
      */
+    ArrayList<vertice> rutaV;
 
-      ArrayList<vertice> rutaV ;
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
             return;
         }
-           
-        if (vertex.ID == ultimo.ID) {  
-             rutaV = convertirRuta(ruta + vertex.ID + "/");
+
+        if (vertex.ID == ultimo.ID) {
+            rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, true);
         } else {
-             rutaV = convertirRuta(ruta + vertex.ID + "/");
+            rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, false);
         }
         vertex.marca = true;
@@ -292,17 +292,18 @@ public class MetodosGrafo {
         }
         vertex.marca = false;
     }
-        /**
+
+    /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 10/07/2020
      *
      * @param ruta
      * @return
      */
-     private ArrayList<vertice> convertirRuta(String ruta) {
+    private ArrayList<vertice> convertirRuta(String ruta) {
         ArrayList<vertice> rutaVertices = new ArrayList<>();
         String[] verticesID = ruta.split("/");
         for (String idV : verticesID) {
-              if (!idV.equals("")) {
+            if (!idV.equals("")) {
                 int id = Integer.parseInt(idV);
                 rutaVertices.add(buscar(id));
             }
@@ -310,8 +311,61 @@ public class MetodosGrafo {
         return rutaVertices;
     }
 
-    public void rutaCortaDinamica(vertice vertice) {
+    /**
+     * Fecha inicio: 07/07/2020 Ultima modificación: 18/07/2020. Método que
+     * impreme la ruta del algoritmo de programación dinámica Dijkstra
+     *
+     * @param destino último vértice
+     */
+    public void mostrarRuta(vertice destino) {
+        String ruta = "";
+        vertice aux = destino;
+        int peso = 0;
+        while (aux != null) {
+            ruta = "->P" + aux.pesoMin + " V" + aux.ID + "/" + ruta;
+            peso += aux.pesoMin;
+            aux = aux.antV;
+        }
+        System.out.println("PD: " + ruta + " distancia: " + peso);
+    }
 
+    /**
+     * Lógica del algoritmo Dijkstra
+     *
+     * @param origen vértice de origen de arco al que queremos insertar
+     * @param destino vértice destino de arco al que queremos insertar
+     */
+    public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
+        vertice aux = origen;
+        vertice ant = origen;
+        int min;
+        ant.distanciaMinima = 0;
+        while (aux != null) {
+            arco auxA = aux.sigA;
+            arco auxMin = null;
+            min = 10000;
+            while (auxA != null) { // para encontrar el más pequeño
+                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) { // 
+                    min = auxA.peso;
+                    auxMin = auxA;
+                }
+                auxA = auxA.sigA;
+            }
+            if (auxMin != null) {
+                if (auxMin.destino.distanciaMinima > (auxMin.peso /*+ ant.distanciaMinima*/)) {
+                    auxMin.destino.marca = true;
+                    auxMin.destino.distanciaMinima = auxMin.peso /*+ ant.distanciaMinima*/;
+                    auxMin.destino.antV = ant;
+                    ant = auxMin.destino;
+                }
+                auxMin.destino.pesoMin = auxMin.peso;
+            }
+            if (aux == destino) {
+                break;
+            }
+            aux = auxMin.destino;
+        }
+        mostrarRuta(destino);
     }
 
     public String rutaActual = "";
