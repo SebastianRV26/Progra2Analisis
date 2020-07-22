@@ -458,9 +458,9 @@ public class MetodosGrafo {
                 if (ag_evaluarFitness2(padre)<ag_evaluarFitness2(hijo2)) {
                     System.out.println("Es mejor el padre");
                     //ImprimirRuta(padre); 
-                    ag_evaluarFitness(padre);
+                    //ag_evaluarFitness(padre);
                     if(ag_mutar(padre)){
-                        System.out.println("muto el padre");
+                        System.err.println("muto el padre");
                     }
                     padre1 = null;
                     padre2 = null; 
@@ -469,16 +469,16 @@ public class MetodosGrafo {
             else{
                 if(ag_evaluarFitness2(hijo1)<ag_evaluarFitness2(hijo2)){
                    System.out.println("Es mejor el hijo1");
-                   ImprimirRuta(hijo1);
-                   ag_evaluarFitness(hijo1);
+                   //ImprimirRuta(hijo1);
+                   //ag_evaluarFitness(hijo1);
                    Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;  
                 }
                 else{
                     System.out.println("Es mejor el hijo2");
-                    ImprimirRuta(hijo2);
-                    ag_evaluarFitness(hijo2);
+                    //ImprimirRuta(hijo2);
+                    //ag_evaluarFitness(hijo2);
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
@@ -488,11 +488,11 @@ public class MetodosGrafo {
         else{
             if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo1)) {
                 if (ag_evaluarFitness2(madre)<ag_evaluarFitness2(hijo2)) {
-                    System.out.println("Es mejor el padre");
-                    ImprimirRuta(madre); 
-                    ag_evaluarFitness(madre);
+                    System.out.println("Es mejor la madre");
+                    //ImprimirRuta(madre); 
+                    //ag_evaluarFitness(madre);
                     if(ag_mutar(madre)){
-                        System.out.println("muto el padre");
+                        System.out.println("muto el padre siendo madre");
                     }
                     padre1 = null;
                     padre2 = null; 
@@ -501,16 +501,16 @@ public class MetodosGrafo {
             else{
                 if(ag_evaluarFitness2(hijo1)<ag_evaluarFitness2(hijo2)){
                    System.out.println("Es mejor el hijo1");
-                   ag_evaluarFitness(hijo1);
-                   ImprimirRuta(hijo1);
+                   //ImprimirRuta(hijo1); 
+                    //ag_evaluarFitness(hijo1);
                    Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;  
                 }
                 else{
                     System.out.println("Es mejor el hijo2");
-                    ImprimirRuta(hijo2); 
-                    ag_evaluarFitness(hijo2);
+                    //ImprimirRuta(hijo2); 
+                    //ag_evaluarFitness(hijo2);
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
