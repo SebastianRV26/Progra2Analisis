@@ -8,6 +8,7 @@ package Methods;
 import Classes.arco;
 import Classes.ListaDoble;
 import Classes.vertice;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,7 +53,7 @@ public class MetodosListaDoble {
         int pos = 1;
         while (aux != null) {
             if (aux.sigN == null) {
-                if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.llegaDestino) || rutaCorta.pesoRuta == 0) {
+                if ((nuevo.pesoRuta < rutaCorta.pesoRuta  || rutaCorta.pesoRuta == 0) && nuevo.llegaDestino) {
                     rutaCorta = nuevo;
                 }
                 nuevo. posicion = pos;
@@ -74,8 +75,7 @@ public class MetodosListaDoble {
      * @param temp
      */
    public void imprimirRuta(ListaDoble temp) {
-        ArrayList<vertice> rutaVertices = temp.verticesRuta;
-        
+        ArrayList<vertice> rutaVertices = temp.verticesRuta;   
          for (int i = 0; i < rutaVertices.size() - 1; i++) {
             vertice origen = rutaVertices.get(i);
             vertice destino = rutaVertices.get(i + 1);
@@ -154,5 +154,29 @@ public class MetodosListaDoble {
             }
         }
         return null;
+    }
+
+     /**
+      * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
+      * @param tamanoGrafo
+      * @return 
+      */
+
+    public ArrayList<ListaDoble> rutasPorTamano(int tamanoGrafo) {
+        ListaDoble aux = inicio;
+        ArrayList<ListaDoble> listaRutas = null;
+        int cont = 0;
+        if (tamanoGrafo <= 20) {
+            while (cont != 20) {
+                listaRutas.add(buscarRuta(cont));
+                cont++;
+            }
+        } else {
+            while (cont != 100) {
+                listaRutas.add(buscarRuta(cont));
+                cont++;
+            }
+        }
+        return listaRutas;
     }
 }

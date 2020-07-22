@@ -19,7 +19,11 @@ import javax.xml.transform.Source;
  *
  * @author Sebas
  */
+
+ ;
+
 public class Main {
+    
 
     public static vertice[] ultimos = new vertice[6];
 
@@ -99,7 +103,7 @@ public class Main {
                 case "6":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                      //  metGrafo.rutaCortaRamificacionYPoda();
+                        //  metGrafo.rutaCortaRamificacionYPoda();
                     }
                     break;
                 case "7":
@@ -129,27 +133,23 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(10);
-     
+        metGrafo.llenarGrafo(5);
 
-     metGrafo.amplitud(metGrafo.grafo);
+        //metGrafo.amplitud(metGrafo.grafo);
+        //mc.Insertar(metGrafo.grafo, 0);
+        //metGrafo.RamificacionyPoda("",0);
+        //System.out.println("Ruta corta por RyP");
+        //mp.imprimirRuta(mp.rutaCorta);
+        //System.out.println("Rutas podadas");
+        //mp.imprimirRutaPodada();
+        //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
+        //metGrafo.quitarMarca(metGrafo.grafo);
+        //  MemoryMeter memoria= new MemoryMeter();
+        /// System.out.println(memoria.measureDeep(new byte[1000]));
+        ///System.out.println(memoria.measureDeep(new byte[2000]));
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        mld.imprimirRuta(mld.rutaCorta);
 
-
-      mc.Insertar(metGrafo.grafo, 0);
-   //  metGrafo.RamificacionyPoda("",0);
-     //   System.out.println("Ruta corta por RyP");
-     //mp.imprimirRuta(mp.rutaCorta);
-       // System.out.println("Rutas podadas");
-     //mp.imprimirRutaPodada();
-       
-
-            //   vertice aux = metGrafo.grafo;
-   //metGrafo.rutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "", 0);
-        
-       metGrafo.quitarMarca(metGrafo.grafo);
-     metGrafo.rutaCortaBacktracking(metGrafo.grafo, "",0);
-
-     mld.imprimirRuta(mld.rutaCorta);
 
     }
 
