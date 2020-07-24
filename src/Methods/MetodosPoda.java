@@ -75,7 +75,7 @@ public class MetodosPoda {
         int contador = 1;
         Poda aux = inicio;
         while (aux != null) {     
-            if(!aux.esSolucion && contador <= 5){
+            if(!aux.esSolucion && contador <= 50){
                 imprimirRuta(aux);
                 contador ++;
             }

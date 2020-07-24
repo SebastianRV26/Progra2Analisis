@@ -5,15 +5,15 @@
  */
 package Main;
 
-import Classes.ListaDoble;
+
 import Classes.vertice;
 import Methods.MetodosCola;
 import Methods.MetodosGrafo;
 import Methods.MetodosListaDoble;
 import Methods.MetodosPoda;
-import java.util.ArrayList;
 import java.util.Scanner;
-import javax.xml.transform.Source;
+
+
 
 /**
  *
@@ -133,22 +133,27 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
+        //System.out.println(objectexplorer.MemoryMeasurer.measureBytes(mc));
+        System.out.println();
+        
         metGrafo.llenarGrafo(5);
+
+        System.out.println(mc.hashCode());
 
         metGrafo.amplitud(metGrafo.grafo);
 
         mc.Insertar(metGrafo.grafo, 0);
-        //  metGrafo.RamificacionyPoda("",0);
-        //   System.out.println("Ruta corta por RyP");
-        //mp.imprimirRuta(mp.rutaCorta);
-        // System.out.println("Rutas podadas");
-        //mp.imprimirRutaPodada();
+         metGrafo.RamificacionyPoda("",0);
+           System.out.println("Ruta corta por RyP");
+       mp.imprimirRuta(mp.rutaCorta);
+        System.out.println("Rutas podadas");
+        mp.imprimirRutaPodada();
 
-        vertice aux = metGrafo.grafo;
-        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
-        metGrafo.quitarMarca(aux);
-        metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
-        metGrafo.quitarMarca(metGrafo.grafo);
+        //vertice aux = metGrafo.grafo;
+        //metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
+        //metGrafo.quitarMarca(aux);
+       //metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
+      // metGrafo.quitarMarca(metGrafo.grafo);
 
         //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //  mld.verRutaCorta();
