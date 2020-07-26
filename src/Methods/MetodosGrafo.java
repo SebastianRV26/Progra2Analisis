@@ -352,20 +352,14 @@ public class MetodosGrafo {
      */
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
         Random random = new Random();
-        int index2 = random.nextInt(poblacion.size())-1;
+        int index2 = random.nextInt(poblacion.size()-1)+1;
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacion.size())-1;
+            int index = random.nextInt(poblacion.size()-1);
             padre1 = poblacion.get(index);
             padre2 = poblacion.get(index2);
             poblacion.remove(poblacion.get(index2));
             poblacion.remove(poblacion.get(index));
-        }//end 1er if
-//        else if(padre1!=null){
-//            
-//            padre2 = poblacion.get(index2);
-//            poblacion.remove(poblacion.get(index2));
-//        }
-        
+        }//end 1er if    
     }
     
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre, int tamGrafo){
@@ -443,33 +437,7 @@ public class MetodosGrafo {
                 break;     
             }
             System.err.println("volvio a sacar punto de cruce");   
-        }
-        
-        
-        
-//        if((hijo2.size()<tamGrafo/2)||(hijo1.size()<tamGrafo/2)){
-//                System.out.println("vamos a cambiar una ruta agregando un vertice");
-//                if(hijo1.size()<tamGrafo/2){
-//                     System.out.println("tam"+(tamGrafo/2)+"tam del hijo: "+hijo1.size());
-//                    ImprimirRuta(hijo1);
-//                   while (hijo1.size()>=tamGrafo/2) {
-//                       ag_mutar(hijo1);
-//                   }
-//                   System.out.println("cambio al hijo"); 
-//                }
-//                else if(hijo2.size()<tamGrafo/2){
-//                     System.out.println("tam"+(tamGrafo/2)+"tam de la hija: "+hijo2.size());
-//                   ImprimirRuta(hijo2);
-//                   while (hijo2.size()>=tamGrafo/2) {
-//                       ag_mutar(hijo2);
-//                   }
-//                   System.out.println("cambio a la hija"); 
-//                }
-//        }
-   
-        //Se evaluan las rutas
-         
-        
+        }  
     }
    
     public void ag_evaluar(ArrayList<vertice> padre,ArrayList<vertice> madre,ArrayList<vertice> hijo1,ArrayList<vertice> hijo2){
@@ -677,13 +645,20 @@ public class MetodosGrafo {
         ImprimirTodasRutas(Manipulados);
         System.out.println("cont"+cont);
         
-//        for (ArrayList<vertice> Manipulado : Manipulados) {
-//            ag_escogerPadres(Manipulados);
-//            ImprimirRuta(padre1);
-//            ImprimirRuta(padre2);
-//            ag_cruzar(padre1, padre2,tamGrafo);
-//            
-//        }
+        
+            for (int i = 0; i < Manipulados.size(); i++) {
+                ag_escogerPadres(Manipulados);
+                ImprimirRuta(padre1);
+                ImprimirRuta(padre2);
+                ag_cruzar(padre1, padre2, tamGrafo);
+            }
+        ImprimirTodasRutas(Manipulados);
+        System.out.println(Manipulados.size());
+        for (int i = 0; i < Manipulados.size(); i++) {
+            ag_evaluarFitness(Manipulados.get(i));
+            
+        }
+        
       
     }
 

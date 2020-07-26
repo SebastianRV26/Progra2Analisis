@@ -133,7 +133,7 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(8);
+        metGrafo.llenarGrafo(10);
 
         //metGrafo.amplitud(metGrafo.grafo);
 
@@ -144,7 +144,7 @@ public class Main {
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         
         //mld.imprimirRuta(mld.rutaCorta);
-        metGrafo.rutaCortaGenetica(8);
+        metGrafo.rutaCortaGenetica(10);
     }
 
 }
