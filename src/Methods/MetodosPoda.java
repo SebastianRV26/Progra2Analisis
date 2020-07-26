@@ -31,43 +31,61 @@ public class MetodosPoda {
         }
         return instance;
     }
-
+    public double instruccionesPoda = 0;
+    public double memoriaPoda = 0;
+     public double pesoCola = 256;
+    public double pesoPoda = 320;
+    public double pesoArco = 256;
+    public double pesoVertice = 320;
+    public double pesoListaDoble= 320;
+    public double pesoArrayVacio = 192;
+    public double pesoArrayConElementos = 640;
+    public double pesoVectorStringVacio = 448;
+    public double pesoVectorStringConElementos = 2112;
     
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
      * @param ruta
      * @param pesoRuta
      * @param esSolucion
-     * @return 
+     * @return
      */
-    public boolean insertarPoda( ArrayList<vertice> ruta, int pesoRuta, boolean esSolucion) {
+    public boolean insertarPoda(ArrayList<vertice> ruta, int pesoRuta, boolean esSolucion) {
         if (buscarRuta(ruta) == null) {
             Poda nuevo = new Poda(ruta, pesoRuta, esSolucion, 0);
+            memoriaPoda += pesoPoda;
+            instruccionesPoda += 2;
             if (inicio == null) {
                 inicio = rutaCorta = nuevo;
+                instruccionesPoda += 4;
                 return true;
             }
             Poda aux = inicio;
             int pos = 1;
+            memoriaPoda += pesoPoda + 32;
+            instruccionesPoda += 2;
             while (aux != null) {
                 if (aux.sig == null) {
                     if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.esSolucion) || rutaCorta.pesoRuta == 0) {
                         rutaCorta = nuevo;
+                        instruccionesPoda += 3;
                     }
                     nuevo.posicion = pos;
                     aux.sig = nuevo;
                     nuevo.ant = aux;
-
+                    instruccionesPoda += 6;
                     return true;
                 }
                 pos++;
                 aux = aux.sig;
+                instruccionesPoda += 3;
             }
-
+            instruccionesPoda++;
         }
+        instruccionesPoda += 3;
         return false;
     }
-    
+
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
      */
@@ -82,7 +100,23 @@ public class MetodosPoda {
             aux = aux.sig;
         }
     }
-     
+
+    /**
+     * Fecha inicio: 12/07/2020 Ultima modificación: 12/07/2020
+     * @return 
+     */
+    public int totalRutasPodadas() {
+        int contador = 0;
+        Poda aux = inicio;
+        while (aux != null) {
+            if (!aux.esSolucion) {
+                contador++;
+            }
+            aux = aux.sig;
+        }
+        return  contador;
+    }
+
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
      * @param temp 

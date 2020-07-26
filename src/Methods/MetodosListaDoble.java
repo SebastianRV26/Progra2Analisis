@@ -32,6 +32,17 @@ public class MetodosListaDoble {
     }
 
     public ListaDoble inicio, ultimo, rutaCorta;
+    public double instruccionesListaDoble = 0; // asignaciones y comparaciones
+    public double memoriaListaDoble = 0; 
+     public double pesoCola = 256;
+    public double pesoPoda = 320;
+    public double pesoArco = 256;
+    public double pesoVertice = 320;
+    public double pesoListaDoble= 320;
+    public double pesoArrayVacio = 192;
+    public double pesoArrayConElementos = 640;
+    public double pesoVectorStringVacio = 448;
+    public double pesoVectorStringConElementos = 2112;
 
     /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 09/07/2020
@@ -43,28 +54,36 @@ public class MetodosListaDoble {
      */
     public boolean insertarRuta(ArrayList<vertice> ruta, int pesoRuta, boolean tieneFin) {
         ListaDoble nuevo = new ListaDoble(ruta, pesoRuta, tieneFin, 0);
+        instruccionesListaDoble ++;
+        memoriaListaDoble += pesoListaDoble;
         if (inicio == null) {
             nuevo.posicion = 0;
             inicio = ultimo = rutaCorta=nuevo;
+            instruccionesListaDoble += 4;
             return true;
         }
         ListaDoble aux = inicio;
         int pos = 1;
+        memoriaListaDoble += pesoListaDoble + 32;
+        instruccionesListaDoble +=3;
         while (aux != null) {
             if (aux.sigN == null) {
-                if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.llegaDestino) || rutaCorta.pesoRuta == 0) {
+                if ((nuevo.pesoRuta < rutaCorta.pesoRuta  || rutaCorta.pesoRuta == 0) && nuevo.llegaDestino) {
                     rutaCorta = nuevo;
+                    instruccionesListaDoble += 4;
                 }
                 nuevo. posicion = pos;
                 aux.sigN = nuevo;
                 nuevo.antN = aux;
                 ultimo = nuevo;
+                instruccionesListaDoble += 7;
                 return true;
             }
-             pos ++;
+            pos ++;
             aux = aux.sigN;
+            instruccionesListaDoble +=4;
         }
-
+        instruccionesListaDoble ++;
         return false;
     }
 
@@ -74,8 +93,7 @@ public class MetodosListaDoble {
      * @param temp
      */
    public void imprimirRuta(ListaDoble temp) {
-        ArrayList<vertice> rutaVertices = temp.verticesRuta;
-        
+        ArrayList<vertice> rutaVertices = temp.verticesRuta;   
          for (int i = 0; i < rutaVertices.size() - 1; i++) {
             vertice origen = rutaVertices.get(i);
             vertice destino = rutaVertices.get(i + 1);
@@ -154,5 +172,29 @@ public class MetodosListaDoble {
             }
         }
         return null;
+    }
+
+     /**
+      * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
+      * @param tamanoGrafo
+      * @return 
+      */
+
+    public ArrayList<ListaDoble> rutasPorTamano(int tamanoGrafo) {
+        ListaDoble aux = inicio;
+        ArrayList<ListaDoble> listaRutas = null;
+        int cont = 0;
+        if (tamanoGrafo <= 20) {
+            while (cont != 20) {
+                listaRutas.add(buscarRuta(cont));
+                cont++;
+            }
+        } else {
+            while (cont != 100) {
+                listaRutas.add(buscarRuta(cont));
+                cont++;
+            }
+        }
+        return listaRutas;
     }
 }
