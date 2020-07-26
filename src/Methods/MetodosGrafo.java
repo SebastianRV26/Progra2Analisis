@@ -45,11 +45,12 @@ public class MetodosGrafo {
     public double pesoPoda = 320;
     public double pesoArco = 256;
     public double pesoVertice = 320;
-    public double pesoListaDoble= 320;
+    public double pesoListaDoble = 320;
     public double pesoArrayVacio = 192;
     public double pesoArrayConElementos = 640;
     public double pesoVectorStringVacio = 448;
     public double pesoVectorStringConElementos = 2112;
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
@@ -86,7 +87,7 @@ public class MetodosGrafo {
      */
     public vertice buscar(int id) {
         vertice aux = grafo;
-        instrucciones ++;
+        instrucciones++;
         while (aux != null) {
             if (aux.ID == id) {
                 instrucciones += 2;
@@ -109,7 +110,7 @@ public class MetodosGrafo {
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-   public String insertarArco(vertice origen, vertice destino, int peso) {
+    public String insertarArco(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             nuevo.destino = destino;
@@ -135,7 +136,7 @@ public class MetodosGrafo {
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-      public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
+    public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             arco auxNuevo = new arco(peso);
@@ -159,6 +160,7 @@ public class MetodosGrafo {
         }
         return false;
     }
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
@@ -247,6 +249,16 @@ public class MetodosGrafo {
         }
     }
 
+    public void MostrarRutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
+        quitarMarca(origen);
+        memoria = 0;
+        instrucciones = 0;
+        System.out.println("Ruta corta por el diseño voraz");
+        rutaCortaVoraz(origen, destino, ruta, distancia);
+        System.out.println("Memoria usada por voraz: " + memoria + " bits");
+        System.out.println("Instrucciones usadas por voraz: " + instrucciones + "\n");
+    }
+
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 10/07/2020.
      *
@@ -259,18 +271,19 @@ public class MetodosGrafo {
      * @param distancia distancia total de los arcos por los vértices que pasa
      */
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
+        instrucciones += 2;
         if ((origen == null) || (origen.marca == true)) {
-            instrucciones += 2;
             return;
         }
+        instrucciones++;
         if (origen == destino) {
-            instrucciones++;
             System.out.println("Voraz: " + ruta + " distancia: " + distancia);
         }
-        int min = 100; // 
+        int min = 100;
         arco auxMenor = null;
         arco aux = origen.sigA;
         instrucciones += 3;
+        memoria += 32 + pesoArco * 2;
         while (aux != null) {
             instrucciones++;
             if (aux.peso < min && aux.destino.marca == false) {
@@ -282,9 +295,8 @@ public class MetodosGrafo {
             instrucciones++;
         }
         origen.marca = true;
-        instrucciones += 2;
+        instrucciones += 3;
         if (auxMenor != null) {
-            instrucciones++;
             rutaCortaVoraz(auxMenor.destino, destino, ruta + "->P" + auxMenor.peso + " V" + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
             instrucciones++;
@@ -308,10 +320,10 @@ public class MetodosGrafo {
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
-            instrucciones ++;
+            instrucciones++;
             return;
         }
-        instrucciones +=2;
+        instrucciones += 2;
         if (vertex.ID == ultimo.ID) {
             rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, true);
@@ -326,14 +338,14 @@ public class MetodosGrafo {
         vertex.marca = true;
         arco auxA = vertex.sigA;
         memoria += pesoArco;
-        instrucciones +=2;
+        instrucciones += 2;
         while (auxA != null) {
             rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);
             auxA = auxA.sigA;
-            instrucciones +=3;
+            instrucciones += 3;
         }
         vertex.marca = false;
-        instrucciones ++;
+        instrucciones++;
     }
 
     /**
@@ -349,7 +361,7 @@ public class MetodosGrafo {
         memoria += pesoArrayVacio + pesoVectorStringConElementos;
         for (int i = 0; i < verticesID.length; i++) {
             String idV = verticesID[i];
-            memoria += 8*idV.length();
+            memoria += 8 * idV.length();
             if (!idV.equals("")) {
                 int id = Integer.parseInt(idV);
                 memoria += 32;
@@ -361,6 +373,16 @@ public class MetodosGrafo {
         memoria += pesoArrayConElementos;
         instrucciones += 2;
         return rutaVertices;
+    }
+
+    public void MostrarRutaCortaDinamica(vertice origen, vertice destino) {
+        quitarMarca(origen);
+        memoria = 0;
+        instrucciones = 0;
+        System.out.println("Ruta corta por el diseño programación dinámica");
+        rutaCortaDinamica(origen, destino);
+        System.out.println("Memoria usada por programación dinámica: " + memoria + " bits");
+        System.out.println("Instrucciones usadas por programación dinámica: " + instrucciones + "\n");
     }
 
     /**
@@ -396,12 +418,14 @@ public class MetodosGrafo {
     public void rutaCortaDinamica(vertice origen, vertice destino) {
         vertice aux = origen;
         int min;
+        memoria += pesoVertice + 32;
         aux.distanciaMinima = 0;
         instrucciones += 2;
         byte cont = 1;
         while (aux != null) {
             arco auxA = aux.sigA;
             arco auxMin = null;
+            memoria += pesoArco * 2;
             min = 10000;
             instrucciones += 4;
             while (auxA != null) {
@@ -444,7 +468,7 @@ public class MetodosGrafo {
 
     public String rutaActual = "";
     ArrayList<vertice> listaRuta;
-     int rutaMinima = 0;
+    int rutaMinima = 0;
 
     /**
      * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
@@ -452,11 +476,11 @@ public class MetodosGrafo {
      * @param ruta
      * @param dist
      */
-      public void RamificacionyPoda(String ruta, int dist) {
+    public void RamificacionyPoda(String ruta, int dist) {
         while (!mc.colaVacia()) {
             Cola auxCola = mc.Extraer();
             vertice origen = auxCola.value;
-            memoria += pesoCola + pesoVertice; 
+            memoria += pesoCola + pesoVertice;
             if (origen.marca) {
                 instrucciones += 3;
                 return;
@@ -466,9 +490,9 @@ public class MetodosGrafo {
                 instrucciones += 2;
                 if (origen.equals(ultimo)) {
                     rutaMinima = dist;
-                     listaRuta = convertirRuta(rutaActual);
+                    listaRuta = convertirRuta(rutaActual);
                     rutaActual = ruta + origen.ID + "/";
-                    memoria += 8*rutaActual.length();
+                    memoria += 8 * rutaActual.length();
                     memoria += 32;
                     memoria += pesoArrayConElementos;
                     mp.insertarPoda(listaRuta, rutaMinima, true);
@@ -476,7 +500,7 @@ public class MetodosGrafo {
                 } else {
                     origen.marca = true;
                     arco auxA = origen.sigA;
-                    memoria +=pesoArco;
+                    memoria += pesoArco;
                     instrucciones += 2;
                     while (auxA != null) {
                         mc.Insertar(auxA.destino, auxA.peso);
@@ -494,7 +518,7 @@ public class MetodosGrafo {
                 instrucciones += 2;
             }
         }
-        instrucciones += 1 +mp.instruccionesPoda + mc.instruccionesCola;
+        instrucciones += 1 + mp.instruccionesPoda + mc.instruccionesCola;
         memoria += mp.memoriaPoda + mc.memoriaCola;
     }
 
@@ -521,13 +545,13 @@ public class MetodosGrafo {
         System.out.println("Ruta corta por el diseño Ramificación y Poda");
         mp.imprimirRuta(mp.rutaCorta);
         System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
-        System.out.println("Instrucciones usadas por RyP: "+ instrucciones);
+        System.out.println("Instrucciones usadas por RyP: " + instrucciones);
         System.out.println("Total de rutas podadas: " + mp.totalRutasPodadas());
         System.out.println("=====================");
         System.out.println("5 ejemplos de rutas podadas");
         mp.imprimirRutaPodada();
     }
-    
+
     public void datosBactraking() {
         memoria = 0;
         instrucciones = 0;

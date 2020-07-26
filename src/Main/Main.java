@@ -5,7 +5,6 @@
  */
 package Main;
 
-
 import Classes.Cola;
 import Classes.ListaDoble;
 import Classes.Poda;
@@ -18,17 +17,13 @@ import Methods.MetodosPoda;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-
 /**
  *
  * @author Sebas
  */
-
- ;
+;
 
 public class Main {
-    
 
     public static vertice[] ultimos = new vertice[6];
 
@@ -84,7 +79,7 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
+                        metGrafo.MostrarRutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
                     }
                     break;
                 case "3":
@@ -102,7 +97,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaDinamica(grafos[i], ultimos[i]);
+                        metGrafo.MostrarRutaCortaDinamica(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
@@ -137,18 +132,12 @@ public class Main {
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
-          
-        
 
-       metGrafo.llenarGrafo(20);
-   
-       
+        metGrafo.llenarGrafo(10);
 
-         //metGrafo.datosRyP();
-         metGrafo.datosBactraking();
-        
+        //metGrafo.datosRyP();
+        //metGrafo.datosBactraking();
 
-     
         /*
             ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
        
@@ -163,24 +152,17 @@ public class Main {
                     }
                 }));
          */
-    
-        
-
-
-
-  
-         //  System.out.println("Ruta corta por RyP");
-       //mp.imprimirRuta(mp.rutaCorta);
+        //  System.out.println("Ruta corta por RyP");
+        //mp.imprimirRuta(mp.rutaCorta);
         //System.out.println("Rutas podadas");
         //mp.imprimirRutaPodada();
-
         //vertice aux = metGrafo.grafo;
         //metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
         //metGrafo.quitarMarca(aux);
-       //metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
-      // metGrafo.quitarMarca(metGrafo.grafo);
-
-    
+        //metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
+        // metGrafo.quitarMarca(metGrafo.grafo);
+        
+        //menuAlgoritmos();
     }
-  
+
 }
