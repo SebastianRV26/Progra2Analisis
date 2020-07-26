@@ -346,6 +346,96 @@ public class MetodosGrafo {
         System.out.println("PD: " + ruta + " distancia: " + peso);
     }
 
+    public void rutaCortaDinamica1(vertice origen, vertice destino) {
+        vertice aux = origen;
+        vertice ant = origen;
+        int min;
+        ant.distanciaMinima = 0;
+        byte cont = 1;
+        while (aux != null) {
+            arco auxA = aux.sigA;
+            arco auxMin = null;
+            min = 10000;
+            while (auxA != null) {
+                if (auxA.destino.distanciaMinima > auxA.peso + ant.distanciaMinima && auxA.destino.marca!=true){
+                    auxA.destino.distanciaMinima = auxA.peso + ant.distanciaMinima;
+                    auxA.destino.antV = aux;
+                    auxA.destino.pesoMin = auxA.peso;
+                }
+                if (aux.distanciaMinima > auxA.peso + ant.distanciaMinima && auxA.destino.marca!=true){
+                    aux.distanciaMinima = auxA.peso + ant.distanciaMinima;
+                    aux.pesoMin = auxA.peso;
+                }
+                if (min > auxA.peso + ant.distanciaMinima){
+                    min = auxA.peso + ant.distanciaMinima;
+                    auxMin = auxA; 
+                }
+                auxA = auxA.sigA;
+            }
+            ant = aux;
+            ant.distanciaMinima = aux.distanciaMinima + aux.pesoMin;
+            if (aux == destino) {
+                break;
+            }
+            aux.marca = true;
+            aux = auxMin.destino;
+        }
+        mostrarRuta(destino);
+    }
+    /**
+     * Fecha inicio: 07/07/2020. Ultima modificación: 21/07/2020.
+     *
+     * Lógica del algoritmo Dijkstra: analizar la mejor manera de llegar al
+     * destino con forme a la menor distancia de llegar de un vértice a otro
+     *
+     * @param origen vértice de origen de arco al que queremos insertar
+     * @param destino vértice destino de arco al que queremos insertar
+     */
+    public void rutaCortaDinamica(vertice origen, vertice destino) {
+        vertice aux = origen;
+        vertice ant = origen;
+        int min;
+        ant.distanciaMinima = 0;
+        byte cont = 1;
+        while (aux != null) {
+            arco auxA = aux.sigA;
+            arco auxMin = null;
+            min = 10000;
+            while (auxA != null) {
+                if (auxA.destino.distanciaMinima > auxA.peso + ant.distanciaMinima && !auxA.destino.marca) {
+                    auxA.destino.distanciaMinima = auxA.peso + ant.distanciaMinima;
+                    auxA.destino.antV = ant; //aux
+                    auxA.destino.pesoMin = auxA.peso;
+                    //ant.distanciaMinima = aux.distanciaMinima;
+                    aux.distanciaMinima = auxA.peso + ant.distanciaMinima;
+                }
+                if (auxA.peso + ant.distanciaMinima < min && !auxA.destino.marca) {
+                    min = auxA.peso + ant.distanciaMinima;
+                    auxMin = auxA;
+                }
+                auxA = auxA.sigA;
+            }
+            if (cont < 6) {
+                vertice aux2 = origen;
+                System.out.println("PD fase " + cont);
+                while (aux2 != null) {
+                    System.out.println(aux2.ID + " distancia: " + aux2.distanciaMinima);
+                    aux2 = aux2.sigV;
+                }
+                cont++;
+            }
+            //ant.distanciaMinima = aux.distanciaMinima;
+            ant = aux;
+            //ant.distanciaMinima = aux.distanciaMinima;
+            if (aux == destino) {
+                break;
+            }
+            aux.marca = true;
+            aux = auxMin.destino;
+        }
+        mostrarRuta(destino);
+    }
+
     /**
      * Fecha inicio: 07/07/2020. Ultima modificación: 19/07/2020.
      *
@@ -355,35 +445,41 @@ public class MetodosGrafo {
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
      */
-    public void rutaCortaDinamica(vertice origen, vertice destino) { 
+    public void rutaCortaDinamica2(vertice origen, vertice destino) {
         vertice aux = origen;
         vertice ant = origen;
         int min;
+        byte cont = 1;
         ant.distanciaMinima = 0;
         while (aux != null) {
             arco auxA = aux.sigA;
             arco auxMin = null;
             min = 10000;
-            while (auxA != null) { 
-                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) { // 
+            while (auxA != null) {
+                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) {
                     min = auxA.peso;
                     auxMin = auxA;
+                    aux = auxA.destino;
                 }
+                aux.distanciaMinima = auxA.peso + ant.distanciaMinima;
                 auxA = auxA.sigA;
             }
             if (auxMin != null) {
-                if (auxMin.destino.distanciaMinima > (auxMin.peso /*+ ant.distanciaMinima*/)) {
-                    auxMin.destino.marca = true;
-                    auxMin.destino.distanciaMinima = auxMin.peso /*+ ant.distanciaMinima*/;
+                aux = auxMin.destino;
+                if (aux.distanciaMinima > (auxMin.peso)) {
+                    aux.distanciaMinima = auxMin.peso;
                 }
-                auxMin.destino.antV = ant;
-                ant = auxMin.destino;
-                auxMin.destino.pesoMin = auxMin.peso;
+                aux.antV = ant;
+                ant = aux;
+                ant.distanciaMinima = aux.distanciaMinima;
+                aux.pesoMin = auxMin.peso;
             }
             if (aux == destino) {
                 break;
             }
+            aux.marca = true;
             aux = auxMin.destino;
+
         }
         mostrarRuta(destino);
     }
