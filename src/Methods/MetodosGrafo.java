@@ -364,11 +364,14 @@ public class MetodosGrafo {
      */
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
         Random random = new Random();
-        int index2 = random.nextInt(poblacion.size())-1;
+        System.out.println("tamanno  " + poblacion.size() );
+        int index2 = random.nextInt(poblacion.size()-1) +1;
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacion.size())-1;
+            int index = random.nextInt(poblacion.size()-1) +1;
             padre1 = poblacion.get(index);
             padre2 = poblacion.get(index2);
+            System.out.println("Indice 2    " +index2);
+            System.out.println("Indice    " +index);
             poblacion.remove(poblacion.get(index2));
             poblacion.remove(poblacion.get(index));
         }//end 1er if
@@ -687,16 +690,26 @@ public class MetodosGrafo {
         cont++;
         }
         ImprimirTodasRutas(Manipulados);
-        System.out.println("cont"+cont);
-        
-//        for (ArrayList<vertice> Manipulado : Manipulados) {
-//            ag_escogerPadres(Manipulados);
-//            ImprimirRuta(padre1);
-//            ImprimirRuta(padre2);
-//            ag_cruzar(padre1, padre2,tamGrafo);
-//            
-//        }
-      
+        System.out.println("cont" + cont);
+
+        for (int i = 0; i < Manipulados.size(); i++) {
+            ag_evaluarFitness(Manipulados.get(i));
+
+        }
+        for (int i = 0; i < Manipulados.size(); i++) {
+            ag_escogerPadres(Manipulados);
+            ImprimirRuta(padre1);
+            ImprimirRuta(padre2);
+            ag_cruzar(padre1, padre2, tamGrafo);
+        }
+                ImprimirTodasRutas(Manipulados);
+                   for (int i = 0; i < Manipulados.size(); i++) {
+            ag_escogerPadres(Manipulados);
+            ImprimirRuta(padre1);
+            ImprimirRuta(padre2);
+            ag_cruzar(padre1, padre2, tamGrafo);
+        }
+                ImprimirTodasRutas(Manipulados);
     }
 
 

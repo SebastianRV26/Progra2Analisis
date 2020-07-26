@@ -140,12 +140,12 @@ public class Main {
           
         
 
-       metGrafo.llenarGrafo(20);
+       metGrafo.llenarGrafo(10);
    
        
 
          //metGrafo.datosRyP();
-         metGrafo.datosBactraking();
+         //metGrafo.datosBactraking();
         
 
      
@@ -181,7 +181,7 @@ public class Main {
       // metGrafo.quitarMarca(metGrafo.grafo);
 
     
-        metGrafo.llenarGrafo(8);
+       // metGrafo.llenarGrafo(8);
 
         //metGrafo.amplitud(metGrafo.grafo);
 
@@ -192,7 +192,7 @@ public class Main {
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         
         //mld.imprimirRuta(mld.rutaCorta);
-        metGrafo.rutaCortaGenetica(8);
+        metGrafo.rutaCortaGenetica(10);
     }
   
 }
