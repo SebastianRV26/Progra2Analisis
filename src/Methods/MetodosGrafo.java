@@ -40,7 +40,7 @@ public class MetodosGrafo {
     MetodosCola mc = MetodosCola.getInstance();
     MetodosPoda mp = MetodosPoda.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
-    public int lineas = 0; // líneas ejecutasas
+    public int memoria = 0; // memoria consumida
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
@@ -250,25 +250,34 @@ public class MetodosGrafo {
      */
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
         if ((origen == null) || (origen.marca == true)) {
+            instrucciones += 2;
             return;
         }
         if (origen == destino) {
+            instrucciones++;
             System.out.println("Voraz: " + ruta + " distancia: " + distancia);
         }
-        int min = 100;
+        int min = 100; // 
         arco auxMenor = null;
         arco aux = origen.sigA;
+        instrucciones += 3;
         while (aux != null) {
+            instrucciones++;
             if (aux.peso < min && aux.destino.marca == false) {
                 min = aux.peso;
                 auxMenor = aux;
+                instrucciones += 4;
             }
             aux = aux.sigA;
+            instrucciones++;
         }
         origen.marca = true;
+        instrucciones += 2;
         if (auxMenor != null) {
+            instrucciones++;
             rutaCortaVoraz(auxMenor.destino, destino, ruta + "->P" + auxMenor.peso + " V" + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
+            instrucciones++;
             rutaCortaVoraz(destino, destino, ruta, distancia);
         }
         return;
@@ -337,10 +346,13 @@ public class MetodosGrafo {
     public void mostrarRuta(vertice destino) {
         String ruta = "";
         vertice aux = destino;
+        instrucciones += 2;
         while (aux != null) {
             ruta = "->P" + aux.pesoMin + " V" + aux.ID + "/" + ruta;
             aux = aux.antV;
+            instrucciones += 2;
         }
+        instrucciones++;
         System.out.println("PD: " + ruta + " distancia: " + destino.distanciaMinima);
     }
 
@@ -357,24 +369,31 @@ public class MetodosGrafo {
         vertice aux = origen;
         int min;
         aux.distanciaMinima = 0;
+        instrucciones += 2;
         byte cont = 1;
         while (aux != null) {
             arco auxA = aux.sigA;
             arco auxMin = null;
             min = 10000;
+            instrucciones += 4;
             while (auxA != null) {
-                if (auxA.destino.distanciaMinima > auxA.peso + aux.distanciaMinima && auxA.destino.marca!=true){
+                instrucciones++;
+                if (auxA.destino.distanciaMinima > auxA.peso + aux.distanciaMinima && auxA.destino.marca != true) {
                     auxA.destino.distanciaMinima = auxA.peso + aux.distanciaMinima;
                     auxA.destino.antV = aux;
                     auxA.destino.pesoMin = auxA.peso;
+                    instrucciones += 3;
                 }
-                if (min > auxA.peso + aux.distanciaMinima && !auxA.destino.marca){
+                instrucciones += 2;
+                if (min > auxA.peso + aux.distanciaMinima && !auxA.destino.marca) {
                     min = auxA.peso + aux.distanciaMinima;
-                    auxMin = auxA; 
+                    auxMin = auxA;
+                    instrucciones += 2;
                 }
+                instrucciones += 3;
                 auxA = auxA.sigA;
             }
-            if (cont < 6) {
+            if (cont < 6) { // no se cuenta como memoria
                 vertice aux2 = origen;
                 System.out.println("--------------------------------------------");
                 System.out.println("PD fase " + cont);
@@ -384,11 +403,13 @@ public class MetodosGrafo {
                 }
                 cont++;
             }
+            instrucciones++;
             if (aux == destino) {
                 break;
             }
             aux.marca = true;
             aux = auxMin.destino;
+            instrucciones += 3;
         }
         mostrarRuta(destino);
     }
