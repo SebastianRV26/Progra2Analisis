@@ -129,7 +129,7 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(5);
+        metGrafo.llenarGrafo(1000);
 
         metGrafo.amplitud(metGrafo.grafo);
 
@@ -141,11 +141,10 @@ public class Main {
         //mp.imprimirRutaPodada();
 
         vertice aux = metGrafo.grafo;
-        
+        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
         metGrafo.quitarMarca(aux);
         metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
         metGrafo.quitarMarca(metGrafo.grafo);
-        metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
 
         //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //  mld.verRutaCorta();
