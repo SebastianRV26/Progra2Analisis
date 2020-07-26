@@ -5,7 +5,10 @@
  */
 package Main;
 
+import Classes.Cola;
 import Classes.ListaDoble;
+import Classes.Poda;
+import Classes.arco;
 import Classes.vertice;
 import Methods.MetodosCola;
 import Methods.MetodosGrafo;
@@ -13,17 +16,14 @@ import Methods.MetodosListaDoble;
 import Methods.MetodosPoda;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.xml.transform.Source;
 
 /**
  *
  * @author Sebas
  */
-
- ;
+;
 
 public class Main {
-    
 
     public static vertice[] ultimos = new vertice[6];
 
@@ -79,7 +79,7 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
+                        metGrafo.MostrarRutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
                     }
                     break;
                 case "3":
@@ -97,7 +97,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaDinamica(grafos[i], ultimos[i]);
+                        metGrafo.MostrarRutaCortaDinamica(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
