@@ -90,7 +90,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        //metGrafo.rutaCortaGenetica(grafos[i]);
+                       // metGrafo.rutaCortaGenetica(grafos[i]);
                     }
                     break;
                 case "4":
@@ -181,6 +181,18 @@ public class Main {
       // metGrafo.quitarMarca(metGrafo.grafo);
 
     
+        metGrafo.llenarGrafo(8);
+
+        //metGrafo.amplitud(metGrafo.grafo);
+
+        
+          //mld.verRutaCorta();
+          // vertice aux = metGrafo.grafo;
+        mc.Insertar(metGrafo.grafo, 0);
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        
+        //mld.imprimirRuta(mld.rutaCorta);
+        metGrafo.rutaCortaGenetica(8);
     }
   
 }
