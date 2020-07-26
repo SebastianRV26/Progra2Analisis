@@ -40,7 +40,16 @@ public class MetodosGrafo {
     MetodosCola mc = MetodosCola.getInstance();
     MetodosPoda mp = MetodosPoda.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
-
+    public int memoria = 0; 
+    public double pesoCola = 256;
+    public double pesoPoda = 320;
+    public double pesoArco = 256;
+    public double pesoVertice = 320;
+    public double pesoListaDoble= 320;
+    public double pesoArrayVacio = 192;
+    public double pesoArrayConElementos = 640;
+    public double pesoVectorStringVacio = 448;
+    public double pesoVectorStringConElementos = 2112;
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
@@ -77,13 +86,16 @@ public class MetodosGrafo {
      */
     public vertice buscar(int id) {
         vertice aux = grafo;
+        instrucciones ++;
         while (aux != null) {
             if (aux.ID == id) {
-
+                instrucciones += 2;
                 return aux;
             }
             aux = aux.sigV;
+            instrucciones += 2;
         }
+        instrucciones += 2;
         return null;
     }
 
@@ -274,23 +286,32 @@ public class MetodosGrafo {
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {
+            instrucciones ++;
             return;
         }
-
+        instrucciones +=2;
         if (vertex.ID == ultimo.ID) {
             rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, true);
+            memoria += pesoArrayConElementos;
+            instrucciones += 3;
         } else {
             rutaV = convertirRuta(ruta + vertex.ID + "/");
             mld.insertarRuta(rutaV, pesoRuta, false);
+            memoria += pesoArrayConElementos;
+            instrucciones += 3;
         }
         vertex.marca = true;
         arco auxA = vertex.sigA;
+        memoria += pesoArco;
+        instrucciones +=2;
         while (auxA != null) {
             rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);
             auxA = auxA.sigA;
+            instrucciones +=3;
         }
         vertex.marca = false;
+        instrucciones ++;
     }
 
     /**
@@ -302,12 +323,21 @@ public class MetodosGrafo {
     private ArrayList<vertice> convertirRuta(String ruta) {
         ArrayList<vertice> rutaVertices = new ArrayList<>();
         String[] verticesID = ruta.split("/");
-        for (String idV : verticesID) {
+        instrucciones += 2;
+        memoria += pesoArrayVacio + pesoVectorStringConElementos;
+        for (int i = 0; i < verticesID.length; i++) {
+            String idV = verticesID[i];
+            memoria += 8*idV.length();
             if (!idV.equals("")) {
                 int id = Integer.parseInt(idV);
+                memoria += 32;
                 rutaVertices.add(buscar(id));
+                instrucciones += 3;
             }
+            instrucciones += 4;
         }
+        memoria += pesoArrayConElementos;
+        instrucciones += 2;
         return rutaVertices;
     }
 
@@ -375,79 +405,95 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
      *
-     * @param actual
      * @param ruta
      * @param dist
      */
-  
-     public void RamificacionyPoda(String ruta, int dist) { 
-        while (!mc.colaVacia()) { 
-             Cola auxCola = mc.Extraer(); 
-            vertice origen = auxCola.value; 
-            if (origen.marca) { 
-                return; 
-            } 
-
-            if ((rutaActual == "" || rutaMinima > dist)) { 
-                if (origen.equals(ultimo)) { 
-                    rutaMinima = dist; 
-                    rutaActual = ruta + origen.ID + "/"; 
-                    listaRuta = convertirRuta(rutaActual); 
-                    mp.insertarPoda(listaRuta, rutaMinima, true); 
-                } else { 
-                    origen.marca = true; 
-                    arco auxA = origen.sigA; 
-                    while (auxA != null) { 
-                        mc.Insertar(auxA.destino, auxA.peso); 
-                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso); 
-                        auxA = auxA.sigA; 
-                    } 
-                    origen.marca = false; 
-                } 
-            } else { 
-                listaRuta = convertirRuta(ruta+ origen.ID + "/"); 
-                mp.insertarPoda(listaRuta, dist, false); 
+      public void RamificacionyPoda(String ruta, int dist) {
+        while (!mc.colaVacia()) {
+            Cola auxCola = mc.Extraer();
+            vertice origen = auxCola.value;
+            memoria += pesoCola + pesoVertice; 
+            if (origen.marca) {
+                instrucciones += 3;
+                return;
             }
-        } 
-    } 
-     
-     
-     /**
-      * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
-      * @return 
-      */
-     public int tamanoGrafo(){
-         vertice aux = grafo;
-         int total = 0;
-         while (aux != null) {
-             total ++;             
-             aux = aux.sigV;
-         }
-         return total;
-     }
-/*
-     public void RamificacionyPoda(vertice actual, String ruta, int dist) { 
-
-        if (actual.equals(ultimo) && rutaMinima > dist) {
-            rutaMinima = dist;
-            rutaActual = ruta + actual.ID + "/";
-            listaRuta = convertirRuta(rutaActual);
-            mp.insertarPoda(listaRuta, rutaMinima, true);
-        } else {
-            while (!mc.colaVacia()) {
-                arco auxA = actual.sigA;
-                while (auxA != null) {
-                    mc.Insertar(auxA.destino, auxA.peso);
-                    auxA = auxA.sigA;
+            instrucciones += 4;
+            if ((rutaActual == "" || rutaMinima > dist)) {
+                instrucciones += 2;
+                if (origen.equals(ultimo)) {
+                    rutaMinima = dist;
+                     listaRuta = convertirRuta(rutaActual);
+                    rutaActual = ruta + origen.ID + "/";
+                    memoria += 8*rutaActual.length();
+                    memoria += 32;
+                    memoria += pesoArrayConElementos;
+                    mp.insertarPoda(listaRuta, rutaMinima, true);
+                    instrucciones += 5;
+                } else {
+                    origen.marca = true;
+                    arco auxA = origen.sigA;
+                    memoria +=pesoArco;
+                    instrucciones += 2;
+                    while (auxA != null) {
+                        mc.Insertar(auxA.destino, auxA.peso);
+                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);
+                        auxA = auxA.sigA;
+                        instrucciones += 4;
+                    }
+                    origen.marca = false;
+                    instrucciones += 2;
                 }
-                Cola auxCola = mc.Extraer();
-                actual = auxCola.value;
-                RamificacionyPoda(actual, ruta, dist + auxCola.pesoArcoLlegada);
-                listaRuta = convertirRuta(ruta + actual.ID + "/");
+
+            } else {
+                listaRuta = convertirRuta(ruta + origen.ID + "/");
                 mp.insertarPoda(listaRuta, dist, false);
+                instrucciones += 2;
             }
         }
+        instrucciones += 1 +mp.instruccionesPoda + mc.instruccionesCola;
+        memoria += mp.memoriaPoda + mc.memoriaCola;
     }
-    */
-   
+
+    /**
+     * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
+     *
+     * @return
+     */
+    public int tamanoGrafo() {
+        vertice aux = grafo;
+        int total = 0;
+        while (aux != null) {
+            total++;
+            aux = aux.sigV;
+        }
+        return total;
+    }
+
+    public void datosRyP() {
+        memoria = 0;
+        instrucciones = 0;
+        mc.Insertar(grafo, 0);
+        RamificacionyPoda("", 0);
+        System.out.println("Ruta corta por el diseño Ramificación y Poda");
+        mp.imprimirRuta(mp.rutaCorta);
+        System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
+        System.out.println("Instrucciones usadas por RyP: "+ instrucciones);
+        System.out.println("Total de rutas podadas: " + mp.totalRutasPodadas());
+        System.out.println("=====================");
+        System.out.println("5 ejemplos de rutas podadas");
+        mp.imprimirRutaPodada();
+    }
+    
+    public void datosBactraking() {
+        memoria = 0;
+        instrucciones = 0;
+        rutaCortaBacktracking(grafo, "", 0);
+        System.out.println("Ruta corta por el diseño Bactraking");
+        mld.imprimirRuta(mld.rutaCorta);
+        System.out.println("Memoria usada por Bactraking: " + memoria + " " + "bits");
+        System.out.println("Instrucciones usadas por Bactraking: " + instrucciones);
+        mld.rutasValidas();
+        System.out.println("Rutas random del backtraking");
+        mld.rutasRandom();
+    }
 }
