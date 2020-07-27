@@ -398,9 +398,16 @@ public class MetodosGrafo {
      */
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacionPadres){
         Random random = new Random();
-        int index2 = random.nextInt(poblacionPadres.size()-1)+1;
+        int index2,index ;
+        while(true){
+            index2 = random.nextInt(poblacionPadres.size()-1)+1;
+            index =  random.nextInt(poblacionPadres.size()-1);
+            if(index2!=index){
+                break;
+            }
+        }
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacionPadres.size()-1);
+            
             padre1 = poblacionPadres.get(index);
             padre2 = poblacionPadres.get(index2);
             poblacionPadres.remove(poblacionPadres.get(index2));
@@ -467,22 +474,26 @@ public class MetodosGrafo {
             cont++;
             if(cont>6){
                 if(ag_evaluarFitness2(padre)<ag_evaluarFitness2(madre)){
+                    System.out.println("se escogio el padre, como mejor ruta");
                     ImprimirRuta(padre);
                     ag_evaluarFitness(padre);
+                    System.out.println("se escogen nuevos padres");
                     Manipulados.add(padre);
                     padre1 = null;
                     padre2 = null;
                 }
                 else{
+                    System.out.println("se escogio la madre, como mejor ruta");
                     ImprimirRuta(madre);
                     ag_evaluarFitness(madre);
+                    System.out.println("se escogen nuevos padres");
                     Manipulados.add(madre);
                     padre1 = null;
                     padre2 = null;
                 }
                 break;     
             }
-            System.err.println("volvio a sacar punto de cruce");   
+            System.out.println("volvio a sacar punto de cruce");   
         }  
     }
    
@@ -691,24 +702,18 @@ public class MetodosGrafo {
         ImprimirTodasRutas(Manipulados);
         System.out.println("cont"+cont);
         
+        
         while(Manipulados.size()!=1){
            for (int i = 0; i < Manipulados.size(); i++) {
                 ag_escogerPadres(Manipulados);
                 ImprimirRuta(padre1);
                 ImprimirRuta(padre2);
                 ag_cruzar(padre1, padre2, tamGrafo);
+                System.out.println("Escogemos padres de nuevo");
             } 
             ImprimirTodasRutas(Manipulados);
         }
-            
-        ImprimirTodasRutas(Manipulados);
-        System.out.println(Manipulados.size());
-        for (int i = 0; i < Manipulados.size(); i++) {
-            ag_evaluarFitness(Manipulados.get(i));
-            
-        }
-        
-      
+        ag_evaluarFitness(Manipulados.get(0));
     }
 
 
