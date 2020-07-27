@@ -805,12 +805,14 @@ public class MetodosGrafo {
     public void mostrarRuta(vertice destino) {
         String ruta = "";
         vertice aux = destino;
+        memoria += pesoVertice;
         instrucciones += 2;
         while (aux != null) {
             ruta = "->P" + aux.pesoMin + " V" + aux.ID + "/" + ruta;
             aux = aux.antV;
             instrucciones += 2;
         }
+        memoria += ruta.length() * 8;
         instrucciones++;
         System.out.println("PD: " + ruta + " distancia: " + destino.distanciaMinima);
     }
