@@ -394,17 +394,17 @@ public class MetodosGrafo {
     
     /**
      * 
-     * @param poblacion todas las rutas a analizar
+     * @param poblacionPadres todas las rutas a analizar
      */
-    public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
+    public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacionPadres){
         Random random = new Random();
-        int index2 = random.nextInt(poblacion.size()-1)+1;
+        int index2 = random.nextInt(poblacionPadres.size()-1)+1;
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacion.size()-1);
-            padre1 = poblacion.get(index);
-            padre2 = poblacion.get(index2);
-            poblacion.remove(poblacion.get(index2));
-            poblacion.remove(poblacion.get(index));
+            int index = random.nextInt(poblacionPadres.size()-1);
+            padre1 = poblacionPadres.get(index);
+            padre2 = poblacionPadres.get(index2);
+            poblacionPadres.remove(poblacionPadres.get(index2));
+            poblacionPadres.remove(poblacionPadres.get(index));
         }//end 1er if    
     }
     
@@ -691,13 +691,16 @@ public class MetodosGrafo {
         ImprimirTodasRutas(Manipulados);
         System.out.println("cont"+cont);
         
-        
-            for (int i = 0; i < Manipulados.size(); i++) {
+        while(Manipulados.size()!=1){
+           for (int i = 0; i < Manipulados.size(); i++) {
                 ag_escogerPadres(Manipulados);
                 ImprimirRuta(padre1);
                 ImprimirRuta(padre2);
                 ag_cruzar(padre1, padre2, tamGrafo);
-            }
+            } 
+            ImprimirTodasRutas(Manipulados);
+        }
+            
         ImprimirTodasRutas(Manipulados);
         System.out.println(Manipulados.size());
         for (int i = 0; i < Manipulados.size(); i++) {
