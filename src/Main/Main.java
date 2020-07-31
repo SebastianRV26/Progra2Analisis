@@ -144,7 +144,16 @@ public class Main {
         metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         
         //mld.imprimirRuta(mld.rutaCorta);
-        metGrafo.rutaCortaGenetica(10);
+        //metGrafo.rutaCortaGenetica(10, 10);
+        //metGrafo.rutaCortaGenetica(10, 20);
+        //metGrafo.rutaCortaGenetica(10, 30);
+        //metGrafo.rutaCortaGenetica(10, 60);
+        metGrafo.rutaCortaGenetica(10, 120);
+        //metGrafo.rutaCortaGenetica(10, 1000);
+        //metGrafo.rutaCortaGenetica(10, 3000);
+       // metGrafo.rutaCortaGenetica(10, 5000);
+        
+        
     }
 
 }

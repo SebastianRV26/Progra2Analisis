@@ -582,9 +582,7 @@ public class MetodosGrafo {
     }
     
     
-    /**
-     * 
-     */
+    
     public int ag_evaluarFitness(ArrayList<vertice> ruta){
         int peso = 0;
         String rutaStr =  "";
@@ -623,7 +621,6 @@ public class MetodosGrafo {
         vertice vD = null;
         
         for (int i = 0; i < hijoMutado.size()-1; i++) {
-            
             //preguntar por el arco de mayor tamaño 
             arco auxA = buscar(hijoMutado.get(i),hijoMutado.get(i+1));
             if(auxA.peso>numero){
@@ -643,11 +640,7 @@ public class MetodosGrafo {
                 System.out.println("el nuevo vertice: "+vNuevo.ID);
             }
             auxA2 = auxA2.sigA;
-//            if(auxA2==null){
-//                System.out.println("no encontro vertice disponible");
-//            }
         }
-        
         for (int i = 0; i < hijo.size(); i++) {
             if(hijo.get(i)==vO){
                 if(vNuevo!=null){
@@ -658,7 +651,6 @@ public class MetodosGrafo {
             else{
                 hijoMutado2.add(hijo.get(i));
             }
-            
         }
         ImprimirRuta(hijoMutado2); 
         // ver si la ruta aun existe y si mejora
@@ -681,17 +673,12 @@ public class MetodosGrafo {
     }
     
 
-    public void rutaCortaGenetica(int tamGrafo ) {
-    // 2.Imprimir la ruta corta encontrada de inicio a fin, indicado los vértices 
-    //por donde pasa y la distancia respectiva entre cada uno, así como la suma total de la ruta.
-    //3.Imprimir todos los cruces realizados para la estrategia genética y su 
-    //mutación. Así como la puntación asignada a cada cromosoma.
-
+    public void rutaCortaGenetica(int tamGrafo, int cantVeces) {
         ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
         poblacion = generarPoblacion(8);
 
         int cont=0;
-        while(cont<tamGrafo/2){
+        while(cont<cantVeces){
             ag_escogerPadres(poblacion);
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
@@ -700,9 +687,6 @@ public class MetodosGrafo {
         cont++;
         }
         ImprimirTodasRutas(Manipulados);
-        System.out.println("cont"+cont);
-        
-        
         while(Manipulados.size()!=1){
            for (int i = 0; i < Manipulados.size(); i++) {
                 ag_escogerPadres(Manipulados);
