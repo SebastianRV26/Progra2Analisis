@@ -5,7 +5,6 @@
  */
 package Main;
 
-
 import Classes.Cola;
 import Classes.ListaDoble;
 import Classes.Poda;
@@ -18,17 +17,13 @@ import Methods.MetodosPoda;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-
 /**
  *
  * @author Sebas
  */
-
- ;
+;
 
 public class Main {
-    
 
     public static vertice[] ultimos = new vertice[6];
 
@@ -84,7 +79,7 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
+                        metGrafo.MostrarRutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
                     }
                     break;
                 case "3":
@@ -102,7 +97,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaDinamica(grafos[i], ultimos[i]);
+                        metGrafo.MostrarRutaCortaDinamica(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
@@ -137,64 +132,28 @@ public class Main {
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
-          
-        System.out.println("Hola");
 
-       metGrafo.llenarGrafo(10);
-
-   
-       
-
-       // metGrafo.datosRyP();
-         metGrafo.datosBactraking();
-         System.out.println("Hola");
-         //System.out.println("Total de rutas " + mld.totalRutas());
-
-     
-        /*
-            ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
-       
-        System.out.println("size of   ArrayList<vertice> is "
-                + MenMeter.measure(new Runnable() {
-
-                   ListaDoble a;
-
-                    @Override
-                    public void run() {
-                        a =  new ListaDoble(rutaV,10,true,2);
-                    }
-                }));
-         */
-    
-        
-
-
-
-  
-         //  System.out.println("Ruta corta por RyP");
-       //mp.imprimirRuta(mp.rutaCorta);
-        //System.out.println("Rutas podadas");
-        //mp.imprimirRutaPodada();
-
-        //vertice aux = metGrafo.grafo;
-        //metGrafo.rutaCortaVoraz(aux, metGrafo.ultimo, "V" + aux.ID + "/", 0);
-        //metGrafo.quitarMarca(aux);
-       //metGrafo.rutaCortaDinamica(aux, metGrafo.ultimo);
-      // metGrafo.quitarMarca(metGrafo.grafo);
-
-    
-       // metGrafo.llenarGrafo(8);
+        metGrafo.llenarGrafo(10);
 
         //metGrafo.amplitud(metGrafo.grafo);
 
         
           //mld.verRutaCorta();
           // vertice aux = metGrafo.grafo;
-       // mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        mc.Insertar(metGrafo.grafo, 0);
+        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         
         //mld.imprimirRuta(mld.rutaCorta);
-        //metGrafo.rutaCortaGenetica(10);
+        //metGrafo.rutaCortaGenetica(10, 10);
+        //metGrafo.rutaCortaGenetica(10, 20);
+        //metGrafo.rutaCortaGenetica(10, 30);
+        //metGrafo.rutaCortaGenetica(10, 60);
+        metGrafo.rutaCortaGenetica(10, 120);
+        //metGrafo.rutaCortaGenetica(10, 1000);
+        //metGrafo.rutaCortaGenetica(10, 3000);
+       // metGrafo.rutaCortaGenetica(10, 5000);
+        
+        
     }
-  
+
 }

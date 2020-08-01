@@ -42,20 +42,21 @@ public class MetodosGrafo {
     MetodosCola mc = MetodosCola.getInstance();
     MetodosPoda mp = MetodosPoda.getInstance();
     public int instrucciones = 0; // asignaciones y comparaciones
-    public int memoria = 0; 
+    public int memoria = 0; // memoria consumida
     public double pesoCola = 256;
     public double pesoPoda = 320;
     public double pesoArco = 256;
     public double pesoVertice = 320;
-    public double pesoListaDoble= 320;
+    public double pesoListaDoble = 320;
     public double pesoArrayVacio = 192;
     public double pesoArrayConElementos = 640;
     public double pesoVectorStringVacio = 448;
     public double pesoVectorStringConElementos = 2112;
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 06/07/2020
      *
-     * // * método que inserta un vértice al final para el grafo
+     * método que inserta un vértice al final para el grafo
      *
      * @param ID el identificador del vértice que deseamos crear
      * @return true o false
@@ -105,14 +106,14 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 13/06/2020
      *
-     * método que inserta un arco para el grafo
+     * Método que inserta un arco para el grafo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-   public String insertarArco(vertice origen, vertice destino, int peso) {
+    public String insertarArco(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             nuevo.destino = destino;
@@ -131,14 +132,14 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 05/07/2020 Ultima modificación: 13/07/2020
      *
-     * método que inserta un arco para el grafo
+     * Método que inserta un arco para el grafo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
      * @param peso el peso del arco, número entre el 1 al 10
      * @return "Insertado" o "No se pueden repetir arcos"
      */
-      public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
+    public boolean insertarArcoDoble(vertice origen, vertice destino, int peso) {
         if (buscar(origen, destino) == null) {
             arco nuevo = new arco(peso);
             arco auxNuevo = new arco(peso);
@@ -162,10 +163,11 @@ public class MetodosGrafo {
         }
         return false;
     }
+
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
      *
-     * método que busca un arco del grafo
+     * Método que busca un arco del grafo
      *
      * @param origen vértice de origen de arco al que queremos buscar
      * @param destino vértice destino de arco al que queremos buscar
@@ -185,8 +187,9 @@ public class MetodosGrafo {
     }
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020. método que
-     * llena el grafo fuertemente conexo
+     * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020.
+     *
+     * Método que llena el grafo fuertemente conexo
      *
      * @param n es la cantidad de nodos que requiere el grafo
      */
@@ -216,8 +219,9 @@ public class MetodosGrafo {
     
 
     /**
-     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020 * método que
-     * establece la marca de todos los nodos del grafo como false
+     * Fecha inicio: 30/06/2020 Ultima modificación: 30/06/2020
+     *
+     * Método que establece la marca de todos los nodos del grafo como false
      *
      * @param grafo es el primer vértice del grafo
      */
@@ -229,7 +233,7 @@ public class MetodosGrafo {
         }
     }
 
-    public void amplitud(vertice grafo) {
+    public void amplitud(vertice grafo) { // BORRAR LUEGO
         if (grafo == null) {//1
             System.out.println("No hay grafo");
         } else {
@@ -249,27 +253,57 @@ public class MetodosGrafo {
         }
     }
 
+    public void MostrarRutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
+        quitarMarca(origen);
+        memoria = 0;
+        instrucciones = 0;
+        System.out.println("Ruta corta por el diseño voraz");
+        rutaCortaVoraz(origen, destino, ruta, distancia);
+        System.out.println("Memoria usada por voraz: " + memoria + " bits");
+        System.out.println("Instrucciones usadas por voraz: " + instrucciones + "\n");
+    }
+
+    /**
+     * Fecha inicio: 08/07/2020 Ultima modificación: 10/07/2020.
+     *
+     * Método de ruta corta que consiste en irse por el arco de menor peso hasta
+     * llegar al destino, no está permitido devolverse
+     *
+     * @param origen vértice de origen de arco al que queremos buscar
+     * @param destino vértice destino de arco al que queremos buscar
+     * @param ruta vértices y sus respectivos pesos de la ruta encontrada
+     * @param distancia distancia total de los arcos por los vértices que pasa
+     */
     public void rutaCortaVoraz(vertice origen, vertice destino, String ruta, int distancia) {
+        instrucciones += 2;
         if ((origen == null) || (origen.marca == true)) {
             return;
         }
+        instrucciones++;
         if (origen == destino) {
             System.out.println("Voraz: " + ruta + " distancia: " + distancia);
         }
         int min = 100;
         arco auxMenor = null;
         arco aux = origen.sigA;
+        instrucciones += 3;
+        memoria += 32 + pesoArco * 2;
         while (aux != null) {
+            instrucciones++;
             if (aux.peso < min && aux.destino.marca == false) {
                 min = aux.peso;
                 auxMenor = aux;
+                instrucciones += 4;
             }
             aux = aux.sigA;
+            instrucciones++;
         }
         origen.marca = true;
+        instrucciones += 3;
         if (auxMenor != null) {
             rutaCortaVoraz(auxMenor.destino, destino, ruta + "->P" + auxMenor.peso + " V" + auxMenor.destino.ID + "/", distancia + auxMenor.peso);
         } else {
+            instrucciones++;
             rutaCortaVoraz(destino, destino, ruta, distancia);
         }
         return;
@@ -361,24 +395,25 @@ public class MetodosGrafo {
     
     /**
      * 
-     * @param poblacion todas las rutas a analizar
+     * @param poblacionPadres todas las rutas a analizar
      */
-    public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
+    public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacionPadres){
         Random random = new Random();
-        int index2 = random.nextInt(poblacion.size()-1) +1;
+        int index2,index ;
+        while(true){
+            index2 = random.nextInt(poblacionPadres.size()-1)+1;
+            index =  random.nextInt(poblacionPadres.size()-1);
+            if(index2!=index){
+                break;
+            }
+        }
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacion.size()-1);
-            padre1 = poblacion.get(index);
-            padre2 = poblacion.get(index2);
-            poblacion.remove(poblacion.get(index2));
-            poblacion.remove(poblacion.get(index));
-        }//end 1er if
-//        else if(padre1!=null){
-//            
-//            padre2 = poblacion.get(index2);
-//            poblacion.remove(poblacion.get(index2));
-//        }
-        
+            
+            padre1 = poblacionPadres.get(index);
+            padre2 = poblacionPadres.get(index2);
+            poblacionPadres.remove(poblacionPadres.get(index2));
+            poblacionPadres.remove(poblacionPadres.get(index));
+        }//end 1er if    
     }
     
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre, int tamGrafo){
@@ -440,49 +475,27 @@ public class MetodosGrafo {
             cont++;
             if(cont>6){
                 if(ag_evaluarFitness2(padre)<ag_evaluarFitness2(madre)){
+                    System.out.println("se escogio el padre, como mejor ruta");
                     ImprimirRuta(padre);
                     ag_evaluarFitness(padre);
+                    System.out.println("se escogen nuevos padres");
                     Manipulados.add(padre);
                     padre1 = null;
                     padre2 = null;
                 }
                 else{
+                    System.out.println("se escogio la madre, como mejor ruta");
                     ImprimirRuta(madre);
                     ag_evaluarFitness(madre);
+                    System.out.println("se escogen nuevos padres");
                     Manipulados.add(madre);
                     padre1 = null;
                     padre2 = null;
                 }
                 break;     
             }
-            System.err.println("volvio a sacar punto de cruce");   
-        }
-        
-        
-        
-//        if((hijo2.size()<tamGrafo/2)||(hijo1.size()<tamGrafo/2)){
-//                System.out.println("vamos a cambiar una ruta agregando un vertice");
-//                if(hijo1.size()<tamGrafo/2){
-//                     System.out.println("tam"+(tamGrafo/2)+"tam del hijo: "+hijo1.size());
-//                    ImprimirRuta(hijo1);
-//                   while (hijo1.size()>=tamGrafo/2) {
-//                       ag_mutar(hijo1);
-//                   }
-//                   System.out.println("cambio al hijo"); 
-//                }
-//                else if(hijo2.size()<tamGrafo/2){
-//                     System.out.println("tam"+(tamGrafo/2)+"tam de la hija: "+hijo2.size());
-//                   ImprimirRuta(hijo2);
-//                   while (hijo2.size()>=tamGrafo/2) {
-//                       ag_mutar(hijo2);
-//                   }
-//                   System.out.println("cambio a la hija"); 
-//                }
-//        }
-   
-        //Se evaluan las rutas
-         
-        
+            System.out.println("volvio a sacar punto de cruce");   
+        }  
     }
    
     public void ag_evaluar(ArrayList<vertice> padre,ArrayList<vertice> madre,ArrayList<vertice> hijo1,ArrayList<vertice> hijo2){
@@ -570,9 +583,7 @@ public class MetodosGrafo {
     }
     
     
-    /**
-     * 
-     */
+    
     public int ag_evaluarFitness(ArrayList<vertice> ruta){
         int peso = 0;
         String rutaStr =  "";
@@ -611,7 +622,6 @@ public class MetodosGrafo {
         vertice vD = null;
         
         for (int i = 0; i < hijoMutado.size()-1; i++) {
-            
             //preguntar por el arco de mayor tamaño 
             arco auxA = buscar(hijoMutado.get(i),hijoMutado.get(i+1));
             if(auxA.peso>numero){
@@ -631,11 +641,7 @@ public class MetodosGrafo {
                 System.out.println("el nuevo vertice: "+vNuevo.ID);
             }
             auxA2 = auxA2.sigA;
-//            if(auxA2==null){
-//                System.out.println("no encontro vertice disponible");
-//            }
         }
-        
         for (int i = 0; i < hijo.size(); i++) {
             if(hijo.get(i)==vO){
                 if(vNuevo!=null){
@@ -646,7 +652,6 @@ public class MetodosGrafo {
             else{
                 hijoMutado2.add(hijo.get(i));
             }
-            
         }
         ImprimirRuta(hijoMutado2); 
         // ver si la ruta aun existe y si mejora
@@ -669,17 +674,12 @@ public class MetodosGrafo {
     }
     
 
-    public void rutaCortaGenetica(int tamGrafo ) {
-    // 2.Imprimir la ruta corta encontrada de inicio a fin, indicado los vértices 
-    //por donde pasa y la distancia respectiva entre cada uno, así como la suma total de la ruta.
-    //3.Imprimir todos los cruces realizados para la estrategia genética y su 
-    //mutación. Así como la puntación asignada a cada cromosoma.
-
+    public void rutaCortaGenetica(int tamGrafo, int cantVeces) {
         ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
         poblacion = generarPoblacion(8);
 
         int cont=0;
-        while(cont<tamGrafo/2){
+        while(cont<cantVeces){
             ag_escogerPadres(poblacion);
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
@@ -688,26 +688,17 @@ public class MetodosGrafo {
         cont++;
         }
         ImprimirTodasRutas(Manipulados);
-        System.out.println("cont" + cont);
-
-        for (int i = 0; i < Manipulados.size(); i++) {
-            ag_evaluarFitness(Manipulados.get(i));
-
+        while(Manipulados.size()!=1){
+           for (int i = 0; i < Manipulados.size(); i++) {
+                ag_escogerPadres(Manipulados);
+                ImprimirRuta(padre1);
+                ImprimirRuta(padre2);
+                ag_cruzar(padre1, padre2, tamGrafo);
+                System.out.println("Escogemos padres de nuevo");
+            } 
+            ImprimirTodasRutas(Manipulados);
         }
-        for (int i = 0; i < Manipulados.size(); i++) {
-            ag_escogerPadres(Manipulados);
-            ImprimirRuta(padre1);
-            ImprimirRuta(padre2);
-            ag_cruzar(padre1, padre2, tamGrafo);
-        }
-                ImprimirTodasRutas(Manipulados);
-                   for (int i = 0; i < Manipulados.size(); i++) {
-            ag_escogerPadres(Manipulados);
-            ImprimirRuta(padre1);
-            ImprimirRuta(padre2);
-            ag_cruzar(padre1, padre2, tamGrafo);
-        }
-                ImprimirTodasRutas(Manipulados);
+        ag_evaluarFitness(Manipulados.get(0));
     }
 
 
@@ -781,66 +772,102 @@ public class MetodosGrafo {
        //Medicion analitica: 12n +4
     }
 
+    public void MostrarRutaCortaDinamica(vertice origen, vertice destino) {
+        quitarMarca(origen);
+        memoria = 0;
+        instrucciones = 0;
+        System.out.println("Ruta corta por el diseño programación dinámica");
+        rutaCortaDinamica(origen, destino);
+        System.out.println("Memoria usada por programación dinámica: " + memoria + " bits");
+        System.out.println("Instrucciones usadas por programación dinámica: " + instrucciones + "\n");
+    }
+
     /**
-     * Fecha inicio: 07/07/2020 Ultima modificación: 18/07/2020. Método que
-     * impreme la ruta del algoritmo de programación dinámica Dijkstra
+     * Fecha inicio: 07/07/2020 Ultima modificación: 26/07/2020.
+     *
+     * Método que impreme la ruta del algoritmo de programación dinámica
+     * Dijkstra
      *
      * @param destino último vértice
      */
     public void mostrarRuta(vertice destino) {
         String ruta = "";
         vertice aux = destino;
-        int peso = 0;
+        memoria += pesoVertice;
+        instrucciones += 2;
         while (aux != null) {
             ruta = "->P" + aux.pesoMin + " V" + aux.ID + "/" + ruta;
-            peso += aux.pesoMin;
             aux = aux.antV;
+            instrucciones += 2;
         }
-        System.out.println("PD: " + ruta + " distancia: " + peso);
+        memoria += ruta.length() * 8;
+        instrucciones++;
+        System.out.println("PD: " + ruta + " distancia: " + destino.distanciaMinima);
     }
 
     /**
-     * Lógica del algoritmo Dijkstra
+     * Fecha inicio: 07/07/2020. Ultima modificación: 26/07/2020.
+     *
+     * Lógica del algoritmo Dijkstra: analizar la mejor manera de llegar al
+     * destino con forme a la menor distancia de llegar de un vértice a otro
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
      */
-    public void rutaCortaDinamica(vertice origen, vertice destino) { // Dijkstra
+    public void rutaCortaDinamica(vertice origen, vertice destino) {
         vertice aux = origen;
-        vertice ant = origen;
         int min;
-        ant.distanciaMinima = 0;
+        memoria += pesoVertice + 32;
+        aux.distanciaMinima = 0;
+        instrucciones += 2;
+        byte cont = 1;
         while (aux != null) {
             arco auxA = aux.sigA;
             arco auxMin = null;
+            memoria += pesoArco * 2;
             min = 10000;
-            while (auxA != null) { // para encontrar el más pequeño
-                if (auxA.peso + ant.distanciaMinima < min && auxA.destino.marca != true) { // 
-                    min = auxA.peso;
-                    auxMin = auxA;
+            instrucciones += 4;
+            while (auxA != null) {
+                instrucciones++;
+                if (auxA.destino.distanciaMinima > auxA.peso + aux.distanciaMinima && auxA.destino.marca != true) {
+                    auxA.destino.distanciaMinima = auxA.peso + aux.distanciaMinima;
+                    auxA.destino.antV = aux;
+                    auxA.destino.pesoMin = auxA.peso;
+                    instrucciones += 3;
                 }
+                instrucciones += 2;
+                if (min > auxA.peso + aux.distanciaMinima && !auxA.destino.marca) {
+                    min = auxA.peso + aux.distanciaMinima;
+                    auxMin = auxA;
+                    instrucciones += 2;
+                }
+                instrucciones += 3;
                 auxA = auxA.sigA;
             }
-            if (auxMin != null) {
-                if (auxMin.destino.distanciaMinima > (auxMin.peso /*+ ant.distanciaMinima*/)) {
-                    auxMin.destino.marca = true;
-                    auxMin.destino.distanciaMinima = auxMin.peso /*+ ant.distanciaMinima*/;
-                    auxMin.destino.antV = ant;
-                    ant = auxMin.destino;
+            if (cont < 6) { // no se cuenta como memoria
+                vertice aux2 = origen;
+                System.out.println("--------------------------------------------");
+                System.out.println("PD fase " + cont);
+                while (aux2 != null) {
+                    System.out.println(aux2.ID + " distancia: " + aux2.distanciaMinima);
+                    aux2 = aux2.sigV;
                 }
-                auxMin.destino.pesoMin = auxMin.peso;
+                cont++;
             }
+            instrucciones++;
             if (aux == destino) {
                 break;
             }
+            aux.marca = true;
             aux = auxMin.destino;
+            instrucciones += 3;
         }
         mostrarRuta(destino);
     }
 
     public String rutaActual = "";
     ArrayList<vertice> listaRuta;
-     int rutaMinima = 0;
+    int rutaMinima = 0;
 
     /**
      * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
@@ -890,7 +917,7 @@ public class MetodosGrafo {
                 instrucciones += 2;
             }
         }
-        instrucciones += 1 +mp.instruccionesPoda + mc.instruccionesCola;
+        instrucciones += 1 + mp.instruccionesPoda + mc.instruccionesCola;
         memoria += mp.memoriaPoda + mc.memoriaCola;
         //Medicion analitica: n a la 3+55n a la 2 + 77n 
     }
@@ -918,13 +945,13 @@ public class MetodosGrafo {
         System.out.println("Ruta corta por el diseño Ramificación y Poda");
         mp.imprimirRuta(mp.rutaCorta);
         System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
-        System.out.println("Instrucciones usadas por RyP: "+ instrucciones);
+        System.out.println("Instrucciones usadas por RyP: " + instrucciones);
         System.out.println("Total de rutas podadas: " + mp.totalRutasPodadas());
         System.out.println("=====================");
         System.out.println("5 ejemplos de rutas podadas");
         mp.imprimirRutaPodada();
     }
-    
+
     public void datosBactraking() {
         memoria = 0;
         instrucciones = 0;
