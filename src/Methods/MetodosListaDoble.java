@@ -202,22 +202,14 @@ public class MetodosListaDoble {
       * 
       * Metodo que devuelve x cantidad de rutas según el tamaño del grafo
       * @param tamanoGrafo tamaño del grado en el que se encuentra actualmente
-      * @return Todas las rutas que se desean según el tamaño del grafo
-      */
-
-    public ArrayList<ListaDoble> rutasPorTamano(int tamanoGrafo) {
-        ArrayList<ListaDoble> listaRutas = null;
+     * @return Todas las rutas que se desean según el tamaño del grafo
+     */
+    public ArrayList<ArrayList<vertice>> rutasPorTamano() {
+        ArrayList< ArrayList<vertice>> listaRutas = null;
         int cont = 0;
-        if (tamanoGrafo <= 20) {
-            while (cont != 20) {
-                listaRutas.add(buscarRuta(cont));
-                cont++;
-            }
-        } else {
-            while (cont != 100) {
-                listaRutas.add(buscarRuta(cont));
-                cont++;
-            }
+        while (cont != 200) {
+            listaRutas.add(buscarRuta(cont).verticesRuta);
+            cont++;
         }
         return listaRutas;
     }

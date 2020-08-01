@@ -87,7 +87,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosBactraking();
+                        metGrafo.datosBactraking(grafos[i], ultimos[i]);
                     }
                     break;
                 case "4":
@@ -99,7 +99,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosRyP();
+                        metGrafo.datosRyP(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
@@ -130,8 +130,13 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(10);
-
+        metGrafo.llenarGrafo(60);
+     
+        metGrafo.datosRyP(metGrafo.grafo, metGrafo.ultimo);
+        //metGrafo.MostrarRutaCortaDinamica(metGrafo.grafo, metGrafo.ultimo, 5000);
+        
+        
+        
         /*
             ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
        
@@ -160,7 +165,7 @@ public class Main {
         //metGrafo.rutaCortaGenetica(10, 1000);
         //metGrafo.rutaCortaGenetica(10, 3000);
         // metGrafo.rutaCortaGenetica(10, 5000);
-        menuAlgoritmos();
+       // menuAlgoritmos();
     }
 
 }
