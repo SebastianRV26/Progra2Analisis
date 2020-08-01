@@ -87,7 +87,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.rutaCortaBacktracking(grafos[i], "", 0);
+                        metGrafo.datosBactraking();
                     }
                     break;
                 case "4":
@@ -99,7 +99,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.RamificacionyPoda("", 0);
+                        metGrafo.datosRyP();
                     }
                     break;
                 case "6":
@@ -123,26 +123,47 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        //menuAlgoritmos();
 
         MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(10);
+     metGrafo.llenarGrafo(5000);
+     metGrafo.MostrarRutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "V" + metGrafo.grafo.ID + "/", 0);
+        
+        
+     
+        /*
+            ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
+       
+        System.out.println("size of   ArrayList<vertice> is "
+                + MenMeter.measure(new Runnable() {
+
+                   ListaDoble a;
+
+                    @Override
+                    public void run() {
+                        a =  new ListaDoble(rutaV,10,true,2);
+                    }
+                }));
+         */
+    
 
         //metGrafo.amplitud(metGrafo.grafo);
         //mld.verRutaCorta();
         // vertice aux = metGrafo.grafo;
-        mc.Insertar(metGrafo.grafo, 0);
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+       // mc.Insertar(metGrafo.grafo, 0);
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
 
         //mld.imprimirRuta(mld.rutaCorta);
         //metGrafo.rutaCortaGenetica(10, 10);
         //metGrafo.rutaCortaGenetica(10, 20);
         //metGrafo.rutaCortaGenetica(10, 30);
         //metGrafo.rutaCortaGenetica(10, 60);
-        metGrafo.rutaCortaGenetica(10, 120);
+        //metGrafo.rutaCortaGenetica(10, 200);
         //metGrafo.rutaCortaGenetica(10, 1000);
         //metGrafo.rutaCortaGenetica(10, 3000);
         // metGrafo.rutaCortaGenetica(10, 5000);

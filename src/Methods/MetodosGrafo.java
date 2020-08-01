@@ -106,7 +106,8 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 13/06/2020
      *
-     * Método que inserta un arco para el grafo
+     * Método que inserta un arco simple para los caminos que salen del
+     * primer nodo y los que llegan al ultimo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
@@ -132,7 +133,8 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 05/07/2020 Ultima modificación: 13/07/2020
      *
-     * Método que inserta un arco para el grafo
+     * Método que inserta un arco doble para los vertices que no sean 
+     * el primer nodo  y el ultimo
      *
      * @param origen vértice de origen de arco al que queremos insertar
      * @param destino vértice destino de arco al que queremos insertar
@@ -189,7 +191,8 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 05/07/2020.
      *
-     * Método que llena el grafo fuertemente conexo
+     * Método que llena el grafo fuertemente conexo,
+     * respetando las instrucciones dadas por la profesora
      *
      * @param n es la cantidad de nodos que requiere el grafo
      */
@@ -705,10 +708,16 @@ public class MetodosGrafo {
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 10/07/2020
+     * 
+     * Metodo que implementa el diseño Backtracking, 
+     * su funcionalidad es encontrar todos las posibles rutas que tenga 
+     * un grafo de determinado tamaño, logra esto recorriendo el grafo
+     * de con el metoo de profundidad, el cual se modificao para poder implementarlo
+     * con el backtracking
      *
-     * @param vertex
-     * @param ruta
-     * @param pesoRuta
+     * @param vertex Este parametro indica el vertice al cual  el metodo va analisar 
+     * @param ruta Es la ruta que lleva el metodo guardada hasta el vertice actual
+     * @param pesoRuta Es el peos  que lleva el metodo guardado hasta el vertice actual
      */
     ArrayList<vertice> rutaV;
 
@@ -747,8 +756,11 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 10/07/2020
      *
-     * @param ruta
-     * @return
+     * Metodo que convierte un string a donde esta guarda una ruta
+     * a un arraylist de vertices, esto para poder acceder de forma mas sencilla
+     *  a la informcación de los vertices
+     * @param ruta Por este parametro llega la ruta en string, esta es la que se convierte
+     * @return El metodo retorna un arraylist con los vertices que componen la ruta
      */
     private ArrayList<vertice> convertirRuta(String ruta) {
         ArrayList<vertice> rutaVertices = new ArrayList<>();//1
@@ -881,9 +893,17 @@ public class MetodosGrafo {
 
     /**
      * Fecha inicio: 09/07/2020 Ultima modificación: 12/07/2020
+     * 
+     * Metodo que busca la ruta mas corta mediante el diseño de
+     * ramificación y poda, este algoritmo primero va iniciar a recorrer 
+     * el grafo desde el nodo inicio, este ya va a estar agregado en la lista de 
+     * nodos vivos, despues de revisar este nodo se generan sus respectivos hijos, esto  es para ver  cual 
+     * ruta es la mejor, si hay una ruta que su peso sea mayor a la menor encontrada hasta el momento se poda, en caso 
+     * contrario, si la ruta aun no hallegado al destino, pero aun es una ruta fiable se sigue recorriendo, hasta encontrar 
+     * un punto donde se pode o que cambie la ruta mas corta
      *
-     * @param ruta
-     * @param dist
+     * @param ruta parametro que va indica la ruta por la que se encuentra actualmente el recorrido
+     * @param dist parametro que va indica el peso que tiene la ruta  por la que se encuentra actualmente el recorrido
      */
       public void RamificacionyPoda(String ruta, int dist) {
             while (!mc.colaVacia()) {//4n a la 2
@@ -935,6 +955,7 @@ public class MetodosGrafo {
     /**
      * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
      *
+     * Metodo que devuelve el tamaño de un grafo
      * @return
      */
     public int tamanoGrafo() {
@@ -947,6 +968,15 @@ public class MetodosGrafo {
         return total;
     }
 
+    /**Fecha inicio: 24/07/2020 Ultima modificación: 24/07/20
+     * 
+     * Metodo que muestra todo los datos relacionados ocn 
+     * el diseño Ramificación y poda, como por ejemplo:
+     * Memoria
+     * Instrucciones
+     * Rutas mas corta
+     * Total de rutas podadas
+     */
     public void datosRyP() {
         memoria = 0;
         instrucciones = 0;
@@ -961,7 +991,16 @@ public class MetodosGrafo {
         System.out.println("5 ejemplos de rutas podadas");
         mp.imprimirRutaPodada();
     }
-
+    
+    /**Fecha inicio: 24/07/2020 Ultima modificación: 24/07/20
+     * 
+     * Metodo que muestra todo los datos relacionados ocn 
+     * el diseño Backtracking, como por ejemplo:
+     * Memoria
+     * Instrucciones
+     * Rutas mas corta
+     * Total de rutas validas
+     */
     public void datosBactraking() {
         memoria = 0;
         instrucciones = 0;

@@ -12,6 +12,8 @@ import java.util.Collections;
 
 /**
  *Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+ * 
+ * Clase que contiene los metodos para la lista de tipo cola
  * @author edubi
  */
 public class MetodosCola {
@@ -26,7 +28,7 @@ public class MetodosCola {
      * singleton para que exista únicamente una instacia de la clase
      * MetodosGrafo
      *
-     * @return la instancia única del objeto MetodosGrafo
+     * @return la instancia única del objeto MetodosCola
      */
     public static MetodosCola getInstance() {
         if (instance == null) {
@@ -49,8 +51,9 @@ public class MetodosCola {
 
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
-     *
-     * @return
+     *Metodo que permite saber cuando una lista
+     * tipo cola esta vacia o no
+     * @return Verdadero si esta vacio o false en caso contrario
      */
     public boolean colaVacia() {
         if (inicioCola == null) {//1
@@ -64,9 +67,10 @@ public class MetodosCola {
 
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 13/07/2020
+     * Metodo que permite insertar en la lista tipo cola
      *
-     * @param aux
-     * @param peso
+     * @param aux es el nuevo nodo que se va insertar en la lista tipo cola
+     * @param peso es el peso que tiene el camino del vertice que llego por el parametro anterio
      */
     public void Insertar(vertice aux, int peso) {
         Cola nuevo = new Cola(aux, peso);//1
@@ -89,7 +93,10 @@ public class MetodosCola {
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
      *
-     * @return
+        * metodo  que permite eliminar nodos de 
+     * la lista tipo cola
+     * 
+     * @return Devuelve el valor a eliminar o null si no existe el elemento 
      */
     public Cola Extraer() {
         if (!colaVacia()) {//4
