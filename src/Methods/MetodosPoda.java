@@ -23,7 +23,11 @@ public class MetodosPoda {
    public static MetodosPoda instance = null;
    /**
     * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
-    * @return 
+     *
+     * singleton para que exista únicamente una instacia de la clase
+     * MetodosPoda
+     *
+     * @return la instancia única del objeto MetodosPoda
     */
     public static MetodosPoda getInstance() {
         if (instance == null) {
@@ -45,49 +49,60 @@ public class MetodosPoda {
     
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
-     * @param ruta
-     * @param pesoRuta
-     * @param esSolucion
+     * 
+     * Inserta en una lista doble todas las rutas que el algortimo de 
+     * ramificación y poda va encontrando, ya sean podas o la solución
+     * 
+     * Tamebin tiene un puntero que encuentra la ruta mas corrta
+     * 
+     * @param ruta Array de los vertices que componen la ruta
+     * @param pesoRuta El peso que tiene la ruta que llego
+     * @param esSolucion Si la ruta es una posible solución o es una poda
      * @return
      */
     public boolean insertarPoda(ArrayList<vertice> ruta, int pesoRuta, boolean esSolucion) {
-        if (buscarRuta(ruta) == null) {
-            Poda nuevo = new Poda(ruta, pesoRuta, esSolucion, 0);
+        if (buscarRuta(ruta) == null) {//7
+            Poda nuevo = new Poda(ruta, pesoRuta, esSolucion, 0);//1
             memoriaPoda += pesoPoda;
             instruccionesPoda += 2;
-            if (inicio == null) {
-                inicio = rutaCorta = nuevo;
+            if (inicio == null) {//1
+                inicio = rutaCorta = nuevo;//2
                 instruccionesPoda += 4;
-                return true;
+                return true;//1
             }
-            Poda aux = inicio;
-            int pos = 1;
+            Poda aux = inicio;//1
+            int pos = 1;//1
             memoriaPoda += pesoPoda + 32;
             instruccionesPoda += 2;
-            while (aux != null) {
-                if (aux.sig == null) {
-                    if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.esSolucion) || rutaCorta.pesoRuta == 0) {
-                        rutaCorta = nuevo;
+            while (aux != null) {//1n
+                if (aux.sig == null) {//1*n = n
+                    if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.esSolucion) || rutaCorta.pesoRuta == 0) {//3
+                        rutaCorta = nuevo;//1
                         instruccionesPoda += 3;
                     }
-                    nuevo.posicion = pos;
-                    aux.sig = nuevo;
-                    nuevo.ant = aux;
+                    nuevo.posicion = pos;//1
+                    aux.sig = nuevo;//1
+                    nuevo.ant = aux;//1
                     instruccionesPoda += 6;
-                    return true;
+                    return true;//1
                 }
-                pos++;
-                aux = aux.sig;
+                pos++;//1n
+                aux = aux.sig;//1n
                 instruccionesPoda += 3;
             }
             instruccionesPoda++;
         }
         instruccionesPoda += 3;
-        return false;
+        return false;//1
+        
+        //Medicion analitica: 4n+23
     }
 
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
+     * 
+     * Metodo que imprimi 5 rutas podas que se 
+     * encuentren en la lista doble
      */
     public void imprimirRutaPodada(){
         int contador = 1;
@@ -103,7 +118,8 @@ public class MetodosPoda {
 
     /**
      * Fecha inicio: 12/07/2020 Ultima modificación: 12/07/2020
-     * @return 
+     * Metodo que cuenta el total de todas las rutas que fueron podadas por el RyP
+     * @return  Cantidad de rutas podadas
      */
     public int totalRutasPodadas() {
         int contador = 0;
@@ -119,7 +135,10 @@ public class MetodosPoda {
 
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
-     * @param temp 
+     * 
+     * Metodo que se encarga de imprimir la ruta que llega por el parametro
+     * 
+     * @param temp  Array de los vertices que componen  la ruta que se dedea imprimir
      */
     public  void imprimirRuta(Poda temp){
          ArrayList<vertice> rutaVertices = temp.ruta;
@@ -142,18 +161,23 @@ public class MetodosPoda {
     
     /**
      * Fecha inicio: 11/07/2020 Ultima modificación: 12/07/2020
-     * @param ruta
-     * @return 
+     * 
+     * Metodo que busca una ruta, al encontrarse se devuelve la ruta, en caso contrario
+     * se da un null
+     * @param ruta Array de los vertices que componen  la ruta
+     * @return La ruta encontrada o un valor nulo que indica que no se encontro
      */
     
     public Poda buscarRuta( ArrayList<vertice> ruta){
-        Poda aux = inicio;
-        while (aux != null) {     
-            if(aux.ruta.equals(ruta)){
-                return  aux;
+        Poda aux = inicio;//1
+        while (aux != null) {  //1   
+            if(aux.ruta.equals(ruta)){//1
+                return  aux;//1
             }
-            aux = aux.sig;
+            aux = aux.sig;//1
         }
-        return  null;
+        return  null;//1
+        
+        //Medicion analitica: 6
     }
 }
