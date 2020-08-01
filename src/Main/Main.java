@@ -138,15 +138,17 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
           
-        
+        System.out.println("Hola");
 
        metGrafo.llenarGrafo(10);
+
    
        
 
-         //metGrafo.datosRyP();
-         //metGrafo.datosBactraking();
-        
+       // metGrafo.datosRyP();
+         metGrafo.datosBactraking();
+         System.out.println("Hola");
+         //System.out.println("Total de rutas " + mld.totalRutas());
 
      
         /*
@@ -188,11 +190,11 @@ public class Main {
         
           //mld.verRutaCorta();
           // vertice aux = metGrafo.grafo;
-        mc.Insertar(metGrafo.grafo, 0);
-        metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+       // mc.Insertar(metGrafo.grafo, 0);
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         
         //mld.imprimirRuta(mld.rutaCorta);
-        metGrafo.rutaCortaGenetica(10);
+        //metGrafo.rutaCortaGenetica(10);
     }
   
 }

@@ -87,18 +87,19 @@ public class MetodosGrafo {
      * @return vértice encontrado o null
      */
     public vertice buscar(int id) {
-        vertice aux = grafo;
-        instrucciones ++;
-        while (aux != null) {
-            if (aux.ID == id) {
+        vertice aux = grafo;//1
+        instrucciones ++;//1
+        while (aux != null) {//1
+            if (aux.ID == id) {//1
                 instrucciones += 2;
-                return aux;
+                return aux;//1
             }
-            aux = aux.sigV;
+            aux = aux.sigV;//1
             instrucciones += 2;
         }
         instrucciones += 2;
-        return null;
+        return null;//1
+       //Medicion analitica: 7
     }
 
     /**
@@ -364,14 +365,11 @@ public class MetodosGrafo {
      */
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacion){
         Random random = new Random();
-        System.out.println("tamanno  " + poblacion.size() );
         int index2 = random.nextInt(poblacion.size()-1) +1;
         if(padre1==null && padre2==null){
-            int index = random.nextInt(poblacion.size()-1) +1;
+            int index = random.nextInt(poblacion.size()-1);
             padre1 = poblacion.get(index);
             padre2 = poblacion.get(index2);
-            System.out.println("Indice 2    " +index2);
-            System.out.println("Indice    " +index);
             poblacion.remove(poblacion.get(index2));
             poblacion.remove(poblacion.get(index));
         }//end 1er if
@@ -724,33 +722,35 @@ public class MetodosGrafo {
     ArrayList<vertice> rutaV;
 
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
-        if ((vertex == null) || (vertex.marca)) {
+        if ((vertex == null) || (vertex.marca)) {//2n
             instrucciones ++;
             return;
         }
         instrucciones +=2;
-        if (vertex.ID == ultimo.ID) {
-            rutaV = convertirRuta(ruta + vertex.ID + "/");
-            mld.insertarRuta(rutaV, pesoRuta, true);
+        if (vertex.ID == ultimo.ID) {//n
+            rutaV = convertirRuta(ruta + vertex.ID + "/"); //12n a la 2 +4n
+            mld.insertarRuta(rutaV, pesoRuta, true);//4n a la 2+18n
             memoria += pesoArrayConElementos;
             instrucciones += 3;
         } else {
-            rutaV = convertirRuta(ruta + vertex.ID + "/");
-            mld.insertarRuta(rutaV, pesoRuta, false);
+            rutaV = convertirRuta(ruta + vertex.ID + "/");//12n a la 2 +4n
+            mld.insertarRuta(rutaV, pesoRuta, false);///4n a la 2+18n
             memoria += pesoArrayConElementos;
             instrucciones += 3;
         }
-        vertex.marca = true;
-        arco auxA = vertex.sigA;
+        vertex.marca = true;//n
+        arco auxA = vertex.sigA;//n
         memoria += pesoArco;
         instrucciones +=2;
-        while (auxA != null) {
-            rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);
-            auxA = auxA.sigA;
+        while (auxA != null) {//n a la 2
+            rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);///n a la 2
+            auxA = auxA.sigA;//n a la 2
             instrucciones +=3;
         }
-        vertex.marca = false;
+        vertex.marca = false;//n
         instrucciones ++;
+        
+        //Medicion analitica: 35n a la 2+50n
     }
 
     /**
@@ -760,24 +760,25 @@ public class MetodosGrafo {
      * @return
      */
     private ArrayList<vertice> convertirRuta(String ruta) {
-        ArrayList<vertice> rutaVertices = new ArrayList<>();
-        String[] verticesID = ruta.split("/");
+        ArrayList<vertice> rutaVertices = new ArrayList<>();//1
+        String[] verticesID = ruta.split("/");//1
         instrucciones += 2;
         memoria += pesoArrayVacio + pesoVectorStringConElementos;
-        for (int i = 0; i < verticesID.length; i++) {
-            String idV = verticesID[i];
+        for (int i = 0; i < verticesID.length; i++) {//2n +1
+            String idV = verticesID[i];//n
             memoria += 8*idV.length();
-            if (!idV.equals("")) {
-                int id = Integer.parseInt(idV);
+            if (!idV.equals("")) {//1n
+                int id = Integer.parseInt(idV);//1(n)=n
                 memoria += 32;
-                rutaVertices.add(buscar(id));
+                rutaVertices.add(buscar(id));//8(n)=8n
                 instrucciones += 3;
             }
             instrucciones += 4;
         }
         memoria += pesoArrayConElementos;
         instrucciones += 2;
-        return rutaVertices;
+        return rutaVertices;//1
+       //Medicion analitica: 12n +4
     }
 
     /**
@@ -848,49 +849,50 @@ public class MetodosGrafo {
      * @param dist
      */
       public void RamificacionyPoda(String ruta, int dist) {
-        while (!mc.colaVacia()) {
-            Cola auxCola = mc.Extraer();
-            vertice origen = auxCola.value;
+            while (!mc.colaVacia()) {//4n a la 2
+            Cola auxCola = mc.Extraer();//12n
+            vertice origen = auxCola.value;//1n
             memoria += pesoCola + pesoVertice; 
-            if (origen.marca) {
+            if (origen.marca) {//1n
                 instrucciones += 3;
-                return;
+                return;//1
             }
             instrucciones += 4;
-            if ((rutaActual == "" || rutaMinima > dist)) {
+            if ((rutaActual == "" || rutaMinima > dist)) {//2n
                 instrucciones += 2;
-                if (origen.equals(ultimo)) {
-                    rutaMinima = dist;
-                     listaRuta = convertirRuta(rutaActual);
-                    rutaActual = ruta + origen.ID + "/";
+                if (origen.equals(ultimo)) {//1n
+                    rutaMinima = dist;//1n
+                     listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
+                    rutaActual = ruta + origen.ID + "/";//1n
                     memoria += 8*rutaActual.length();
                     memoria += 32;
                     memoria += pesoArrayConElementos;
-                    mp.insertarPoda(listaRuta, rutaMinima, true);
+                    mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
                     instrucciones += 5;
                 } else {
-                    origen.marca = true;
-                    arco auxA = origen.sigA;
+                    origen.marca = true;//1n
+                    arco auxA = origen.sigA;//1n
                     memoria +=pesoArco;
                     instrucciones += 2;
-                    while (auxA != null) {
-                        mc.Insertar(auxA.destino, auxA.peso);
-                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);
-                        auxA = auxA.sigA;
+                    while (auxA != null) {//n a la 2
+                        mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
+                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
+                        auxA = auxA.sigA;//1n  a la 2
                         instrucciones += 4;
                     }
-                    origen.marca = false;
+                    origen.marca = false;//1 a la 2
                     instrucciones += 2;
                 }
 
             } else {
-                listaRuta = convertirRuta(ruta + origen.ID + "/");
-                mp.insertarPoda(listaRuta, dist, false);
+                listaRuta = convertirRuta(ruta + origen.ID + "/");//12n a la 2+5n
+                mp.insertarPoda(listaRuta, dist, false);//4n a la 2 +23n
                 instrucciones += 2;
             }
         }
         instrucciones += 1 +mp.instruccionesPoda + mc.instruccionesCola;
         memoria += mp.memoriaPoda + mc.memoriaCola;
+        //Medicion analitica: n a la 3+55n a la 2 + 77n 
     }
 
     /**

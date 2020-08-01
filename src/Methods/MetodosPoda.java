@@ -51,39 +51,41 @@ public class MetodosPoda {
      * @return
      */
     public boolean insertarPoda(ArrayList<vertice> ruta, int pesoRuta, boolean esSolucion) {
-        if (buscarRuta(ruta) == null) {
-            Poda nuevo = new Poda(ruta, pesoRuta, esSolucion, 0);
+        if (buscarRuta(ruta) == null) {//7
+            Poda nuevo = new Poda(ruta, pesoRuta, esSolucion, 0);//1
             memoriaPoda += pesoPoda;
             instruccionesPoda += 2;
-            if (inicio == null) {
-                inicio = rutaCorta = nuevo;
+            if (inicio == null) {//1
+                inicio = rutaCorta = nuevo;//2
                 instruccionesPoda += 4;
-                return true;
+                return true;//1
             }
-            Poda aux = inicio;
-            int pos = 1;
+            Poda aux = inicio;//1
+            int pos = 1;//1
             memoriaPoda += pesoPoda + 32;
             instruccionesPoda += 2;
-            while (aux != null) {
-                if (aux.sig == null) {
-                    if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.esSolucion) || rutaCorta.pesoRuta == 0) {
-                        rutaCorta = nuevo;
+            while (aux != null) {//1n
+                if (aux.sig == null) {//1*n = n
+                    if ((nuevo.pesoRuta < rutaCorta.pesoRuta && nuevo.esSolucion) || rutaCorta.pesoRuta == 0) {//3
+                        rutaCorta = nuevo;//1
                         instruccionesPoda += 3;
                     }
-                    nuevo.posicion = pos;
-                    aux.sig = nuevo;
-                    nuevo.ant = aux;
+                    nuevo.posicion = pos;//1
+                    aux.sig = nuevo;//1
+                    nuevo.ant = aux;//1
                     instruccionesPoda += 6;
-                    return true;
+                    return true;//1
                 }
-                pos++;
-                aux = aux.sig;
+                pos++;//1n
+                aux = aux.sig;//1n
                 instruccionesPoda += 3;
             }
             instruccionesPoda++;
         }
         instruccionesPoda += 3;
-        return false;
+        return false;//1
+        
+        //Medicion analitica: 4n+23
     }
 
     /**
@@ -147,13 +149,15 @@ public class MetodosPoda {
      */
     
     public Poda buscarRuta( ArrayList<vertice> ruta){
-        Poda aux = inicio;
-        while (aux != null) {     
-            if(aux.ruta.equals(ruta)){
-                return  aux;
+        Poda aux = inicio;//1
+        while (aux != null) {  //1   
+            if(aux.ruta.equals(ruta)){//1
+                return  aux;//1
             }
-            aux = aux.sig;
+            aux = aux.sig;//1
         }
-        return  null;
+        return  null;//1
+        
+        //Medicion analitica: 6
     }
 }

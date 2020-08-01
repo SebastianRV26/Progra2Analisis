@@ -53,38 +53,40 @@ public class MetodosListaDoble {
      * @return
      */
     public boolean insertarRuta(ArrayList<vertice> ruta, int pesoRuta, boolean tieneFin) {
-        ListaDoble nuevo = new ListaDoble(ruta, pesoRuta, tieneFin, 0);
+        ListaDoble nuevo = new ListaDoble(ruta, pesoRuta, tieneFin, 0);//1
         instruccionesListaDoble ++;
         memoriaListaDoble += pesoListaDoble;
-        if (inicio == null) {
-            nuevo.posicion = 0;
-            inicio = ultimo = rutaCorta=nuevo;
+        if (inicio == null) {//1
+            nuevo.posicion = 0;//1
+            inicio = ultimo = rutaCorta=nuevo;//2
             instruccionesListaDoble += 4;
-            return true;
+            return true;//1
         }
-        ListaDoble aux = inicio;
-        int pos = 1;
+        ListaDoble aux = inicio;//1
+        int pos = 1;//1
         memoriaListaDoble += pesoListaDoble + 32;
         instruccionesListaDoble +=3;
-        while (aux != null) {
-            if (aux.sigN == null) {
-                if ((nuevo.pesoRuta < rutaCorta.pesoRuta  || rutaCorta.pesoRuta == 0) && nuevo.llegaDestino) {
-                    rutaCorta = nuevo;
+        while (aux != null) {//n
+            if (aux.sigN == null) {//n
+                if ((nuevo.pesoRuta < rutaCorta.pesoRuta  || rutaCorta.pesoRuta == 0) && nuevo.llegaDestino) {//3
+                    rutaCorta = nuevo;//1
                     instruccionesListaDoble += 4;
                 }
-                nuevo. posicion = pos;
-                aux.sigN = nuevo;
-                nuevo.antN = aux;
-                ultimo = nuevo;
+                nuevo. posicion = pos;//1
+                aux.sigN = nuevo;//1
+                nuevo.antN = aux;//1
+                ultimo = nuevo;//1
                 instruccionesListaDoble += 7;
-                return true;
+                return true;//1
             }
-            pos ++;
-            aux = aux.sigN;
+            pos ++;//n
+            aux = aux.sigN;//n
             instruccionesListaDoble +=4;
         }
         instruccionesListaDoble ++;
-        return false;
+        return false;//1
+        
+        //Medicion analitica: 4n+ 18
     }
 
     /**
@@ -130,7 +132,7 @@ public class MetodosListaDoble {
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
      */
-    private int totalRutas() {
+    public int totalRutas() {
         ListaDoble aux = inicio;
         if (aux != null) {
             int cant = 0;
@@ -181,7 +183,6 @@ public class MetodosListaDoble {
       */
 
     public ArrayList<ListaDoble> rutasPorTamano(int tamanoGrafo) {
-        ListaDoble aux = inicio;
         ArrayList<ListaDoble> listaRutas = null;
         int cont = 0;
         if (tamanoGrafo <= 20) {

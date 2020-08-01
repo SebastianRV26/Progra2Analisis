@@ -112,23 +112,5 @@ public class MetodosCola {
             return null;//1
         }
         //Total medicion analitica 11
-    }
-
-         
-         
-    public Cola buscar(int id){
-        Cola aux = inicioCola;
-        memoriaCola += pesoCola;
-        instruccionesCola ++;
-        while (aux != null) {    
-            if(aux.value.ID == id){
-                instruccionesCola += 3;
-                return aux;
-            }
-            aux = aux.sig;
-            instruccionesCola += 3;
-        }
-        instruccionesCola += 2;
-        return null; 
-    }
+    }       
 }
