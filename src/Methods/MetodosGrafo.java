@@ -840,13 +840,15 @@ public class MetodosGrafo {
         vertice aux = origen;
         int min;
         memoria += pesoVertice + 32;
+        arco auxA;
+        arco auxMin;
+        memoria += pesoArco * 2;
         aux.distanciaMinima = 0;
         instrucciones += 2;
-        byte cont = 1;
+        byte cont = 1; // no se cuenta, es para las primeras 5 fases
         while (aux != null) {
-            arco auxA = aux.sigA;
-            arco auxMin = null;
-            memoria += pesoArco * 2;
+            auxA = aux.sigA;
+            auxMin = null;
             min = 10000;
             instrucciones += 4;
             while (auxA != null) {

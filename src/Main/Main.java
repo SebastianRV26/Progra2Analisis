@@ -123,19 +123,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        //menuAlgoritmos();
 
+        //menuAlgoritmos();
         MetodosGrafo metGrafo = new MetodosGrafo();
         MetodosListaDoble mld = MetodosListaDoble.getInstance();
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-     metGrafo.llenarGrafo(5000);
-     metGrafo.MostrarRutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "V" + metGrafo.grafo.ID + "/", 0);
-        
-        
-     
+        metGrafo.llenarGrafo(10);
+
         /*
             ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
        
@@ -150,14 +146,11 @@ public class Main {
                     }
                 }));
          */
-    
-
         //metGrafo.amplitud(metGrafo.grafo);
         //mld.verRutaCorta();
         // vertice aux = metGrafo.grafo;
-       // mc.Insertar(metGrafo.grafo, 0);
+        // mc.Insertar(metGrafo.grafo, 0);
         //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
-
         //mld.imprimirRuta(mld.rutaCorta);
         //metGrafo.rutaCortaGenetica(10, 10);
         //metGrafo.rutaCortaGenetica(10, 20);
@@ -167,8 +160,7 @@ public class Main {
         //metGrafo.rutaCortaGenetica(10, 1000);
         //metGrafo.rutaCortaGenetica(10, 3000);
         // metGrafo.rutaCortaGenetica(10, 5000);
-
-        // menuAlgoritmos();
+        menuAlgoritmos();
     }
 
 }
