@@ -133,10 +133,15 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-//        metGrafo.llenarGrafo(10);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,10);
-//        metGrafo.rutaCortaGenetica(10, 5);
+        metGrafo.llenarGrafo(10);
+        mc.Insertar(metGrafo.grafo, 0);
+        
+       // metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+    
+        metGrafo.generarPadres(metGrafo.grafo,"", 0,10);
+        metGrafo.rutaCortaGenetica(10, 5);
+        
+        
 //        
 //        metGrafo.llenarGrafo(20);
 //        mc.Insertar(metGrafo.grafo, 0);
@@ -158,10 +163,10 @@ public class Main {
         //metGrafo.generarPadres(metGrafo.grafo,"", 0,120);
         //metGrafo.rutaCortaGenetica(120, 60);
         
-        metGrafo.llenarGrafo(1000);
-        mc.Insertar(metGrafo.grafo, 0);
-        metGrafo.generarPadres(metGrafo.grafo,"", 0,1000);
-        metGrafo.rutaCortaGenetica(1000, 100);
+//        metGrafo.llenarGrafo(500);
+//        mc.Insertar(metGrafo.grafo, 0);
+//        metGrafo.generarPadres(metGrafo.grafo,"", 0,500);
+//        metGrafo.rutaCortaGenetica(500, 100);
         
 //        metGrafo.llenarGrafo(3000);
 //        mc.Insertar(metGrafo.grafo, 0);

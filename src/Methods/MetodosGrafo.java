@@ -312,8 +312,8 @@ public class MetodosGrafo {
     ArrayList<ArrayList<vertice>> Manipulados = new ArrayList();
     ArrayList<vertice> padre1;
     ArrayList<vertice> padre2;
+    ArrayList<ArrayList<vertice>> poblacion = new ArrayList();
     
-     ArrayList<ArrayList<vertice>> poblacion = new ArrayList();
     public void generarPadres(vertice vertex, String ruta, int pesoRuta, int ultimo ) {
         if ((vertex == null) || (vertex.marca)) {
             return;
@@ -323,7 +323,7 @@ public class MetodosGrafo {
             // array.append convertirRuta(ruta + vertex.ID + "/");
         }
         // si array.len == 200 retorne 
-        if (poblacion.size()==200){
+        if (poblacion.size()==220){
                 return;
             }
         vertex.marca = true;
@@ -331,7 +331,7 @@ public class MetodosGrafo {
         while (auxA != null) {
             generarPadres(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso, ultimo);
             // si array.len == 200 retorne 
-            if (poblacion.size()==200){
+            if (poblacion.size()==220){
                 return;
             }
             auxA = auxA.sigA;
@@ -383,26 +383,6 @@ public class MetodosGrafo {
             }
             System.out.println(ruta);
             ruta = "";
-    }
-    
-    /**
-     * 
-     * @param tamGrafo
-     * @return ArrayList<ArrayList<vertice>> que son todas las Arraylist de rutas.
-     */
-    public ArrayList<ArrayList<vertice>> generarPoblacion(int tamGrafo){
-        ArrayList<ArrayList<vertice>> poblacionInicial = new ArrayList<>();
-        ListaDoble aux = mld.inicio;
-        while (aux != null) {
-           if(aux.llegaDestino){
-               if(aux.verticesRuta.size()>(tamGrafo/2)){
-                   poblacionInicial.add(aux.verticesRuta);
-               }          
-           }
-            aux = aux.sigN;
-        }
-        ListaDoble temp = aux;
-        return poblacionInicial;
     }
     
     /**
