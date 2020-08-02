@@ -81,7 +81,12 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        //metGrafo.rutaCortaGenetica(grafos[i]);
+                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+                        if(tamannioGrafo[i]>500){
+                            metGrafo.rutaCortaGenetica(tamannioGrafo[i], 100);
+                        }
+                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
+                        
                     }
                     break;
                 case "3":
@@ -130,13 +135,14 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(10);
-        mc.Insertar(metGrafo.grafo, 0);
+       // metGrafo.llenarGrafo(5000);
+       // mc.Insertar(metGrafo.grafo, 0);
         
-       // metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+         //metGrafo.rutaCortaGenetica(10, 5);
     
-        metGrafo.generarPadres(metGrafo.grafo,"", 0,10);
-        metGrafo.rutaCortaGenetica(10, 5);
+        //metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
+        //metGrafo.rutaCortaGenetica(5000, 100);
         
         
 //        
@@ -195,14 +201,8 @@ public class Main {
         // mc.Insertar(metGrafo.grafo, 0);
         //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
         //mld.imprimirRuta(mld.rutaCorta);
-        //metGrafo.rutaCortaGenetica(10, 10);
-        //metGrafo.rutaCortaGenetica(10, 20);
-        //metGrafo.rutaCortaGenetica(10, 30);
-        //metGrafo.rutaCortaGenetica(10, 60);
-        //metGrafo.rutaCortaGenetica(10, 200);
-        //metGrafo.rutaCortaGenetica(10, 1000);
-        //metGrafo.rutaCortaGenetica(10, 3000);
-        // metGrafo.rutaCortaGenetica(10, 5000);
+        
+        
         menuAlgoritmos();
     }
 

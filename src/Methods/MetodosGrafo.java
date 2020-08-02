@@ -465,7 +465,8 @@ public class MetodosGrafo {
         int cont = 0;
         while (true) {
 
-            randomNum = ThreadLocalRandom.current().nextInt(2, padre.size());
+            
+            randomNum = ThreadLocalRandom.current().nextInt(2, tamGrafo);
             System.out.println("Punto de cruse: " + randomNum);
             esta = padre.contains(buscar(randomNum));
             esta2 = madre.contains(buscar(randomNum));
@@ -761,9 +762,7 @@ public class MetodosGrafo {
      */
     ArrayList<vertice> rutaV;
 
-    public void GenerarRutas(vertice vertex, String ruta, int pesoRuta) {
-        if ((vertex == null) || (vertex.marca)) {
-            instrucciones++;
+   
     public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {//2n
             instrucciones ++;
@@ -1049,7 +1048,7 @@ public class MetodosGrafo {
     public void datosBactraking() {
         memoria = 0;
         instrucciones = 0;
-        GenerarRutas(grafo, "", 0);
+        //GenerarRutas(grafo, "", 0);
         System.out.println("Ruta corta por el diseño Bactraking");
         mld.imprimirRuta(mld.rutaCorta);
         System.out.println("Memoria usada por Bactraking: " + memoria + " " + "bits");
