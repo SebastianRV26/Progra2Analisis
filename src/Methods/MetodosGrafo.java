@@ -1057,4 +1057,14 @@ public class MetodosGrafo {
         System.out.println("Rutas random del backtraking");
         mld.rutasRandom();
     }
+    public void datosGenetico(){
+        memoria = 0;
+        instrucciones = 0;
+        System.out.println("Ruta corta por el diseño de Algoritmo Genetico");
+        //genetico
+        System.out.println("Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits");
+        System.out.println("Instrucciones usadas por Algoritmo Genetico: " + instrucciones);
+        
+        
+    }
 }

@@ -81,12 +81,18 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        
+//                        metGrafo.llenarGrafo(10);
+//                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+//                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
+//        
+                        
                         metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+                        
                         if(tamannioGrafo[i]>500){
                             metGrafo.rutaCortaGenetica(tamannioGrafo[i], 100);
                         }
-                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
-                        
+                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);                        
                     }
                     break;
                 case "3":
@@ -129,11 +135,11 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        //menuAlgoritmos();
-        MetodosGrafo metGrafo = new MetodosGrafo();
-        MetodosListaDoble mld = MetodosListaDoble.getInstance();
-        MetodosCola mc = MetodosCola.getInstance();
-        MetodosPoda mp = MetodosPoda.getInstance();
+       // menuAlgoritmos();
+//        MetodosGrafo metGrafo = new MetodosGrafo();
+//        MetodosListaDoble mld = MetodosListaDoble.getInstance();
+//        MetodosCola mc = MetodosCola.getInstance();
+//        MetodosPoda mp = MetodosPoda.getInstance();
 
        // metGrafo.llenarGrafo(5000);
        // mc.Insertar(metGrafo.grafo, 0);
@@ -143,65 +149,8 @@ public class Main {
     
         //metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
         //metGrafo.rutaCortaGenetica(5000, 100);
-        
-        
-//        
-//        metGrafo.llenarGrafo(20);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,20);
-//        metGrafo.rutaCortaGenetica(20, 10);
-       
-//        metGrafo.llenarGrafo(30);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,30);
-//        metGrafo.rutaCortaGenetica(30, 15);
-         
-//        metGrafo.llenarGrafo(60);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,60);
-//        metGrafo.rutaCortaGenetica(60, 30);
-       
-        //metGrafo.llenarGrafo(120);
-        //mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.generarPadres(metGrafo.grafo,"", 0,120);
-        //metGrafo.rutaCortaGenetica(120, 60);
-        
-//        metGrafo.llenarGrafo(500);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,500);
-//        metGrafo.rutaCortaGenetica(500, 100);
-        
-//        metGrafo.llenarGrafo(3000);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,3000);
-//        metGrafo.rutaCortaGenetica(3000, 100);
-//        
-//        metGrafo.llenarGrafo(5000);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
-//        metGrafo.rutaCortaGenetica(5000, 100); 
-
-        /*
-            ListaDoble a = new ListaDoble(rutaV, 3, false, 45);
-       
-        System.out.println("size of   ArrayList<vertice> is "
-                + MenMeter.measure(new Runnable() {
-
-                   ListaDoble a;
-
-                    @Override
-                    public void run() {
-                        a =  new ListaDoble(rutaV,10,true,2);
-                    }
-                }));
-         */
-        //metGrafo.amplitud(metGrafo.grafo);
-        //mld.verRutaCorta();
-        // vertice aux = metGrafo.grafo;
-        // mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
-        //mld.imprimirRuta(mld.rutaCorta);
-        
+    
+    
         
         menuAlgoritmos();
     }
