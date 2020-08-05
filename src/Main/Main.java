@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static vertice[] ultimos = new vertice[6];
+    public static vertice[] ultimos = new vertice[8];
 
     ;
     /**
@@ -38,7 +38,7 @@ public class Main {
      */
     public static vertice[] crearGrafos(int[] tamannio) {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        vertice[] grafos = new vertice[6];
+        vertice[] grafos = new vertice[tamannio.length];
         for (int i = 0; i < tamannio.length; i++) {
             metGrafo.llenarGrafo(tamannio[i]);
             vertice grafo = metGrafo.grafo;
@@ -61,52 +61,59 @@ public class Main {
 
         while (true) {
             System.out.println("Digite un numero del 1 al 6 para ver las diferentes consultas "
-                    + "\n 1-Imprima todas las variables de medición para cada una de las estrategias de diseño "
-                    + "\n 2-Imprimir la ruta corta encontrada de inicio a fin "
-                    + "\n 3-Imprimir todos los cruces realizados para la estrategia genética y su mutación "
-                    + "\n 4-Para la estrategia backtracking imprimir la cantidad de todas las rutas validas e imprimir 5 rutas al azar "
-                    + "\n 5-Para la estrategia de programación dinámica imprimir algunas 5 fases durante el proceso de obtención de la ruta corta "
-                    + "\n 6-Para la estrategia de ramificación y poda imprimir algunas la cantidad de rutas podas, e imprimir 5 rutas podas se las hubieran "
-                    + "\n 7-Salir"
+                    + "\n 1-Estrategia voraz "
+                    + "\n 2-Estrategia genética, todos los cruces realizados y su mutación "
+                    + "\n 3-Estrategia backtracking y la cantidad de todas las rutas validas e imprimir 5 rutas al azar "
+                    + "\n 4-Estrategia de programación dinámica y las primeras 5 fases durante el proceso de obtención de la ruta corta "
+                    + "\n 5-Estrategia de ramificación y poda y algunas la cantidad de rutas podas, e imprimir 5 rutas podas si las hubieran "
+                    + "\n 6-Salir"
                     + "\n ====================================");
             Scanner scanObj = new Scanner(System.in);  // Create a Scanner object
             String opcion = scanObj.nextLine();  // Read user input
 
             switch (opcion) {
                 case "1":
-
-                    break;
-                case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
                         metGrafo.MostrarRutaCortaVoraz(grafos[i], ultimos[i], "V" + grafos[i].ID + "/", 0);
                     }
                     break;
+                case "2":
+                    for (int i = 0; i < tamannioGrafo.length; i++) {
+                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                        
+//                        metGrafo.llenarGrafo(10);
+//                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+//                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
+//        
+                        
+                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+                        
+                        if(tamannioGrafo[i]>500){
+                            metGrafo.rutaCortaGenetica(tamannioGrafo[i], 100);
+                        }
+                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);                        
+                    }
+                    break;
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                       // metGrafo.rutaCortaGenetica(grafos[i]);
+                        metGrafo.datosBactraking();
                     }
                     break;
                 case "4":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        // metGrafo.GenerarRutas(grafos[i]);
+                        metGrafo.MostrarRutaCortaDinamica(grafos[i], ultimos[i], tamannioGrafo[i]);
                     }
                     break;
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.MostrarRutaCortaDinamica(grafos[i], ultimos[i]);
+                        metGrafo.datosRyP();
                     }
                     break;
                 case "6":
-                    for (int i = 0; i < tamannioGrafo.length; i++) {
-                        System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        //  metGrafo.rutaCortaRamificacionYPoda();
-                    }
-                    break;
-                case "7":
                     System.exit(0);
                 default:
                     break;
@@ -128,50 +135,24 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        MetodosGrafo metGrafo = new MetodosGrafo();
-        MetodosListaDoble mld = MetodosListaDoble.getInstance();
-        MetodosCola mc = MetodosCola.getInstance();
-        MetodosPoda mp = MetodosPoda.getInstance();
+       // menuAlgoritmos();
+//        MetodosGrafo metGrafo = new MetodosGrafo();
+//        MetodosListaDoble mld = MetodosListaDoble.getInstance();
+//        MetodosCola mc = MetodosCola.getInstance();
+//        MetodosPoda mp = MetodosPoda.getInstance();
 
-//        metGrafo.llenarGrafo(10);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,10);
-//        metGrafo.rutaCortaGenetica(10, 5);
-//        
-//        metGrafo.llenarGrafo(20);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,20);
-//        metGrafo.rutaCortaGenetica(20, 10);
-       
-//        metGrafo.llenarGrafo(30);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,30);
-//        metGrafo.rutaCortaGenetica(30, 15);
-         
-//        metGrafo.llenarGrafo(60);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,60);
-//        metGrafo.rutaCortaGenetica(60, 30);
-       
-        //metGrafo.llenarGrafo(120);
-        //mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.generarPadres(metGrafo.grafo,"", 0,120);
-        //metGrafo.rutaCortaGenetica(120, 60);
+       // metGrafo.llenarGrafo(5000);
+       // mc.Insertar(metGrafo.grafo, 0);
         
-        metGrafo.llenarGrafo(5000);
-        mc.Insertar(metGrafo.grafo, 0);
-        metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
-        metGrafo.rutaCortaGenetica(5000, 100);
+        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+         //metGrafo.rutaCortaGenetica(10, 5);
+    
+        //metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
+        //metGrafo.rutaCortaGenetica(5000, 100);
+    
+    
         
-//        metGrafo.llenarGrafo(3000);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,3000);
-//        metGrafo.rutaCortaGenetica(3000, 100);
-//        
-//        metGrafo.llenarGrafo(5000);
-//        mc.Insertar(metGrafo.grafo, 0);
-//        metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
-//        metGrafo.rutaCortaGenetica(5000, 100); 
+        menuAlgoritmos();
     }
 
 }

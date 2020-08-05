@@ -13,6 +13,8 @@ import java.util.Random;
 
 /**
  ** Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+ * 
+ * Clase que contiene los metodos para la clase de ListaDoble
  *
  * @author edubi
  */
@@ -21,8 +23,11 @@ public class MetodosListaDoble {
 
     /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
+     * 
+     * singleton para que exista únicamente una instacia de la clase
+     * MetodosListaDoble
      *
-     * @return
+     * @return la instancia única del objeto MetodosListaDoble
      */
     public static MetodosListaDoble getInstance() {
         if (instance == null) {
@@ -47,10 +52,14 @@ public class MetodosListaDoble {
     /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 09/07/2020
      *
-     * @param ruta
-     * @param pesoRuta
-     * @param tieneFin
-     * @return
+     * Metodo que inserta en la lista doble, al mismo tiempo va buscando 
+     * cual de todos los nuevos que van llegando es la ruta mas corta, cuando lo encuentra le
+     * asigna un puntero para no perderlo
+     * 
+     * @param ruta Array que contiene todos los vertices que forman parte de la ruta encontrada por el backtracking
+     * @param pesoRuta Peso de la ruta que llego por el parametro anterior
+     * @param tieneFin Indica si la rutra que llego es una solución total o parcial
+     * @return Verdadero si inserto correctamente o false si hubo problemas
      */
     public boolean insertarRuta(ArrayList<vertice> ruta, int pesoRuta, boolean tieneFin) {
         ListaDoble nuevo = new ListaDoble(ruta, pesoRuta, tieneFin, 0);//1
@@ -92,6 +101,10 @@ public class MetodosListaDoble {
     /**
      * Fecha inicio: 07/07/2020 Ultima modificación: 08/07/2020
      *
+     * Medoto que recorre una ruta y la imprime, 
+     * mostrando en orden los origenes y destinos, hasta llegar
+     * al último nodo
+     * 
      * @param temp
      */
    public void imprimirRuta(ListaDoble temp) {
@@ -116,6 +129,8 @@ public class MetodosListaDoble {
 
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+     * 
+     * Muestra las rutas validas que dio como reultado el backtracking
      */
     public void rutasValidas() {
         ListaDoble aux = inicio;
@@ -131,6 +146,8 @@ public class MetodosListaDoble {
 
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+     * 
+     * Muestra el total de rutas que logro sacar el backtracking de un determinado grafo
      */
     public int totalRutas() {
         ListaDoble aux = inicio;
@@ -147,6 +164,8 @@ public class MetodosListaDoble {
 
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
+     * 
+     * Busca 5 rutas de forma random en la lista para poder imprimirlas
      */
     public void rutasRandom() {
         Random random = new Random();
@@ -160,8 +179,10 @@ public class MetodosListaDoble {
     /**
      * Fecha inicio: 08/07/2020 Ultima modificación: 08/07/2020
      *
-     * @param posicion
-     * @return
+     * Busca una ruta por la posición en la que se encuentra
+     * 
+     * @param posicion posición de la ruta que se desea buscar
+     * @return Devuelve la ruta encontrada
      */
     private ListaDoble buscarRuta(int posicion) {
         ListaDoble aux = inicio;
@@ -178,8 +199,10 @@ public class MetodosListaDoble {
 
      /**
       * Fecha inicio: 21/07/2020 Ultima modificación: 21/07/2020
-      * @param tamanoGrafo
-      * @return 
+      * 
+      * Metodo que devuelve x cantidad de rutas según el tamaño del grafo
+      * @param tamanoGrafo tamaño del grado en el que se encuentra actualmente
+      * @return Todas las rutas que se desean según el tamaño del grafo
       */
 
     public ArrayList<ListaDoble> rutasPorTamano(int tamanoGrafo) {
