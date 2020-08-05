@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static vertice[] ultimos = new vertice[8];
+    public static vertice[] ultimos = new vertice[3];
 
     ;
     /**
@@ -41,8 +41,7 @@ public class Main {
         vertice[] grafos = new vertice[tamannio.length];
         for (int i = 0; i < tamannio.length; i++) {
             metGrafo.llenarGrafo(tamannio[i]);
-            vertice grafo = metGrafo.grafo;
-            grafos[i] = grafo;
+            grafos[i] = metGrafo.grafo;
             ultimos[i] = metGrafo.ultimo;
             metGrafo.grafo = null;
         }
@@ -56,7 +55,7 @@ public class Main {
      */
     public static void menuAlgoritmos() {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        int[] tamannioGrafo = {10, 20, 30, 60, 120, 1000, 3000, 5000}; // array con los tamaÃ±os para los grafos
+        int[] tamannioGrafo = {10, 20, 30}; // array con los tamaÃ±os para los grafos
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
 
         while (true) {
@@ -87,7 +86,8 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosBactraking(grafos[i], ultimos[i]);
+                        metGrafo.grafo = grafos[i];
+                        metGrafo.datosBactraking(metGrafo.grafo, ultimos[i]);
                     }
                     break;
                 case "4":
@@ -99,7 +99,8 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosRyP(grafos[i], ultimos[i]);
+                        metGrafo.grafo = grafos[i];
+                        metGrafo.datosRyP(metGrafo.grafo, ultimos[i]);
                     }
                     break;
                 case "6":
@@ -123,6 +124,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+      menuAlgoritmos();
 
         //menuAlgoritmos();
         MetodosGrafo metGrafo = new MetodosGrafo();
@@ -130,11 +133,8 @@ public class Main {
         MetodosCola mc = MetodosCola.getInstance();
         MetodosPoda mp = MetodosPoda.getInstance();
 
-        metGrafo.llenarGrafo(60);
-     
-        metGrafo.datosRyP(metGrafo.grafo, metGrafo.ultimo);
-        //metGrafo.MostrarRutaCortaDinamica(metGrafo.grafo, metGrafo.ultimo, 5000);
-        
+       metGrafo.llenarGrafo(10);
+     //metGrafo.MostrarRutaCortaVoraz(metGrafo.grafo, metGrafo.ultimo, "V" + metGrafo.grafo.ID + "/", 0);
         
         
         /*
@@ -154,8 +154,10 @@ public class Main {
         //metGrafo.amplitud(metGrafo.grafo);
         //mld.verRutaCorta();
         // vertice aux = metGrafo.grafo;
-        // mc.Insertar(metGrafo.grafo, 0);
-        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
+       // mc.Insertar(metGrafo.grafo, 0);
+        //metGrafo.datosBactraking();
+        metGrafo.datosRyP(metGrafo.grafo, metGrafo.ultimo);
+
         //mld.imprimirRuta(mld.rutaCorta);
         //metGrafo.rutaCortaGenetica(10, 10);
         //metGrafo.rutaCortaGenetica(10, 20);

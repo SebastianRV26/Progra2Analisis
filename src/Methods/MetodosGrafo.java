@@ -102,6 +102,8 @@ public class MetodosGrafo {
         return null;//1
        //Medicion analitica: 7
     }
+    
+   
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 13/06/2020
@@ -721,7 +723,7 @@ public class MetodosGrafo {
      * @param pesoRuta Es el peos  que lleva el metodo guardado hasta el vertice actual
      */
 
-    public void rutaCortaBacktracking(vertice vertex, vertice ultimo, String ruta, int pesoRuta) {
+    public void rutaCortaBacktracking(vertice vertex,vertice ultimo,  String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {//2n
             instrucciones ++;
             return;
@@ -900,11 +902,11 @@ public class MetodosGrafo {
      * contrario, si la ruta aun no hallegado al destino, pero aun es una ruta fiable se sigue recorriendo, hasta encontrar 
      * un punto donde se pode o que cambie la ruta mas corta
      *
-     * @param ultimo Ultimo vertice del grafo
+     * @param ultimo
      * @param ruta parametro que va indica la ruta por la que se encuentra actualmente el recorrido
      * @param dist parametro que va indica el peso que tiene la ruta  por la que se encuentra actualmente el recorrido
      */
-      public void RamificacionyPoda(vertice ultimo,String ruta, int dist) {
+      public void RamificacionyPoda(vertice ultimo, String ruta, int dist) {
             while (!mc.colaVacia()) {//4n a la 2
             Cola auxCola = mc.Extraer();//12n
             vertice origen = auxCola.value;//1n
@@ -917,11 +919,11 @@ public class MetodosGrafo {
             if ((rutaActual == "" || rutaMinima > dist)) {//2n
                 instrucciones += 2;
                 if (origen.equals(ultimo)) {//1n
-                    rutaMinima = dist;//1n
+                    rutaMinima = dist;//1nn
                     rutaActual = ruta + origen.ID + "/";//1n
                     memoria += 8*rutaActual.length();
                     memoria += 32;
-                    mp.insertarPoda(convertirRuta(rutaActual), rutaMinima, true);//16n a la 2 + 28n
+                    mp.insertarPoda(convertirRuta(rutaActual), rutaMinima, true);//4n a la 2 +23n
                     instrucciones += 5;
                 } else {
                     origen.marca = true;//1n
@@ -937,9 +939,8 @@ public class MetodosGrafo {
                     origen.marca = false;//1 a la 2
                     instrucciones += 2;
                 }
-
             } else {
-                mp.insertarPoda( convertirRuta(ruta + origen.ID + "/"), dist, false);//16n a la 2 + 28n
+                mp.insertarPoda( convertirRuta(ruta + origen.ID + "/"), dist, false);//4n a la 2 +23n
                 instrucciones += 2;
             }
         }
@@ -972,22 +973,22 @@ public class MetodosGrafo {
      * Instrucciones
      * Rutas mas corta
      * Total de rutas podadas
-     *  @param grafo Primer vertice del grafo
-     * @param ultimo Ultimo vertice del grafo
+     * @param grafo
+     * @param ultimo
      */
-    public void datosRyP(vertice grafo, vertice ultimo) {
+    public void datosRyP(vertice grafo, vertice  ultimo) {
         memoria = 0;
         instrucciones = 0;
         mc.Insertar(grafo, 0);
         RamificacionyPoda(ultimo,"", 0);
-        System.out.println("Ruta corta por el diseño Ramificación y Poda");
-        mp.imprimirRuta(mp.rutaCorta);
+        System.out.println("Ruta corta por el diseño Ramificación y Poda"); 
+       mp.imprimirRuta(mp.rutaCorta);
         System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
         System.out.println("Instrucciones usadas por RyP: " + instrucciones);
         System.out.println("Total de rutas podadas: " + mp.totalRutasPodadas());
         System.out.println("=====================");
         System.out.println("5 ejemplos de rutas podadas");
-        mp.imprimirRutaPodada();
+        mp.imprimirRutaPodada();  
     }
     
     /**Fecha inicio: 24/07/2020 Ultima modificación: 24/07/20
@@ -998,10 +999,10 @@ public class MetodosGrafo {
      * Instrucciones
      * Rutas mas corta
      * Total de rutas validas
-     * @param grafo Primer vertice del grafo
-     * @param ultimo Ultimo vertice del grafo
+     * @param grafo
+     * @param ultimo
      */
-    public void datosBactraking(vertice grafo, vertice ultimo) {
+    public void datosBactraking(vertice grafo, vertice  ultimo) {
         memoria = 0;
         instrucciones = 0;
         rutaCortaBacktracking(grafo,ultimo, "", 0);
