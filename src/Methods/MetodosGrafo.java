@@ -991,7 +991,7 @@ public class MetodosGrafo {
     public void datosBactraking() {
         memoria = 0;
         instrucciones = 0;
-        GenerarRutas(grafo, "", 0);
+        rutaCortaBacktracking(grafo, "", 0);
         System.out.println("Ruta corta por el diseño Bactraking");
         mld.imprimirRuta(mld.rutaCorta);
         System.out.println("Memoria usada por Bactraking: " + memoria + " " + "bits");

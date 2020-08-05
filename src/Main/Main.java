@@ -158,10 +158,10 @@ public class Main {
         //metGrafo.generarPadres(metGrafo.grafo,"", 0,120);
         //metGrafo.rutaCortaGenetica(120, 60);
         
-        metGrafo.llenarGrafo(1000);
+        metGrafo.llenarGrafo(5000);
         mc.Insertar(metGrafo.grafo, 0);
-        metGrafo.generarPadres(metGrafo.grafo,"", 0,1000);
-        metGrafo.rutaCortaGenetica(1000, 100);
+        metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
+        metGrafo.rutaCortaGenetica(5000, 100);
         
 //        metGrafo.llenarGrafo(3000);
 //        mc.Insertar(metGrafo.grafo, 0);
