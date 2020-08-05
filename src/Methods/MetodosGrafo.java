@@ -377,10 +377,16 @@ public class MetodosGrafo {
     public void ImprimirRuta(ArrayList<vertice> Manipulados){
         System.out.println("Esta es la ruta");
         String ruta = " ";
+        System.out.println(Manipulados.size());
         //esto imprime la ruta
-        for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
-            ruta = ruta + object.ID + "/";
+        
+        
+        for (int i = 0; i < Manipulados.size(); i++) { // tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + Manipulados.get(i).ID + "/";
         }
+
+        
+        
         System.out.println(ruta);
         ruta = "";
     }
@@ -725,6 +731,10 @@ public class MetodosGrafo {
         int cont = 0;
         while (cont < cantVeces) {
             ag_escogerPadres(poblacion);
+            System.out.println("Padre  "  + padre1.size());
+            for (int i = 0; i < padre1.size(); i++) {
+                System.out.println(padre1.get(i).ID);
+            }
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
             ag_cruzar(padre1, padre2, tamGrafo);

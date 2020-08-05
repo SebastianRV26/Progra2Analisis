@@ -56,7 +56,7 @@ public class Main {
      */
     public static void menuAlgoritmos() {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        int[] tamannioGrafo = {10, 20, 30, 60, 120, 1000, 3000, 5000}; // array con los tamaÃ±os para los grafos
+        int[] tamannioGrafo = {10, 20, 30}; // array con los tamaños para los grafos
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
 
         while (true) {
@@ -87,12 +87,14 @@ public class Main {
 //                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
 //        
                         
-                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
+                        metGrafo.generarPadres(grafos[i],"", 0,tamannioGrafo[i]);
                         
                         if(tamannioGrafo[i]>500){
                             metGrafo.rutaCortaGenetica(tamannioGrafo[i], 100);
+                        }else{
+                                   metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);     
                         }
-                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);                        
+                                    
                     }
                     break;
                 case "3":
