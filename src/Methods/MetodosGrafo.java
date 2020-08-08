@@ -419,9 +419,10 @@ public class MetodosGrafo {
         Random random = new Random();
         int index2, index;
         instrucciones+=2;
+        
         while (true) {
-            index2 = random.nextInt(poblacionPadres.size() - 1) + 1;
-            index = random.nextInt(poblacionPadres.size() - 1);
+            index2 = random.nextInt(poblacionPadres.size() -1) + 1;
+            index = random.nextInt(poblacionPadres.size()-1 ) ;
             memoria+=64;
             instrucciones+=4;
             if (index2 != index) {
@@ -812,7 +813,6 @@ public class MetodosGrafo {
         while (cont < cantVeces) {
             instrucciones++;
             ag_escogerPadres(poblacion);
-            System.out.println("Padre  "  + padre1.size());
             for (int i = 0; i < padre1.size(); i++) {
                 System.out.println(padre1.get(i).ID);
             }
