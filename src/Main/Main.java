@@ -93,7 +93,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosBactraking();
+                        metGrafo.datosBactraking(grafos[i], ultimos[i]);
                     }
                     break;
                 case "4":
@@ -105,7 +105,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.datosRyP();
+                        metGrafo.datosRyP(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":

@@ -401,6 +401,9 @@ public class MetodosGrafo {
             ruta = ruta + object.ID + "/";
             instrucciones++;
         }
+
+        
+        
         System.out.println(ruta);
         ruta = "";
     }
@@ -822,6 +825,10 @@ public class MetodosGrafo {
         while (cont < cantVeces) {
             instrucciones++;
             ag_escogerPadres(poblacion);
+            System.out.println("Padre  "  + padre1.size());
+            for (int i = 0; i < padre1.size(); i++) {
+                System.out.println(padre1.get(i).ID);
+            }
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
             ag_cruzar(padre1, padre2, tamGrafo);
@@ -862,8 +869,7 @@ public class MetodosGrafo {
      */
     ArrayList<vertice> rutaV;
 
-   
-    public void rutaCortaBacktracking(vertice vertex, String ruta, int pesoRuta) {
+    public void rutaCortaBacktracking(vertice vertex,vertice ultimo, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {//2n
             instrucciones ++;
             return;
@@ -885,7 +891,7 @@ public class MetodosGrafo {
         memoria += pesoArco;
         instrucciones +=2;
         while (auxA != null) {//n a la 2
-            rutaCortaBacktracking(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso);///n a la 2
+            rutaCortaBacktracking(auxA.destino,ultimo, ruta + vertex.ID + "/", pesoRuta + auxA.peso);///n a la 2
             auxA = auxA.sigA;//n a la 2
             instrucciones +=3;
         }
@@ -1049,7 +1055,7 @@ public class MetodosGrafo {
      * @param ruta parametro que va indica la ruta por la que se encuentra actualmente el recorrido
      * @param dist parametro que va indica el peso que tiene la ruta  por la que se encuentra actualmente el recorrido
      */
-      public void RamificacionyPoda(String ruta, int dist) {
+      public void RamificacionyPoda(vertice ultimo, String ruta, int dist) {
             while (!mc.colaVacia()) {//4n a la 2
             Cola auxCola = mc.Extraer();//12n
             vertice origen = auxCola.value;//1n
@@ -1077,7 +1083,7 @@ public class MetodosGrafo {
                     instrucciones += 2;
                     while (auxA != null) {//n a la 2
                         mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
-                        RamificacionyPoda(ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
+                        RamificacionyPoda(ultimo, ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
                         auxA = auxA.sigA;//1n  a la 2
                         instrucciones += 4;
                     }
@@ -1120,12 +1126,14 @@ public class MetodosGrafo {
      * Instrucciones
      * Rutas mas corta
      * Total de rutas podadas
+     * @param grafo
+     * @param ultimo
      */
-    public void datosRyP() {
+    public void datosRyP(vertice grafo, vertice ultimo) {
         memoria = 0;
         instrucciones = 0;
         mc.Insertar(grafo, 0);
-        RamificacionyPoda("", 0);
+        RamificacionyPoda(ultimo,"", 0);
         System.out.println("Ruta corta por el diseño Ramificación y Poda");
         mp.imprimirRuta(mp.rutaCorta);
         System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
@@ -1144,11 +1152,13 @@ public class MetodosGrafo {
      * Instrucciones
      * Rutas mas corta
      * Total de rutas validas
+     * @param grafo
+     * @param ultimo
      */
-    public void datosBactraking() {
+    public void datosBactraking(vertice grafo,vertice ultimo) {
         memoria = 0;
         instrucciones = 0;
-        //GenerarRutas(grafo, "", 0);
+        rutaCortaBacktracking(grafo,ultimo, "", 0);
         System.out.println("Ruta corta por el diseño Bactraking");
         mld.imprimirRuta(mld.rutaCorta);
         System.out.println("Memoria usada por Bactraking: " + memoria + " " + "bits");
