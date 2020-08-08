@@ -56,7 +56,7 @@ public class Main {
      */
     public static void menuAlgoritmos() {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        int[] tamannioGrafo = {10, 20, 30, 60,120, 1000, 3000, 5000 };  // array con los tamaÃ±os para los grafos   
+        int[] tamannioGrafo = {10, 2,30, 60,120,  1000, 3000, 5000 };  // array con los tamaÃ±os para los grafos   
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
 
         while (true) {

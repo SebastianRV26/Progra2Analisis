@@ -484,12 +484,13 @@ public class MetodosGrafo {
          instrucciones+=8;
         while (true) {
             randomNum = ThreadLocalRandom.current().nextInt(2, tamGrafo);
-            System.out.println("Punto de cruse: " + randomNum);
+            
             esta = padre.contains(buscar(randomNum));
             esta2 = madre.contains(buscar(randomNum));
             memoria+= 2 + 32;
             instrucciones+=4;
             if (esta && esta2) {
+                System.out.println("Punto de cruse: " + randomNum);
                 System.out.println("Estan ambos");
                 instrucciones++;
                 //recorre los padres para buscar el punto de cruce que se hace random
@@ -568,7 +569,7 @@ public class MetodosGrafo {
                 }
                 break;
             }
-            System.out.println("volvio a sacar punto de cruce");   
+           // System.out.println("volvio a sacar punto de cruce");   
         }  
     }
    /**
@@ -825,10 +826,6 @@ public class MetodosGrafo {
         while (cont < cantVeces) {
             instrucciones++;
             ag_escogerPadres(poblacion);
-            System.out.println("Padre  "  + padre1.size());
-            for (int i = 0; i < padre1.size(); i++) {
-                System.out.println(padre1.get(i).ID);
-            }
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
             ag_cruzar(padre1, padre2, tamGrafo);
@@ -1172,6 +1169,7 @@ public class MetodosGrafo {
     public void datosGenetico(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces){
         memoria = 0;
         instrucciones = 0;
+        quitarMarca(origen);
         rutaCortaGenetica(origen, ruta, peso, tamGrafo,cantVeces);
         System.out.println("╔══════════════════════════════════════════════════════════════════╗");
         System.out.println("‖Ruta corta por el diseño de Algoritmo Genetico          ‖");
