@@ -142,7 +142,6 @@ public class MetodosPoda {
      */
     public  void imprimirRuta(Poda temp){
          ArrayList<vertice> rutaVertices = temp.ruta;
-         System.out.println(rutaVertices);
          for (int i = 0; i < rutaVertices.size() - 1; i++) {
             vertice origen = rutaVertices.get(i);
             vertice destino = rutaVertices.get(i + 1);
