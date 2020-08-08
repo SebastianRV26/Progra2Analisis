@@ -982,32 +982,33 @@ public class MetodosGrafo {
         memoria = 0;
         instrucciones = 0;
         mc.Insertar(grafo, 0);
-        RamificacionyPoda(ultimo,"", 0);
-        System.out.println("Ruta corta por el diseño Ramificación y Poda"); 
-       mp.imprimirRuta(mp.rutaCorta);
+        RamificacionyPoda(ultimo, "", 0);
+        System.out.println("Ruta corta por el diseño Ramificación y Poda");
+        mp.imprimirRuta(mp.rutaCorta);
         System.out.println("Memoria usada por RyP: " + memoria + " " + "bits");
         System.out.println("Instrucciones usadas por RyP: " + instrucciones);
         System.out.println("Total de rutas podadas: " + mp.totalRutasPodadas());
         System.out.println("=====================");
         System.out.println("5 ejemplos de rutas podadas");
-        mp.imprimirRutaPodada();  
+        mp.imprimirRutaPodada();
+        mp.inicio = null;
     }
-    
-    /**Fecha inicio: 24/07/2020 Ultima modificación: 24/07/20
-     * 
+
+    /**
+     * Fecha inicio: 24/07/2020 Ultima modificación: 24/07/20
+     *
      * Metodo que muestra todo los datos relacionados ocn 
-     * el diseño Backtracking, como por ejemplo:
-     * Memoria
-     * Instrucciones
-     * Rutas mas corta
+     * el diseño
+     * Backtracking, como por ejemplo: Memoria Instrucciones Rutas mas corta
      * Total de rutas validas
+     *
      * @param grafo
      * @param ultimo
      */
-    public void datosBactraking(vertice grafo, vertice  ultimo) {
+    public void datosBactraking(vertice grafo, vertice ultimo) {
         memoria = 0;
         instrucciones = 0;
-        rutaCortaBacktracking(grafo,ultimo, "", 0);
+        rutaCortaBacktracking(grafo, ultimo, "", 0);
         System.out.println("Ruta corta por el diseño Bactraking");
         mld.imprimirRuta(mld.rutaCorta);
         System.out.println("Memoria usada por Bactraking: " + memoria + " " + "bits");
@@ -1015,5 +1016,6 @@ public class MetodosGrafo {
         mld.rutasValidas();
         System.out.println("Rutas random del backtraking");
         mld.rutasRandom();
+        mld.inicio = null;
     }
 }
