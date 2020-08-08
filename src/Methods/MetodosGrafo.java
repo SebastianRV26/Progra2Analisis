@@ -330,24 +330,33 @@ public class MetodosGrafo {
     ArrayList<ArrayList<vertice>> poblacion;
     
     public ArrayList<ArrayList<vertice>> generarPadres( ArrayList<ArrayList<vertice>> poblacion,vertice vertex, String ruta, int pesoRuta, int ultimo ) {
-       
+       instrucciones++;
         if ((vertex == null) || (vertex.marca)) {
+            instrucciones++;
             return poblacion;
         }
+        instrucciones++;
         if (vertex.ID == ultimo) {
+            instrucciones++;
             poblacion.add(convertirRuta(ruta + vertex.ID + "/"));
             // array.append convertirRuta(ruta + vertex.ID + "/");
         }
+        instrucciones++;
         // si array.len == 200 retorne 
         if (poblacion.size()==220){
+            instrucciones++;
                 return poblacion;
             }
         vertex.marca = true;
         arco auxA = vertex.sigA;
+        instrucciones+=3;
         while (auxA != null) {
+            instrucciones++;
             generarPadres(poblacion,auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso, ultimo);
             // si array.len == 200 retorne 
+            instrucciones++;
             if (poblacion.size()==220){
+                instrucciones++;
                 return poblacion;
             }
             auxA = auxA.sigA;
@@ -366,12 +375,16 @@ public class MetodosGrafo {
         System.out.println("Estan son todas las rutas con las que se va a trabajar");
         String ruta = " ";
         //esto imprime las rutas
+        instrucciones+=2;
         for (ArrayList<vertice> arrayList : Manipulados) {//  este prueba tiene todas las rutas 
+            instrucciones++;
             for (vertice object : arrayList) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
                 ruta = ruta + object.ID + "/";
+                instrucciones++;
             }
             System.out.println(ruta);
             ruta = "";
+            instrucciones++;
         }
         System.out.println("////////////////////////");
     }
@@ -382,12 +395,11 @@ public class MetodosGrafo {
     public void ImprimirRuta(ArrayList<vertice> Manipulados){
         System.out.println("Esta es la ruta");
         String ruta = " ";
-        System.out.println(Manipulados.size());
+        instrucciones+=3;
         //esto imprime la ruta
-        
-        
-        for (int i = 0; i < Manipulados.size(); i++) { // tiene vertices , es la ruta de la que esta compuesta esa ruta
-                ruta = ruta + Manipulados.get(i).ID + "/";
+        for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
+            ruta = ruta + object.ID + "/";
+            instrucciones++;
         }
 
         
@@ -402,10 +414,11 @@ public class MetodosGrafo {
     public void ImprimirRuta(List<vertice> Manipulados){
         System.out.println("Esta es la sublista: ");
         String ruta = " ";
-        
+        instrucciones+=3;
         //esto imprime la ruta
         for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
             ruta = ruta + object.ID + "/";
+            instrucciones++;
         }
         System.out.println(ruta);
         ruta = "";
