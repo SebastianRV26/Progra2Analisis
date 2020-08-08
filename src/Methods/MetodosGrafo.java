@@ -1051,34 +1051,34 @@ public class MetodosGrafo {
                 instrucciones += 3;
                 return;//1
             }
-            instrucciones += 4;
-            if ((rutaActual == "" || rutaMinima > dist)) {//2n
-                instrucciones += 2;
-                if (origen.equals(ultimo)) {//1n
-                    rutaMinima = dist;//1n
-                     listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
-                    rutaActual = ruta + origen.ID + "/";//1n
-                    memoria += 8*rutaActual.length();
-                    memoria += 32;
-                    memoria += pesoArrayConElementos;
-                    mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
-                    instrucciones += 5;
-                } else {
-                    origen.marca = true;//1n
-                    arco auxA = origen.sigA;//1n
-                    memoria +=pesoArco;
+                instrucciones += 4;
+                if ((rutaActual == "" || rutaMinima > dist)) {//2n
                     instrucciones += 2;
-                    while (auxA != null) {//n a la 2
-                        mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
-                        RamificacionyPoda(ultimo, ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
-                        auxA = auxA.sigA;//1n  a la 2
-                        instrucciones += 4;
+                    if (origen.equals(ultimo)) {//1n
+                        rutaMinima = dist;//1n
+                        rutaActual = ruta + origen.ID + "/";//1n
+                        listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
+                        memoria += 8 * rutaActual.length();
+                        memoria += 32;
+                        memoria += pesoArrayConElementos;
+                        mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
+                        instrucciones += 5;
+                    } else {
+                        origen.marca = true;//1n
+                        arco auxA = origen.sigA;//1n
+                        memoria += pesoArco;
+                        instrucciones += 2;
+                        while (auxA != null) {//n a la 2
+                            mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
+                            RamificacionyPoda(ultimo, ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
+                            auxA = auxA.sigA;//1n  a la 2
+                            instrucciones += 4;
+                        }
+                        origen.marca = false;//1 a la 2
+                        instrucciones += 2;
                     }
-                    origen.marca = false;//1 a la 2
-                    instrucciones += 2;
-                }
 
-            } else {
+                } else {
                 listaRuta = convertirRuta(ruta + origen.ID + "/");//12n a la 2+5n
                 mp.insertarPoda(listaRuta, dist, false);//4n a la 2 +23n
                 instrucciones += 2;
