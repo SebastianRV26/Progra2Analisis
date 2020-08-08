@@ -1165,5 +1165,6 @@ public class MetodosGrafo {
         System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
         System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
+        quitarMarca(grafo);
     }
 }
