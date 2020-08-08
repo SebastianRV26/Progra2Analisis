@@ -471,7 +471,6 @@ public class MetodosGrafo {
          instrucciones+=8;
         while (true) {
             randomNum = ThreadLocalRandom.current().nextInt(2, tamGrafo);
-            System.out.println("Punto de cruse: " + randomNum);
             esta = padre.contains(buscar(randomNum));
             esta2 = madre.contains(buscar(randomNum));
             memoria+= 2 + 32;
@@ -555,7 +554,7 @@ public class MetodosGrafo {
                 }
                 break;
             }
-            System.out.println("volvio a sacar punto de cruce");   
+           System.out.println("Punto de cruse: " + randomNum);
         }  
     }
    /**
