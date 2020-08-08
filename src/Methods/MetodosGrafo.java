@@ -102,8 +102,6 @@ public class MetodosGrafo {
         return null;//1
        //Medicion analitica: 7
     }
-    
-   
 
     /**
      * Fecha inicio: 30/06/2020 Ultima modificación: 13/06/2020
@@ -352,8 +350,10 @@ public class MetodosGrafo {
                 return poblacion;
             }
             auxA = auxA.sigA;
+            instrucciones++;
         }
         vertex.marca = false;
+        instrucciones++;
         return poblacion;
     }
     
@@ -381,10 +381,16 @@ public class MetodosGrafo {
     public void ImprimirRuta(ArrayList<vertice> Manipulados){
         System.out.println("Esta es la ruta");
         String ruta = " ";
+        System.out.println(Manipulados.size());
         //esto imprime la ruta
-        for (vertice object : Manipulados) {// tiene vertices , es la ruta de la que esta compuesta esa ruta
-            ruta = ruta + object.ID + "/";
+        
+        
+        for (int i = 0; i < Manipulados.size(); i++) { // tiene vertices , es la ruta de la que esta compuesta esa ruta
+                ruta = ruta + Manipulados.get(i).ID + "/";
         }
+
+        
+        
         System.out.println(ruta);
         ruta = "";
     }
@@ -410,9 +416,11 @@ public class MetodosGrafo {
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacionPadres) {
         Random random = new Random();
         int index2, index;
+        instrucciones++;
         while (true) {
             index2 = random.nextInt(poblacionPadres.size() - 1) + 1;
             index = random.nextInt(poblacionPadres.size() - 1);
+            instrucciones++;
             if (index2 != index) {
                 break;
             }
@@ -423,6 +431,7 @@ public class MetodosGrafo {
             padre2 = poblacionPadres.get(index2);
             poblacionPadres.remove(poblacionPadres.get(index2));
             poblacionPadres.remove(poblacionPadres.get(index));
+            instrucciones++;
         }//end 1er if    
     }
     /**
@@ -443,21 +452,23 @@ public class MetodosGrafo {
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre, int tamGrafo){
         ArrayList<vertice> hijo1 = new ArrayList();
         ArrayList<vertice> hijo2 = new ArrayList();
-
         List<vertice> sub1 = new ArrayList<vertice>();
         List<vertice> sub2 = new ArrayList<vertice>();
         List<vertice> sub3 = new ArrayList<vertice>();
         List<vertice> sub4 = new ArrayList<vertice>();
+       
         //punto de cruce
         int randomNum;
         boolean esta;
         boolean esta2;
         int cont = 0;
+         instrucciones++;
         while (true) {
             randomNum = ThreadLocalRandom.current().nextInt(2, tamGrafo);
             System.out.println("Punto de cruse: " + randomNum);
             esta = padre.contains(buscar(randomNum));
             esta2 = madre.contains(buscar(randomNum));
+            instrucciones++;
             if (esta && esta2) {
                 System.out.println("Estan ambos");
                 //recorre los padres para buscar el punto de cruce que se hace random
@@ -467,6 +478,7 @@ public class MetodosGrafo {
                         sub2 = padre.subList(i, padre.size());//creo la sublista 2
                         ImprimirRuta(sub1);
                         ImprimirRuta(sub2);
+                        instrucciones++;
                     }
                 }
                 for (int j = 0; j < madre.size() - 1; j++) {
@@ -475,6 +487,7 @@ public class MetodosGrafo {
                         sub4 = madre.subList(j, madre.size());//creo la sublista 4
                         ImprimirRuta(sub3);
                         ImprimirRuta(sub4);
+                        instrucciones++;
                     }
                 }
                 //esto arma al hijo1 con sub 1-4
@@ -504,6 +517,7 @@ public class MetodosGrafo {
                     Manipulados.add(padre);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("se escogio la madre, como mejor ruta");
                     ImprimirRuta(madre);
@@ -512,6 +526,7 @@ public class MetodosGrafo {
                     Manipulados.add(madre);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
                 break;
             }
@@ -538,6 +553,7 @@ public class MetodosGrafo {
                     }
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
 
                 } else {
                     System.out.println("Es mejor el hijo2");
@@ -546,6 +562,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             } else {
                 if (ag_evaluarFitness2(hijo1) < ag_evaluarFitness2(hijo2)) {
@@ -555,6 +572,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -562,6 +580,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             }
         } else {
@@ -575,6 +594,7 @@ public class MetodosGrafo {
                     }
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -582,6 +602,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             } else {
                 if (ag_evaluarFitness2(hijo1) < ag_evaluarFitness2(hijo2)) {
@@ -591,6 +612,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -598,6 +620,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             }
         }
@@ -629,9 +652,11 @@ public class MetodosGrafo {
      */
     public int ag_evaluarFitness2(ArrayList<vertice> ruta) {
         int peso = 0;
+        instrucciones++;
         for (int i = 0; i < ruta.size() - 1; i++) {
             arco auxA = buscar(ruta.get(i), ruta.get(i + 1));
             peso = peso + auxA.peso; // suma el peso desde el origen hacia el siguiente arco
+            instrucciones+=2;
         }
         return peso;
     }
@@ -649,27 +674,33 @@ public class MetodosGrafo {
         arco actual = null;
         vertice vO = null;
         vertice vD = null;
+        instrucciones++;
 
         for (int i = 0; i < hijoMutado.size() - 1; i++) {
             //preguntar por el arco de mayor tamaño 
             arco auxA = buscar(hijoMutado.get(i), hijoMutado.get(i + 1));
+            instrucciones++;
             if (auxA.peso > numero) {
                 numero = auxA.peso;
                 actual = auxA;
                 vO = hijoMutado.get(i);
                 vD = hijoMutado.get(i + 1);
                 System.out.println("Arco mas grande: " + numero + "vertice de origen: " + vO.ID);
+                instrucciones++;
             }
         }
         //cambiarlo por otro vertice destino
         vertice vNuevo = null;
         arco auxA2 = vO.sigA;
+        instrucciones++;
         while (auxA2 != null) {
             if (!hijoMutado.contains(auxA2.destino)) {
                 vNuevo = auxA2.destino;
+                instrucciones++;
                 System.out.println("el nuevo vertice: " + vNuevo.ID);
             }
             auxA2 = auxA2.sigA;
+            instrucciones++;
         }
         for (int i = 0; i < hijo.size(); i++) {
             if (hijo.get(i) == vO) {
@@ -688,6 +719,7 @@ public class MetodosGrafo {
             System.out.println("no sirvio");
             Manipulados.add(hijo);
             padre1 = null;
+            instrucciones++;
             return false;
         } else {
             //si mejora sale hijo mutado
@@ -695,6 +727,7 @@ public class MetodosGrafo {
             ag_evaluarFitness(hijoMutado2);
             Manipulados.add(hijoMutado2);
             padre1 = null;
+            instrucciones++;
             return true;
         }
         //return hijo
@@ -711,8 +744,13 @@ public class MetodosGrafo {
         poblacion = generarPadres(poblacion,origen, ruta, peso, tamGrafo);
         Manipulados = new ArrayList();
         int cont = 0;
+        instrucciones+=4;
         while (cont < cantVeces) {
             ag_escogerPadres(poblacion);
+            System.out.println("Padre  "  + padre1.size());
+            for (int i = 0; i < padre1.size(); i++) {
+                System.out.println(padre1.get(i).ID);
+            }
             ImprimirRuta(padre1);
             ImprimirRuta(padre2);
             ag_cruzar(padre1, padre2, tamGrafo);
@@ -745,22 +783,26 @@ public class MetodosGrafo {
      * con el backtracking
      *
      * @param vertex Este parametro indica el vertice al cual  el metodo va analisar 
-     * @param ultimo Ultimo vertice de la ruta
      * @param ruta Es la ruta que lleva el metodo guardada hasta el vertice actual
      * @param pesoRuta Es el peos  que lleva el metodo guardado hasta el vertice actual
      */
+    ArrayList<vertice> rutaV;
 
-    public void rutaCortaBacktracking(vertice vertex,vertice ultimo,  String ruta, int pesoRuta) {
+    public void rutaCortaBacktracking(vertice vertex,vertice ultimo, String ruta, int pesoRuta) {
         if ((vertex == null) || (vertex.marca)) {//2n
             instrucciones ++;
             return;
         }
         instrucciones +=2;
         if (vertex.ID == ultimo.ID) {//n
-            mld.insertarRuta(convertirRuta(ruta + vertex.ID + "/"), pesoRuta, true);// 16n a la 2 + 22n
+            rutaV = convertirRuta(ruta + vertex.ID + "/"); //12n a la 2 +4n
+            mld.insertarRuta(rutaV, pesoRuta, true);//4n a la 2+18n
+            memoria += pesoArrayConElementos;
             instrucciones += 3;
         } else {
-            mld.insertarRuta(convertirRuta(ruta + vertex.ID + "/"), pesoRuta, false);///16n a la 2 + 22n
+            rutaV = convertirRuta(ruta + vertex.ID + "/");//12n a la 2 +4n
+            mld.insertarRuta(rutaV, pesoRuta, false);///4n a la 2+18n
+            memoria += pesoArrayConElementos;
             instrucciones += 3;
         }
         vertex.marca = true;//n
@@ -929,7 +971,6 @@ public class MetodosGrafo {
      * contrario, si la ruta aun no hallegado al destino, pero aun es una ruta fiable se sigue recorriendo, hasta encontrar 
      * un punto donde se pode o que cambie la ruta mas corta
      *
-     * @param ultimo
      * @param ruta parametro que va indica la ruta por la que se encuentra actualmente el recorrido
      * @param dist parametro que va indica el peso que tiene la ruta  por la que se encuentra actualmente el recorrido
      */
@@ -946,11 +987,13 @@ public class MetodosGrafo {
             if ((rutaActual == "" || rutaMinima > dist)) {//2n
                 instrucciones += 2;
                 if (origen.equals(ultimo)) {//1n
-                    rutaMinima = dist;//1nn
+                    rutaMinima = dist;//1n
+                     listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
                     rutaActual = ruta + origen.ID + "/";//1n
                     memoria += 8*rutaActual.length();
                     memoria += 32;
-                    mp.insertarPoda(convertirRuta(rutaActual), rutaMinima, true);//4n a la 2 +23n
+                    memoria += pesoArrayConElementos;
+                    mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
                     instrucciones += 5;
                 } else {
                     origen.marca = true;//1n
@@ -959,15 +1002,17 @@ public class MetodosGrafo {
                     instrucciones += 2;
                     while (auxA != null) {//n a la 2
                         mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
-                        RamificacionyPoda(ultimo,ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
+                        RamificacionyPoda(ultimo, ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
                         auxA = auxA.sigA;//1n  a la 2
                         instrucciones += 4;
                     }
                     origen.marca = false;//1 a la 2
                     instrucciones += 2;
                 }
+
             } else {
-                mp.insertarPoda( convertirRuta(ruta + origen.ID + "/"), dist, false);//4n a la 2 +23n
+                listaRuta = convertirRuta(ruta + origen.ID + "/");//12n a la 2+5n
+                mp.insertarPoda(listaRuta, dist, false);//4n a la 2 +23n
                 instrucciones += 2;
             }
         }
@@ -1003,7 +1048,7 @@ public class MetodosGrafo {
      * @param grafo
      * @param ultimo
      */
-    public void datosRyP(vertice grafo, vertice  ultimo) {
+    public void datosRyP(vertice grafo, vertice ultimo) {
         memoria = 0;
         instrucciones = 0;
         mc.Insertar(grafo, 0);

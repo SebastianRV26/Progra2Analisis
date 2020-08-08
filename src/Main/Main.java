@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static vertice[] ultimos = new vertice[3];
+    public static vertice[] ultimos = new vertice[8];
 
     ;
     /**
@@ -41,7 +41,8 @@ public class Main {
         vertice[] grafos = new vertice[tamannio.length];
         for (int i = 0; i < tamannio.length; i++) {
             metGrafo.llenarGrafo(tamannio[i]);
-            grafos[i] = metGrafo.grafo;
+            vertice grafo = metGrafo.grafo;
+            grafos[i] = grafo;
             ultimos[i] = metGrafo.ultimo;
             metGrafo.grafo = null;
         }
@@ -95,8 +96,7 @@ public class Main {
                 case "3":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.grafo = grafos[i];
-                        metGrafo.datosBactraking(metGrafo.grafo, ultimos[i]);
+                        metGrafo.datosBactraking(grafos[i], ultimos[i]);
                     }
                     break;
                 case "4":
@@ -108,8 +108,7 @@ public class Main {
                 case "5":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                        metGrafo.grafo = grafos[i];
-                        metGrafo.datosRyP(metGrafo.grafo, ultimos[i]);
+                        metGrafo.datosRyP(grafos[i], ultimos[i]);
                     }
                     break;
                 case "6":
