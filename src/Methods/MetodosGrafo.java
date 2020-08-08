@@ -339,14 +339,13 @@ public class MetodosGrafo {
         if (vertex.ID == ultimo) {
             instrucciones++;
             poblacion.add(convertirRuta(ruta + vertex.ID + "/"));
-            // array.append convertirRuta(ruta + vertex.ID + "/");
         }
         instrucciones++;
         // si array.len == 200 retorne 
-        if (poblacion.size()==220){
+        if (poblacion.size() == 220) {
             instrucciones++;
-                return poblacion;
-            }
+            return poblacion;
+        }
         vertex.marca = true;
         arco auxA = vertex.sigA;
         instrucciones+=3;
@@ -432,9 +431,10 @@ public class MetodosGrafo {
         Random random = new Random();
         int index2, index;
         instrucciones+=2;
+        
         while (true) {
-            index2 = random.nextInt(poblacionPadres.size() - 1) + 1;
-            index = random.nextInt(poblacionPadres.size() - 1);
+            index2 = random.nextInt(poblacionPadres.size() -1) + 1;
+            index = random.nextInt(poblacionPadres.size()-1 ) ;
             memoria+=64;
             instrucciones+=4;
             if (index2 != index) {
@@ -823,7 +823,8 @@ public class MetodosGrafo {
         memoria+=32;
         instrucciones+=5;
         memoria += pesoArco;
-        while (cont < cantVeces) {
+        
+             while (cont < cantVeces) {
             instrucciones++;
             ag_escogerPadres(poblacion);
             ImprimirRuta(padre1);
@@ -847,6 +848,8 @@ public class MetodosGrafo {
             ImprimirTodasRutas(Manipulados);
         }
         ag_evaluarFitness(Manipulados.get(0));
+        
+   
     }
     
     
@@ -1176,5 +1179,6 @@ public class MetodosGrafo {
         System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
         System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
+        quitarMarca(grafo);
     }
 }

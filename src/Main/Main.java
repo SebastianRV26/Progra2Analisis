@@ -107,7 +107,7 @@ public class Main {
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
                         metGrafo.grafo = grafos[i];
-                        metGrafo.datosRyP(  metGrafo.grafo, ultimos[i]);
+                        metGrafo.datosRyP(metGrafo.grafo, ultimos[i]);
                     }
                     break;
                 case "6":
