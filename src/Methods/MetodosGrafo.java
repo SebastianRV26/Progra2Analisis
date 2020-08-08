@@ -569,7 +569,7 @@ public class MetodosGrafo {
                 }
                 break;
             }
-            System.out.println("volvio a sacar punto de cruce");   
+            //System.out.println("volvio a sacar punto de cruce");   
         }  
     }
    /**
