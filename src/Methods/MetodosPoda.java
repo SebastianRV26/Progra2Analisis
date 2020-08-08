@@ -167,17 +167,17 @@ public class MetodosPoda {
      * @param ruta Array de los vertices que componen  la ruta
      * @return La ruta encontrada o un valor nulo que indica que no se encontro
      */
-    
-    public Poda buscarRuta( ArrayList<vertice> ruta){
-        Poda aux = inicio;//1
-        while (aux != null) {  //1   
-            if(aux.ruta.equals(ruta)){//1
-                return  aux;//1
+    public Poda buscarRuta(ArrayList<vertice> ruta) {
+        if (inicio != null) {
+            Poda aux = inicio;//1
+            while (aux != null) {  //1   
+                if (aux.ruta.equals(ruta)) {//1
+                    return aux;//1
+                }
+                aux = aux.sig;//1
             }
-            aux = aux.sig;//1
         }
-        return  null;//1
-        
+        return null;//1
         //Medicion analitica: 6
     }
 }
