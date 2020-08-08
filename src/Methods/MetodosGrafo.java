@@ -1117,6 +1117,7 @@ public class MetodosGrafo {
      * @param ultimo
      */
     public void datosRyP(vertice grafo, vertice ultimo) {
+        quitarMarca(grafo);
         memoria = 0;
         instrucciones = 0;
         mc.Insertar(grafo, 0);
@@ -1130,6 +1131,7 @@ public class MetodosGrafo {
         System.out.println("5 ejemplos de rutas podadas");
         mp.imprimirRutaPodada();
         mp.inicio = null;
+        quitarMarca(grafo);
     }
 
     /**
@@ -1144,6 +1146,7 @@ public class MetodosGrafo {
      * @param ultimo
      */
     public void datosBactraking(vertice grafo, vertice ultimo) {
+        quitarMarca(grafo);
         memoria = 0;
         instrucciones = 0;
         rutaCortaBacktracking(grafo, ultimo, "", 0);
@@ -1155,8 +1158,11 @@ public class MetodosGrafo {
         System.out.println("Rutas random del backtraking");
         mld.rutasRandom();
         mld.inicio = null;
+        quitarMarca(grafo);
     }
-    public void datosGenetico(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces){
+
+    public void datosGenetico(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces) {
+        quitarMarca(grafo);
         memoria = 0;
         instrucciones = 0;
         rutaCortaGenetica(origen, ruta, peso, tamGrafo,cantVeces);
