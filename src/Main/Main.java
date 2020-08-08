@@ -56,7 +56,7 @@ public class Main {
      */
     public static void menuAlgoritmos() {
         MetodosGrafo metGrafo = MetodosGrafo.getInstance();
-        int[] tamannioGrafo = {10, 20, 30}; // array con los tamaños para los grafos
+        int[] tamannioGrafo = {10, 20, 30, 60 };  // array con los tamaÃ±os para los grafos 120, 1000, 3000, 5000  
         vertice[] grafos = crearGrafos(tamannioGrafo); // array con los vérrtices de los grafos
 
         while (true) {
@@ -81,20 +81,16 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
+                         metGrafo.grafo = grafos[i];
                         
-//                        metGrafo.llenarGrafo(10);
-//                        metGrafo.generarPadres(metGrafo.grafo,"", 0,tamannioGrafo[i]);
-//                        metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);
-//        
-                        
-                        metGrafo.generarPadres(grafos[i],"", 0,tamannioGrafo[i]);
-                        
-                        if(tamannioGrafo[i]>500){
-                            metGrafo.rutaCortaGenetica(tamannioGrafo[i], 100);
-                        }else{
-                                   metGrafo.rutaCortaGenetica(tamannioGrafo[i], tamannioGrafo[i]/2);     
+                        if (tamannioGrafo[i] > 500) {
+                            metGrafo.rutaCortaGenetica(metGrafo.grafo,"", 0,tamannioGrafo[i], tamannioGrafo[i]/2);
+                            metGrafo.datosGenetico();
                         }
-                                    
+                        else{
+                            metGrafo.rutaCortaGenetica(metGrafo.grafo,"", 0,tamannioGrafo[i], tamannioGrafo[i]/2);
+                            metGrafo.datosGenetico();
+                        }
                     }
                     break;
                 case "3":
@@ -136,25 +132,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-       // menuAlgoritmos();
-//        MetodosGrafo metGrafo = new MetodosGrafo();
-//        MetodosListaDoble mld = MetodosListaDoble.getInstance();
-//        MetodosCola mc = MetodosCola.getInstance();
-//        MetodosPoda mp = MetodosPoda.getInstance();
-
-       // metGrafo.llenarGrafo(5000);
-       // mc.Insertar(metGrafo.grafo, 0);
         
-        //metGrafo.rutaCortaBacktracking(metGrafo.grafo, "", 0);
-         //metGrafo.rutaCortaGenetica(10, 5);
-    
-        //metGrafo.generarPadres(metGrafo.grafo,"", 0,5000);
-        //metGrafo.rutaCortaGenetica(5000, 100);
-    
-    
-        
-        menuAlgoritmos();
+       menuAlgoritmos();
+       
     }
 
 }

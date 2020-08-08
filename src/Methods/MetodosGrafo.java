@@ -326,11 +326,12 @@ public class MetodosGrafo {
     ArrayList<ArrayList<vertice>> Manipulados = new ArrayList();
     ArrayList<vertice> padre1;
     ArrayList<vertice> padre2;
-    ArrayList<ArrayList<vertice>> poblacion = new ArrayList();
+   // public ArrayList<ArrayList<vertice>> poblacion = new ArrayList();
     
-    public void generarPadres(vertice vertex, String ruta, int pesoRuta, int ultimo ) {
+    public ArrayList<ArrayList<vertice>> generarPadres( ArrayList<ArrayList<vertice>> poblacion,vertice vertex, String ruta, int pesoRuta, int ultimo ) {
+       
         if ((vertex == null) || (vertex.marca)) {
-            return;
+            return poblacion;
         }
         if (vertex.ID == ultimo) {
             poblacion.add(convertirRuta(ruta + vertex.ID + "/"));
@@ -338,24 +339,27 @@ public class MetodosGrafo {
         }
         // si array.len == 200 retorne 
         if (poblacion.size()==220){
-                return;
+                return poblacion;
             }
         vertex.marca = true;
         arco auxA = vertex.sigA;
         while (auxA != null) {
-            generarPadres(auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso, ultimo);
+            generarPadres(poblacion,auxA.destino, ruta + vertex.ID + "/", pesoRuta + auxA.peso, ultimo);
             // si array.len == 200 retorne 
             if (poblacion.size()==220){
-                return;
+                return poblacion;
             }
             auxA = auxA.sigA;
+            instrucciones++;
         }
         vertex.marca = false;
+        instrucciones++;
+        return poblacion;
     }
     
     /**
-     * 
-     * @param Manipulados 
+     * Imprime todaas las rutas existentes
+     * @param Manipulados Arraylist con todas las listas
      */
     public void ImprimirTodasRutas(ArrayList<ArrayList<vertice>> Manipulados){
         System.out.println("Estan son todas las rutas con las que se va a trabajar");
@@ -371,7 +375,7 @@ public class MetodosGrafo {
         System.out.println("////////////////////////");
     }
     /**
-     * 
+     * Imprime la ruta que esta en ese momento
      * @param Manipulados 
      */
     public void ImprimirRuta(ArrayList<vertice> Manipulados){
@@ -391,7 +395,7 @@ public class MetodosGrafo {
         ruta = "";
     }
     /**
-     * 
+     * Imprime las sublistas de los padres
      * @param Manipulados 
      */
     public void ImprimirRuta(List<vertice> Manipulados){
@@ -406,37 +410,17 @@ public class MetodosGrafo {
     }
 
     /**
-     * 
-     *
-     * @param tamGrafo
-     * @return ArrayList<ArrayList<vertice>> que son todas las Arraylist de
-     * rutas.
-     */
-    public ArrayList<ArrayList<vertice>> generarPoblacion(int tamGrafo) {
-        ArrayList<ArrayList<vertice>> poblacionInicial = new ArrayList<>();
-        ListaDoble aux = mld.inicio;
-        while (aux != null) {
-            if (aux.llegaDestino) {
-                if (aux.verticesRuta.size() > (tamGrafo / 2)) {
-                    poblacionInicial.add(aux.verticesRuta);
-                }
-            }
-            aux = aux.sigN;
-        }
-        ListaDoble temp = aux;
-        return poblacionInicial;
-    }
-
-    /**
-     *
+     * Recorre la poblacion de todas las rutas y saca 2 rutas al azar
      * @param poblacionPadres todas las rutas a analizar
      */
     public void ag_escogerPadres(ArrayList<ArrayList<vertice>> poblacionPadres) {
         Random random = new Random();
         int index2, index;
+        instrucciones++;
         while (true) {
             index2 = random.nextInt(poblacionPadres.size() - 1) + 1;
             index = random.nextInt(poblacionPadres.size() - 1);
+            instrucciones++;
             if (index2 != index) {
                 break;
             }
@@ -447,37 +431,46 @@ public class MetodosGrafo {
             padre2 = poblacionPadres.get(index2);
             poblacionPadres.remove(poblacionPadres.get(index2));
             poblacionPadres.remove(poblacionPadres.get(index));
+            instrucciones++;
         }//end 1er if    
     }
     /**
      * 
-     * @param padre
-     * @param madre
-     * @param tamGrafo 
+     * @param padre Arraylist proveniente de la poblacion
+     * @param madre ArrayList proveniente de la poblacion
+     * @param tamGrafo cantidad de vertices del grafo
+     * @var hijo1 Arraylist resultado de cruce
+     * @var hijo2 Arraylist resultado de cruce
+     * @var sub1 guarda la sublista de el padre
+     * @var sub2 guarda la sublista de el padre
+     * @var sub3 guarda la sublista de el madre
+     * @var sub4 guarda la sublista de el madre
+     * @var randomNum es el punto de cruce
+     * @var esta, esta2 valores para saber si contienen un punto de cruce el comun
+     * @var cont cuenta la cantidad de veces que busca un punto de cruce en comun
      */
     public void ag_cruzar(ArrayList<vertice> padre,ArrayList<vertice> madre, int tamGrafo){
         ArrayList<vertice> hijo1 = new ArrayList();
         ArrayList<vertice> hijo2 = new ArrayList();
-
         List<vertice> sub1 = new ArrayList<vertice>();
         List<vertice> sub2 = new ArrayList<vertice>();
         List<vertice> sub3 = new ArrayList<vertice>();
         List<vertice> sub4 = new ArrayList<vertice>();
-
+       
         //punto de cruce
         int randomNum;
         boolean esta;
         boolean esta2;
         int cont = 0;
+         instrucciones++;
         while (true) {
-
-            
             randomNum = ThreadLocalRandom.current().nextInt(2, tamGrafo);
             System.out.println("Punto de cruse: " + randomNum);
             esta = padre.contains(buscar(randomNum));
             esta2 = madre.contains(buscar(randomNum));
+            instrucciones++;
             if (esta && esta2) {
-                System.out.println("estan ambos");
+                System.out.println("Estan ambos");
                 //recorre los padres para buscar el punto de cruce que se hace random
                 for (int i = 0; i < padre.size() - 1; i++) {
                     if (padre.get(i).ID == randomNum) {
@@ -485,6 +478,7 @@ public class MetodosGrafo {
                         sub2 = padre.subList(i, padre.size());//creo la sublista 2
                         ImprimirRuta(sub1);
                         ImprimirRuta(sub2);
+                        instrucciones++;
                     }
                 }
                 for (int j = 0; j < madre.size() - 1; j++) {
@@ -493,6 +487,7 @@ public class MetodosGrafo {
                         sub4 = madre.subList(j, madre.size());//creo la sublista 4
                         ImprimirRuta(sub3);
                         ImprimirRuta(sub4);
+                        instrucciones++;
                     }
                 }
                 //esto arma al hijo1 con sub 1-4
@@ -513,7 +508,7 @@ public class MetodosGrafo {
                 break;
             }
             cont++;
-            if (cont > 6) {
+            if (cont > (tamGrafo/2)+1) {
                 if (ag_evaluarFitness2(padre) < ag_evaluarFitness2(madre)) {
                     System.out.println("se escogio el padre, como mejor ruta");
                     ImprimirRuta(padre);
@@ -522,6 +517,7 @@ public class MetodosGrafo {
                     Manipulados.add(padre);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("se escogio la madre, como mejor ruta");
                     ImprimirRuta(madre);
@@ -530,6 +526,7 @@ public class MetodosGrafo {
                     Manipulados.add(madre);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
                 break;
             }
@@ -537,11 +534,12 @@ public class MetodosGrafo {
         }  
     }
    /**
-    * 
-    * @param padre
-    * @param madre
-    * @param hijo1
-    * @param hijo2 
+    * Funcion que evalua los padres y los hijos para ver cual es el mejor
+    * y lo guarda en una lista de Elementos Manipulados para luego ser otra vez utilizados
+    * @param padre Arraylist de vertices
+    * @param madre Arraylist de vertices
+    * @param hijo1 Arraylist de vertices
+    * @param hijo2 Arraylist de vertices
     */
     public void ag_evaluar(ArrayList<vertice> padre,ArrayList<vertice> madre,ArrayList<vertice> hijo1,ArrayList<vertice> hijo2){
         if(ag_evaluarFitness2(padre)<ag_evaluarFitness2(madre)){
@@ -555,6 +553,7 @@ public class MetodosGrafo {
                     }
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
 
                 } else {
                     System.out.println("Es mejor el hijo2");
@@ -563,6 +562,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             } else {
                 if (ag_evaluarFitness2(hijo1) < ag_evaluarFitness2(hijo2)) {
@@ -572,6 +572,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -579,6 +580,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             }
         } else {
@@ -592,6 +594,7 @@ public class MetodosGrafo {
                     }
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -599,6 +602,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             } else {
                 if (ag_evaluarFitness2(hijo1) < ag_evaluarFitness2(hijo2)) {
@@ -608,6 +612,7 @@ public class MetodosGrafo {
                     Manipulados.add(hijo1);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 } else {
                     System.out.println("Es mejor el hijo2");
                     ImprimirRuta(hijo2);
@@ -615,16 +620,16 @@ public class MetodosGrafo {
                     Manipulados.add(hijo2);
                     padre1 = null;
                     padre2 = null;
+                    instrucciones++;
                 }
             }
         }
     }
-    
-    
+       
     /**
-     * 
-     * @param ruta
-     * @return 
+     *  Imprime la ruta y el peso de la ruta
+     * @param ruta Arraylist de vertices
+     * @return peso de la ruta
      */
     public int ag_evaluarFitness(ArrayList<vertice> ruta){
         int peso = 0;
@@ -641,22 +646,24 @@ public class MetodosGrafo {
     }
 
     /**
-     *
-     * @param ruta
-     * @return
+     *Recorre la ruta y saca el peso final de la ruta
+     * @param ruta Arraylist vertices
+     * @return peso 
      */
     public int ag_evaluarFitness2(ArrayList<vertice> ruta) {
         int peso = 0;
+        instrucciones++;
         for (int i = 0; i < ruta.size() - 1; i++) {
             arco auxA = buscar(ruta.get(i), ruta.get(i + 1));
-            peso = peso + auxA.peso;
+            peso = peso + auxA.peso; // suma el peso desde el origen hacia el siguiente arco
+            instrucciones+=2;
         }
         return peso;
     }
     /**
-     * 
-     * @param hijo
-     * @return 
+     * La funcion mutar muta un hijo, si el hijo mutado es mejor que el hijo que venia por parametro.
+     * @param hijo el hijo que salio de la escogencia de padres, un arraylist de vertices
+     * @return verdadero si el hijomutado mejoro, false si no hay mejora
      */
     public boolean ag_mutar(ArrayList<vertice> hijo){
         //si no hay mutacion el hijo debe salir igual
@@ -667,27 +674,33 @@ public class MetodosGrafo {
         arco actual = null;
         vertice vO = null;
         vertice vD = null;
+        instrucciones++;
 
         for (int i = 0; i < hijoMutado.size() - 1; i++) {
             //preguntar por el arco de mayor tamaño 
             arco auxA = buscar(hijoMutado.get(i), hijoMutado.get(i + 1));
+            instrucciones++;
             if (auxA.peso > numero) {
                 numero = auxA.peso;
                 actual = auxA;
                 vO = hijoMutado.get(i);
                 vD = hijoMutado.get(i + 1);
                 System.out.println("Arco mas grande: " + numero + "vertice de origen: " + vO.ID);
+                instrucciones++;
             }
         }
         //cambiarlo por otro vertice destino
         vertice vNuevo = null;
         arco auxA2 = vO.sigA;
+        instrucciones++;
         while (auxA2 != null) {
             if (!hijoMutado.contains(auxA2.destino)) {
                 vNuevo = auxA2.destino;
+                instrucciones++;
                 System.out.println("el nuevo vertice: " + vNuevo.ID);
             }
             auxA2 = auxA2.sigA;
+            instrucciones++;
         }
         for (int i = 0; i < hijo.size(); i++) {
             if (hijo.get(i) == vO) {
@@ -706,6 +719,7 @@ public class MetodosGrafo {
             System.out.println("no sirvio");
             Manipulados.add(hijo);
             padre1 = null;
+            instrucciones++;
             return false;
         } else {
             //si mejora sale hijo mutado
@@ -713,22 +727,24 @@ public class MetodosGrafo {
             ag_evaluarFitness(hijoMutado2);
             Manipulados.add(hijoMutado2);
             padre1 = null;
+            instrucciones++;
             return true;
         }
         //return hijo
     }
     
-    /**
+    /***Fecha inicio: 08/07/2020 Ultima modificación: 5/08/2020.
      * 
-     * @param tamGrafo
-     * @param cantVeces 
+     * @param tamGrafo el tamaño del grafo con el que se esta trabajando
+     * @param cantVeces cantidad de veces que va a escoger padres de la poblacion general
      */
-    public void rutaCortaGenetica(int tamGrafo, int cantVeces) {
-        //ArrayList<ArrayList<vertice>> poblacion = new ArrayList<>();
-        
-        //poblacion = generarPoblacion(8);
-
+    public void rutaCortaGenetica(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces) {
+        //public void rutaCortaGenetica(vertice origen, String rtua, int peso, int tamGrafo, int cantVeces)
+        ArrayList poblacion = new ArrayList();
+        poblacion = generarPadres(poblacion,origen, ruta, peso, tamGrafo);
+        Manipulados = new ArrayList();
         int cont = 0;
+        instrucciones+=4;
         while (cont < cantVeces) {
             ag_escogerPadres(poblacion);
             System.out.println("Padre  "  + padre1.size());
@@ -1073,10 +1089,11 @@ public class MetodosGrafo {
     public void datosGenetico(){
         memoria = 0;
         instrucciones = 0;
-        System.out.println("Ruta corta por el diseño de Algoritmo Genetico");
+        System.out.println("╔══════════════════════════════════════════════════════════╗");
+        System.out.println("‖Ruta corta por el diseño de Algoritmo Genetico  ‖");
         //genetico
-        System.out.println("Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits");
-        System.out.println("Instrucciones usadas por Algoritmo Genetico: " + instrucciones);
-        
+        System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
+        System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
+        System.out.println("╚══════════════════════════════════════════════════════════╝");
     }
 }
