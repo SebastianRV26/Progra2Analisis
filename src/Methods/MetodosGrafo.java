@@ -339,14 +339,13 @@ public class MetodosGrafo {
         if (vertex.ID == ultimo) {
             instrucciones++;
             poblacion.add(convertirRuta(ruta + vertex.ID + "/"));
-            // array.append convertirRuta(ruta + vertex.ID + "/");
         }
         instrucciones++;
         // si array.len == 200 retorne 
-        if (poblacion.size()==220){
+        if (poblacion.size() == 220) {
             instrucciones++;
-                return poblacion;
-            }
+            return poblacion;
+        }
         vertex.marca = true;
         arco auxA = vertex.sigA;
         instrucciones+=3;
@@ -823,7 +822,8 @@ public class MetodosGrafo {
         memoria+=32;
         instrucciones+=5;
         memoria += pesoArco;
-        while (cont < cantVeces) {
+        
+             while (cont < cantVeces) {
             instrucciones++;
             ag_escogerPadres(poblacion);
             for (int i = 0; i < padre1.size(); i++) {
@@ -850,6 +850,8 @@ public class MetodosGrafo {
             ImprimirTodasRutas(Manipulados);
         }
         ag_evaluarFitness(Manipulados.get(0));
+        
+   
     }
     
     
@@ -1172,11 +1174,13 @@ public class MetodosGrafo {
     public void datosGenetico(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces){
         memoria = 0;
         instrucciones = 0;
+        System.out.println("Vertice origen   " +origen.ID);
         rutaCortaGenetica(origen, ruta, peso, tamGrafo,cantVeces);
         System.out.println("╔══════════════════════════════════════════════════════════════════╗");
         System.out.println("‖Ruta corta por el diseño de Algoritmo Genetico          ‖");
         System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
         System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
+        quitarMarca(grafo);
     }
 }
