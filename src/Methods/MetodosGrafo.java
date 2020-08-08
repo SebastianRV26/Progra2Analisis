@@ -1052,6 +1052,7 @@ public class MetodosGrafo {
      * contrario, si la ruta aun no hallegado al destino, pero aun es una ruta fiable se sigue recorriendo, hasta encontrar 
      * un punto donde se pode o que cambie la ruta mas corta
      *
+     * @param ultimo
      * @param ruta parametro que va indica la ruta por la que se encuentra actualmente el recorrido
      * @param dist parametro que va indica el peso que tiene la ruta  por la que se encuentra actualmente el recorrido
      */
@@ -1063,24 +1064,24 @@ public class MetodosGrafo {
             if (origen.marca) {//1n
                 instrucciones += 3;
                 return;//1
-            }
-            instrucciones += 4;
-            if ((rutaActual == "" || rutaMinima > dist)) {//2n
-                instrucciones += 2;
-                if (origen.equals(ultimo)) {//1n
-                    rutaMinima = dist;//1n
-                     listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
-                    rutaActual = ruta + origen.ID + "/";//1n
-                    memoria += 8*rutaActual.length();
-                    memoria += 32;
-                    memoria += pesoArrayConElementos;
-                    mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
-                    instrucciones += 5;
-                } else {
-                    origen.marca = true;//1n
-                    arco auxA = origen.sigA;//1n
-                    memoria +=pesoArco;
+                }
+                instrucciones += 4;
+                if (("".equals(rutaActual) || rutaMinima > dist)) {//2n
                     instrucciones += 2;
+                    if (origen.equals(ultimo)) {//1n
+                        rutaMinima = dist;//1n
+                        rutaActual = ruta + origen.ID + "/";//1n
+                        listaRuta = convertirRuta(rutaActual);//12n a la 2+5n
+                        memoria += 8 * rutaActual.length();
+                        memoria += 32;
+                        memoria += pesoArrayConElementos;
+                        mp.insertarPoda(listaRuta, rutaMinima, true);//4n a la 2 +23n
+                        instrucciones += 5;
+                    } else {
+                        origen.marca = true;//1n
+                        arco auxA = origen.sigA;//1n
+                        memoria += pesoArco;
+                        instrucciones += 2;
                     while (auxA != null) {//n a la 2
                         mc.Insertar(auxA.destino, auxA.peso);//13n a la 2
                         RamificacionyPoda(ultimo, ruta + origen.ID + "/", dist + auxA.peso);//n a la 3
@@ -1179,6 +1180,5 @@ public class MetodosGrafo {
         System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
         System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
-        quitarMarca(grafo);
     }
 }
