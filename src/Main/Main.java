@@ -81,15 +81,12 @@ public class Main {
                 case "2":
                     for (int i = 0; i < tamannioGrafo.length; i++) {
                         System.out.println(i + 1 + "-Grafo con tamaño " + tamannioGrafo[i]);
-                         metGrafo.grafo = grafos[i];
-                        
+                        metGrafo.grafo = grafos[i];
                         if (tamannioGrafo[i] > 500) {
-                            metGrafo.rutaCortaGenetica(metGrafo.grafo,"", 0,tamannioGrafo[i], tamannioGrafo[i]/2);
-                            metGrafo.datosGenetico();
+                            metGrafo.datosGenetico(metGrafo.grafo,"", 0,tamannioGrafo[i], 100);
                         }
                         else{
-                            metGrafo.rutaCortaGenetica(metGrafo.grafo,"", 0,tamannioGrafo[i], tamannioGrafo[i]/2);
-                            metGrafo.datosGenetico();
+                            metGrafo.datosGenetico(metGrafo.grafo,"", 0,tamannioGrafo[i], tamannioGrafo[i]/2);
                         }
                     }
                     break;
