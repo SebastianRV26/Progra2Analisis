@@ -735,9 +735,11 @@ public class MetodosGrafo {
     public void rutaCortaGenetica(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces) {
         //public void rutaCortaGenetica(vertice origen, String rtua, int peso, int tamGrafo, int cantVeces)
         ArrayList poblacion = new ArrayList();
+        
         poblacion = generarPadres(poblacion,origen, ruta, peso, tamGrafo);
         Manipulados = new ArrayList();
         int cont = 0;
+        memoria+=8;
         instrucciones+=4;
         while (cont < cantVeces) {
             ag_escogerPadres(poblacion);
@@ -1073,12 +1075,12 @@ public class MetodosGrafo {
         System.out.println("Rutas random del backtraking");
         mld.rutasRandom();
     }
-    public void datosGenetico(){
+    public void datosGenetico(vertice origen, String ruta, int peso, int tamGrafo, int cantVeces){
         memoria = 0;
         instrucciones = 0;
         System.out.println("╔══════════════════════════════════════════════════════════╗");
         System.out.println("‖Ruta corta por el diseño de Algoritmo Genetico  ‖");
-        //genetico
+        rutaCortaGenetica(origen, ruta, peso, tamGrafo,cantVeces);
         System.out.println("‖Memoria usada por Algoritmo Genetico: " + memoria + " " + "bits  ‖");
         System.out.println("‖Instrucciones usadas por Algoritmo Genetico: " + instrucciones+"‖");
         System.out.println("╚══════════════════════════════════════════════════════════╝");
