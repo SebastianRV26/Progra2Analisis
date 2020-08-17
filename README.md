@@ -1,12 +1,12 @@
 # PrograAnalisis2
 
-Acerca de: Crear grafos de distintos tamaños y realizarle ruta corta con 5 distintos algoritmos de diseño
+Acerca de: Crear grafos de distintos tamaÃ±os y realizarle ruta corta con 5 distintos algoritmos de diseÃ±o
 
 ## Integrantes:
-* [Eduardo Binns Sánchez](https://github.com/EduardoBinns)
+* [Eduardo Binns SÃ¡nchez](https://github.com/EdBinns)
 * [Dilana Sancho Vargas](https://github.com/dsvargas)
-* [Sebastián Rojas Vargas](https://github.com/SebastianRV26)
+* [SebastiÃ¡n Rojas Vargas](https://github.com/SebastianRV26)
 
-Curso: Análisis de algoritmos. 
+Curso: AnÃ¡lisis de algoritmos. 
 I Semestre 2020. 
 Profesora: Lorena Valerio.
